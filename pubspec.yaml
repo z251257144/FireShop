@@ -22,7 +22,9 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  # https://github.com/thundersword/fire-shop-lite.git
   cupertino_icons: ^0.1.2
+  apifm: ^0.0.5
 
 dev_dependencies:
   flutter_test:
