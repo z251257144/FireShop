@@ -12,17 +12,29 @@ class IndexPage extends StatefulWidget {
   _IndexPageState createState() => _IndexPageState();
 }
 
+final double width = 25;
+
 final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
-      icon: Icon(CupertinoIcons.home),
+      icon: Image.asset("images/home-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/home-on.png", width: width, height: width,),
       title: Text("首页")
     ),
     BottomNavigationBarItem(
-      icon: Icon(CupertinoIcons.search),
+      icon: Image.asset("images/menu-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/menu-on.png", width: width, height: width,),
       title: Text("搜索")
     ),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.shopping_cart), title: Text("购物车")),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.profile_circled), title: Text("我的"))
+    BottomNavigationBarItem(
+      icon: Image.asset("images/cart-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/cart-on.png", width: width, height: width,),
+      title: Text("购物车")
+    ),
+    BottomNavigationBarItem(
+      icon: Image.asset("images/my-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/my-on.png", width: width, height: width,),
+      title: Text("我的")
+    )
   ];
 
   final List<Widget> pages = [
@@ -40,7 +52,7 @@ class _IndexPageState extends State<IndexPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color.fromARGB(255, 171, 43, 43),
         unselectedItemColor: Colors.grey,
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,

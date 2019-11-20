@@ -10,7 +10,10 @@ class HomePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white
       ),
-      child: Text("HomePage"),
+      child: Image.asset("images/profile_tegral.png"),
     );
   }
 }
+
+TextStyle blueStyle = TextStyle(fontSize: 40, color: Colors.blue, fontWeight: FontWeight.normal);
+TextStyle blackStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black); // 黑色样式
