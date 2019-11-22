@@ -5,12 +5,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("主页"),
       ),
-      child: Image.asset("images/profile_tegral.png"),
+      body: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white
+        ),
+        child: Image.asset("images/profile_tegral.png"),
+      ),
     );
   }
 }
