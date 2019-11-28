@@ -16,23 +16,23 @@ final double width = 25;
 
 final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
-      icon: Image.asset("images/home-off.png", width: width, height: width,),
-      activeIcon: Image.asset("images/home-on.png", width: width, height: width,),
+      icon: Image.asset("images/button_icons/home-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/button_icons/home-on.png", width: width, height: width,),
       title: Text("首页")
     ),
     BottomNavigationBarItem(
-      icon: Image.asset("images/menu-off.png", width: width, height: width,),
-      activeIcon: Image.asset("images/menu-on.png", width: width, height: width,),
+      icon: Image.asset("images/button_icons/menu-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/button_icons/menu-on.png", width: width, height: width,),
       title: Text("搜索")
     ),
     BottomNavigationBarItem(
-      icon: Image.asset("images/cart-off.png", width: width, height: width,),
-      activeIcon: Image.asset("images/cart-on.png", width: width, height: width,),
+      icon: Image.asset("images/button_icons/cart-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/button_icons/cart-on.png", width: width, height: width,),
       title: Text("购物车")
     ),
     BottomNavigationBarItem(
-      icon: Image.asset("images/my-off.png", width: width, height: width,),
-      activeIcon: Image.asset("images/my-on.png", width: width, height: width,),
+      icon: Image.asset("images/button_icons/my-off.png", width: width, height: width,),
+      activeIcon: Image.asset("images/button_icons/my-on.png", width: width, height: width,),
       title: Text("我的")
     )
   ];
