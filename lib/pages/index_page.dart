@@ -1,7 +1,7 @@
 import 'package:fire_shop/pages/cart/cart_page.dart';
 import 'package:fire_shop/pages/category/category_page.dart';
 import 'package:fire_shop/pages/home/home_page.dart';
-import 'package:fire_shop/pages/member/member_page.dart';
+import 'package:fire_shop/pages/member/member/member_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
