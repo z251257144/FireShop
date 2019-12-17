@@ -1,3 +1,4 @@
+import 'package:fire_shop/pages/member/resigter/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,6 +21,18 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("登录"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("注册", 
+              style: TextStyle(
+                fontSize: 16
+              ),  
+            ),
+            onPressed: () {
+              this.showRegisterPage(context);
+            },
+          )
+        ],
       ),
       body: Container(
         color: Color(0xffF0F1F2),
@@ -120,6 +133,15 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
+  }
+  
+  // 显示注册页面
+  showRegisterPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return RegisterPage();
+      }
+    ));
   }
 
   //登录方法

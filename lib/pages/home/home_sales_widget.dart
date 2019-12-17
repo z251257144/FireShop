@@ -23,7 +23,7 @@ class HomeSalesWidget extends StatelessWidget {
   }
 
   Widget _homeSalesItemWidget(Map info) {
-    print(info);
+    // print(info);
     return Container(
       width: 50,
       child: Column(

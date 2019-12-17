@@ -7,29 +7,31 @@ class MemberHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: 160,
       height: 200.0,
-      // width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage("images/member/user-bg.jpg"),
           fit: BoxFit.cover
         )
       ),
+      child: InkWell(
+        onTap: () {
+          print("login");
+          this.showLoginPage(context);
+        },
+        child: Container(
+          margin: EdgeInsets.fromLTRB(0, 58, 0, 0),
+          child: loginTapWidget(),
+        ),
+      ),
+    );
+  }
+
+  Widget loginTapWidget() {
+    return Container(
       child: Column(
         children: <Widget>[
-          Container(
-            height: 58,
-          ),
-          IconButton(
-            icon: Image.asset("images/member/my_account0.png"),
-            iconSize: 56,
-            onPressed: () {
-              print("login");
-              this.showLoginPage(context);
-            },
-          ),
-
+          Image.asset("images/member/my_account0.png", width: 56,),
           Container(
             margin: EdgeInsets.only(top: 10),
             width: 200,
@@ -44,7 +46,7 @@ class MemberHeaderWidget extends StatelessWidget {
             ),),
           )
         ],
-      ),
+      )
     );
   }
 
