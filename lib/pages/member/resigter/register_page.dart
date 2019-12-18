@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/const.dart';
-import 'package:fire_shop/utils/validate_util.dart';
+import 'package:fire_shop/utils/validator_util.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -150,11 +151,10 @@ class _RegisterPageState extends State<RegisterPage> {
   // 获取验证码
   getVerificationCode() {
     var email = this.emailController.text;
-    if (!isValidateEmail(email)) {
-      print("邮箱有效");
+    if (!ValidatorUtil.isEmail(email)) {
+      Fluttertoast.showToast(msg: "邮箱格式不正确");
     }
-    else {
-      print("邮箱无效");
-    }
+
+    debugPrint("邮箱有效");
   }
 }
