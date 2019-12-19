@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/validator_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dio/dio.dart';
+import 'package:apifm/apifm.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -12,6 +16,22 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
+
+  Timer countTimer;
+  String codeButtonTitle = "获取验证码";
+  int count = 60;
+  bool codeButtonEnable = true;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    if (this.countTimer != null) {
+      this.countTimer.cancel();
+      this.countTimer = null;
+    }
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +82,13 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget emailTextField() {
     Widget eamilField = TextField(
       controller: emailController,
+      maxLength: 11,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        hintText: "邮箱",
-        icon: Icon(Icons.email),
-        border: InputBorder.none
+        hintText: "手机号",
+        icon: Icon(Icons.phone_iphone),
+        border: InputBorder.none,
+        counterText: ""
       ),
     );
     return Container(
@@ -88,19 +111,23 @@ class _RegisterPageState extends State<RegisterPage> {
       children: <Widget>[
         Expanded(
           child: TextField(
+            maxLength: 6,
             decoration: InputDecoration(
               hintText: "验证码",
               icon: Icon(Icons.collections),
-              border: InputBorder.none
+              border: InputBorder.none,
+              counterText: ""
             ),
           )
         ),
         Container(
           child: FlatButton(
-            child: Text("获取验证码"),
-            onPressed: () {
+            disabledTextColor: Colors.grey,
+            textColor: appCommonColor,
+            child: Text(this.codeButtonTitle),
+            onPressed: !this.codeButtonEnable ? null : (){
               this.getVerificationCode();
-            },
+            }
           ),
         )
       ],
@@ -151,10 +178,57 @@ class _RegisterPageState extends State<RegisterPage> {
   // 获取验证码
   getVerificationCode() {
     var email = this.emailController.text;
-    if (!ValidatorUtil.isEmail(email)) {
-      Fluttertoast.showToast(msg: "邮箱格式不正确");
+    if (email == null || email.length == 0) {
+      Fluttertoast.showToast(msg: "请输入手机号");
+      return;
     }
 
+    if (!ValidatorUtil.isPhone(email)) {
+      Fluttertoast.showToast(msg: "请输入有效的手机号");
+      return;
+    }
+
+    this.fetchEmailCode(email);
+
+
     debugPrint("邮箱有效");
+  }
+
+  // 获取验证码按钮倒计时
+  regetCodeCountdown() {
+    if (this.countTimer != null) {
+      return;
+    }
+
+    this.count = 5;
+    String title = "获取验证码";
+    this.countTimer = Timer.periodic(Duration(seconds: 1), (timer){
+      if (this.count > 0) {
+        title = "${this.count}秒后重新获取";
+      }
+      else if (this.count == 0) {
+        title = "获取验证码";
+      }
+
+      this.count--;
+
+      this.codeButtonEnable = this.count < 0;
+
+      setState(() {
+        this.codeButtonTitle = title;
+
+        if (this.count < 0) {
+          debugPrint("定时器已销毁");
+          this.countTimer.cancel();
+          this.countTimer = null;
+        }
+      });
+    });
+  }
+
+  // 获取邮箱验证码
+  fetchEmailCode(phone) async {
+    Response response = await Dio().get("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/verification/sms/get", queryParameters: {"mobile":phone});
+    print(response);
   }
 }

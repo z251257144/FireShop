@@ -1,5 +1,8 @@
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fire_shop/utils/validator_util.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dio/dio.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -69,10 +72,13 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: TextField(
         controller: this.usernameController,
+        maxLength: 11,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           icon: Image.asset("images/member/login_icon_member.png"),
           hintText: "手机号",
-          border: InputBorder.none
+          border: InputBorder.none,
+          counterText: ""
         ),
       ),
     );
@@ -95,11 +101,13 @@ class _LoginPageState extends State<LoginPage> {
       child: TextField(
         controller: this.passwordController,
         obscureText: !showPassword,
+        maxLength: 20,
         decoration: InputDecoration(
           hintText: "密码",
           border: InputBorder.none,
           icon: Image.asset("images/member/login_icon_password.png"),
           suffixIcon: this.passwordShowWidget(),
+          counterText: ""
         ),
       ),
     );
@@ -146,8 +154,31 @@ class _LoginPageState extends State<LoginPage> {
 
   //登录方法
   doLogin() {
+    var phone = this.usernameController.text;
+    if (phone == null || phone.length == 0 ) {
+      Fluttertoast.showToast(msg: "请输入手机号");
+      return;
+    }
+    else if (!ValidatorUtil.isPhone(phone)) {
+      Fluttertoast.showToast(msg: "请输入11位手机号");
+      return;
+    }
+
+    var password = this.passwordController.text;
+    if (password == null || password.length == 0 ) {
+      Fluttertoast.showToast(msg: "请输入密码");
+      return;
+    }
+
+
+
     print("开始登录");
     print({"username": this.usernameController.text, "password": this.passwordController.text});
     // print("登录结束");
+  }
+
+  void fetchLogin(phone, password) async {
+    Response response = await Dio().get("");
+    print(response);
   }
 }
