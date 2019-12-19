@@ -4,16 +4,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a8f844f-3674-454e-996f-cc8e3560bb10" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/4.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/4.10.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/4.10.2/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/4.10.2/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/member/login/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/member/login/login_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/member/resigter/register_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/member/resigter/register_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/validator_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/validator_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="5a8f844f-3674-454e-996f-cc8e3560bb10" name="Default Changelist" comment="开发登录校验" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +65,7 @@
       <workItem from="1576719072935" duration="214000" />
       <workItem from="1576719454391" duration="687000" />
       <workItem from="1576720158325" duration="8252000" />
+      <workItem from="1576737789749" duration="306000" />
     </task>
     <task id="LOCAL-00001" summary="开发注册校验">
       <created>1576669974066</created>
@@ -82,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576669974066</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="开发登录校验">
+      <created>1576737815777</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1576737815777</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,7 +103,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="开发注册校验" />
-    <option name="LAST_COMMIT_MESSAGE" value="开发注册校验" />
+    <MESSAGE value="开发登录校验" />
+    <option name="LAST_COMMIT_MESSAGE" value="开发登录校验" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
