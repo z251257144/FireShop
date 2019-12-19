@@ -1,4 +1,5 @@
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
+import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/validator_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,11 +13,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   bool showPassword = false;
+
+  @override
+  void initState() {
+
+    usernameController.text = "18652905789";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,13 +160,16 @@ class _LoginPageState extends State<LoginPage> {
 
   //登录方法
   doLogin() {
+    this.fetchUserProfile();
+    return;
+
     var phone = this.usernameController.text;
     if (phone == null || phone.length == 0 ) {
       Fluttertoast.showToast(msg: "请输入手机号");
       return;
     }
     else if (!ValidatorUtil.isPhone(phone)) {
-      Fluttertoast.showToast(msg: "请输入11位手机号");
+      Fluttertoast.showToast(msg: "请输入有效的11位手机号");
       return;
     }
 
@@ -175,10 +184,37 @@ class _LoginPageState extends State<LoginPage> {
     print("开始登录");
     print({"username": this.usernameController.text, "password": this.passwordController.text});
     // print("登录结束");
+    this.fetchLogin(phone, password);
   }
 
   void fetchLogin(phone, password) async {
-    Response response = await Dio().get("");
+    var param = Map<String, dynamic>();
+    param["deviceId"] = await DeviceUtil.deviceID();
+    param["deviceName"] = await DeviceUtil.deviceName();
+    param["mobile"] = phone;
+    param["pwd"] = password;
+    debugPrint(param.toString());
+
+    Response response = await Dio().post("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/user/m/login", queryParameters: param);
     print(response);
+
+    Response response2 = await Dio().get("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/user/detail", queryParameters: param);
+
+    print(response2);
+  }
+
+  fetchUserProfile() async {
+    var param = {"token": "276db1df-9f8d-4aec-be8c-00590df3d0d9"};
+    Response response = await Dio().get("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/user/detail", queryParameters: param);
+    if (response.statusCode == 200) {
+      int code = response.data['code'];
+      if (code == 0) {
+        debugPrint(response.data["code"].toString());
+        debugPrint(response.data["data"]['base'].toString());
+      }
+      else {
+
+      }
+    }
   }
 }
