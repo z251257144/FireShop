@@ -10,7 +10,7 @@ class HomeSalesWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       height: 100,
-      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
       child: GridView.count(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
         crossAxisCount: 4,

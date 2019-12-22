@@ -1,9 +1,12 @@
+import 'package:fire_shop/manager/userinfo_manager.dart';
+import 'package:fire_shop/model/user_model.dart';
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/validator_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -211,6 +214,11 @@ class _LoginPageState extends State<LoginPage> {
       if (code == 0) {
         debugPrint(response.data["code"].toString());
         debugPrint(response.data["data"]['base'].toString());
+        var model = UserModel.fromJson(response.data["data"]['base']);
+        UserinfoManager.shared.setLoginInfo(model);
+        print(UserinfoManager.shared.isLogin ? "用户已登录" : "用户未登录");
+        print(model);
+        print(model.avatarUrl);
       }
       else {
 
