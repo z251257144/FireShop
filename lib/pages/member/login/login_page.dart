@@ -1,6 +1,7 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/user_model.dart';
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
+import 'package:fire_shop/server/user_server.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/validator_util.dart';
@@ -23,7 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
 
-    usernameController.text = "18652905789";
+    usernameController.text = "18652905788";
+    passwordController.text = "123456";
     super.initState();
   }
 
@@ -163,9 +165,6 @@ class _LoginPageState extends State<LoginPage> {
 
   //登录方法
   doLogin() {
-    this.fetchUserProfile();
-    return;
-
     var phone = this.usernameController.text;
     if (phone == null || phone.length == 0 ) {
       Fluttertoast.showToast(msg: "请输入手机号");
@@ -182,47 +181,28 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-
-
     print("开始登录");
     print({"username": this.usernameController.text, "password": this.passwordController.text});
-    // print("登录结束");
     this.fetchLogin(phone, password);
   }
 
-  void fetchLogin(phone, password) async {
-    var param = Map<String, dynamic>();
-    param["deviceId"] = await DeviceUtil.deviceID();
-    param["deviceName"] = await DeviceUtil.deviceName();
-    param["mobile"] = phone;
-    param["pwd"] = password;
-    debugPrint(param.toString());
-
-    Response response = await Dio().post("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/user/m/login", queryParameters: param);
-    print(response);
-
-    Response response2 = await Dio().get("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/user/detail", queryParameters: param);
-
-    print(response2);
+  void fetchLogin(phone, password) {
+    UserServer().fetchLogin(phone, password).then((result){
+      print(result);
+      this.fetchUserProfile(result['token']);
+    }).catchError((err){
+      Fluttertoast.showToast(msg: err.message);
+    });
   }
 
-  fetchUserProfile() async {
-    var param = {"token": "276db1df-9f8d-4aec-be8c-00590df3d0d9"};
-    Response response = await Dio().get("https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/user/detail", queryParameters: param);
-    if (response.statusCode == 200) {
-      int code = response.data['code'];
-      if (code == 0) {
-        debugPrint(response.data["code"].toString());
-        debugPrint(response.data["data"]['base'].toString());
-        var model = UserModel.fromJson(response.data["data"]['base']);
-        UserinfoManager.shared.setLoginInfo(model);
-        print(UserinfoManager.shared.isLogin ? "用户已登录" : "用户未登录");
-        print(model);
-        print(model.avatarUrl);
-      }
-      else {
-
-      }
-    }
+  fetchUserProfile(token) {
+    UserServer().fetchUserProfile(token).then((result) {
+      print(result);
+      Fluttertoast.showToast(msg: "登录成功");
+    }).catchError((err){
+      print("fetchUserProfile(token) {");
+      print(err.toString());
+      Fluttertoast.showToast(msg: err.message);
+    });
   }
 }
