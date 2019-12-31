@@ -27,9 +27,8 @@ class _LoadingDialog extends State<LoadingDialog> {
   void initState() {
     super.initState();
     if (widget.dismissDialog != null) {
-      widget.dismissDialog(
-        //将关闭 dialog的方法传递到调用的页面.
-        (){Navigator.of(context).pop();}
+      widget.dismissDialog((){
+        Navigator.of(context).pop();}
       );
     }
   }
@@ -64,7 +63,7 @@ class _LoadingDialog extends State<LoadingDialog> {
                     ),
                     child: new Text(
                       widget.loadingText,
-                      style: new TextStyle(fontSize: 12.0),
+                      style: new TextStyle(fontSize: 13.0),
                     ),
                   ),
                 ],

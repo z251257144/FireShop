@@ -3,17 +3,24 @@ import 'package:dio/dio.dart';
 class BaseServer {
   static String baseUrl = "";
 
+  // 获取网络库Client
+  Dio client() {
+    Dio dio = new Dio(); // with default Options
+
+    dio.options.baseUrl = BaseServer.baseUrl;
+    dio.options.connectTimeout = 5000; //5s
+    dio.options.receiveTimeout = 5000;
+
+    return dio;
+  }
+
   /*
   * 发送post请求
   * */
   Future requestPostData(url, param) async {
     print("requestPostDataUrl 开始请求 ");
 
-    Dio dio = new Dio(); // with default Options
-
-    dio.options.baseUrl = BaseServer.baseUrl;
-    dio.options.connectTimeout = 5000; //5s
-    dio.options.receiveTimeout = 5000;
+    Dio dio = this.client();
 
     try {
       Response response = await dio.post(url, queryParameters: param);
@@ -27,7 +34,30 @@ class BaseServer {
       }
     }
     on DioError catch(err) {
-      print("asdfhskjadfhkjs");
+      throw this.convertDioError(err);
+    }
+  }
+
+  /*
+  * 发送get请求
+  * */
+  Future requestGetData(url, param) async {
+    print("requestGetData 开始请求 ");
+
+    Dio dio = this.client();
+
+    try {
+      Response response = await dio.get(url, queryParameters: param);
+      var exception = this.checkException(response);
+      if (exception == null) {
+        return  response.data["data"];
+      }
+      else {
+        print(exception.toString());
+        throw exception;
+      }
+    }
+    on DioError catch(err) {
       throw this.convertDioError(err);
     }
   }

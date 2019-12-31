@@ -1,7 +1,7 @@
 
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
 
-import 'package:fire_shop/view_model/member/login_viewmodel.dart';
+import 'package:fire_shop/view_model/member/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/validator_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
