@@ -1,13 +1,11 @@
-import 'package:fire_shop/manager/userinfo_manager.dart';
-import 'package:fire_shop/model/user_model.dart';
+
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
-import 'package:fire_shop/server/user_server.dart';
-import 'package:fire_shop/utils/device_util.dart';
+
+import 'package:fire_shop/view_model/member/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/utils/validator_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dio/dio.dart';
-import 'package:provider/provider.dart';
+import 'package:fire_shop/widgets/LoadingWidget.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -19,11 +17,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  LoginViewModel _viewModel = LoginViewModel();
+
   bool showPassword = false;
 
   @override
   void initState() {
-
     usernameController.text = "18652905788";
     passwordController.text = "123456";
     super.initState();
@@ -183,26 +183,25 @@ class _LoginPageState extends State<LoginPage> {
 
     print("开始登录");
     print({"username": this.usernameController.text, "password": this.passwordController.text});
-    this.fetchLogin(phone, password);
-  }
 
-  void fetchLogin(phone, password) {
-    UserServer().fetchLogin(phone, password).then((result){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return LoadingDialog(
+            outsideDismiss: false,
+          );
+        });
+
+    _viewModel.doLogin(phone, password).then((result){
       print(result);
-      this.fetchUserProfile(result['token']);
+      Future.delayed(Duration(seconds: 1), (){
+        Navigator.of(context).pop();
+      });
     }).catchError((err){
       Fluttertoast.showToast(msg: err.message);
-    });
-  }
-
-  fetchUserProfile(token) {
-    UserServer().fetchUserProfile(token).then((result) {
-      print(result);
-      Fluttertoast.showToast(msg: "登录成功");
-    }).catchError((err){
-      print("fetchUserProfile(token) {");
-      print(err.toString());
-      Fluttertoast.showToast(msg: err.message);
+    }).whenComplete((){
+      Navigator.of(context).pop();
     });
   }
 }
