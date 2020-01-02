@@ -26,6 +26,7 @@ class BaseServer {
       Response response = await dio.post(url, queryParameters: param);
       var exception = this.checkException(response);
       if (exception == null) {
+        print(response.data);
         return  response.data["data"];
       }
       else {

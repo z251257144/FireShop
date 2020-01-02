@@ -1,11 +1,10 @@
 
-import 'package:fire_shop/pages/member/resigter/register_page.dart';
+import 'package:fire_shop/routes/app_routes.dart';
 
 import 'package:fire_shop/view_model/member/login_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:fire_shop/utils/validator_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fire_shop/widgets/LoadingWidget.dart';
+import 'package:fire_shop/utils/view_util.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -24,8 +23,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    usernameController.text = "18652905788";
-    passwordController.text = "123456";
+//    usernameController.text = "18652905788";
+//    passwordController.text = "123456";
     super.initState();
   }
 
@@ -59,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
               height: 0.5,
             ),
             this.passwordField(),
-            this.loginButton()
+            this.loginButton(),
+            this.findPasswordWidget()
           ],
         ),
       ),
@@ -153,45 +153,59 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  //找回密码按钮
+  Widget findPasswordWidget() {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+//      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: InkWell(
+          onTap: () {
+            this.showPasswordPage();
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Text("找回密码"),
+          ),
+        ),
+      )
+
+      ,
+    );
+  }
   
   // 显示注册页面
   showRegisterPage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return RegisterPage();
+    Navigator.of(context).pushNamed(RoutePath.register, arguments: {"phone":this.usernameController.text}).then((value){
+      print(value);
+      if (value != null) {
+        var phone = (value as Map)["phone"];
+        var password = (value as Map)["password"];
+        this.usernameController.text = phone;
+        this.passwordController.text = password;
+        this.doLogin();
       }
-    ));
+    });
+  }
+
+  showPasswordPage() {
+    Navigator.of(context).pushNamed(RoutePath.password, arguments: {"phone":this.usernameController.text});
   }
 
   //登录方法
   doLogin() {
+    // 隐藏键盘
+    FocusScope.of(context).requestFocus(FocusNode());
+
     var phone = this.usernameController.text;
-    if (phone == null || phone.length == 0 ) {
-      Fluttertoast.showToast(msg: "请输入手机号");
-      return;
-    }
-    else if (!ValidatorUtil.isPhone(phone)) {
-      Fluttertoast.showToast(msg: "请输入有效的11位手机号");
-      return;
-    }
+    if ( !_viewModel.checkPhone(phone) ) {return;}
 
     var password = this.passwordController.text;
-    if (password == null || password.length == 0 ) {
-      Fluttertoast.showToast(msg: "请输入密码");
-      return;
-    }
+    if (_viewModel.checkPassword(password)) {return;}
 
-    print("开始登录");
-    print({"username": this.usernameController.text, "password": this.passwordController.text});
-
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return LoadingDialog(
-            outsideDismiss: false,
-          );
-        });
+    showLoadingView(context);
 
     _viewModel.doLogin(phone, password).then((result){
       print(result);

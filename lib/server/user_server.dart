@@ -33,5 +33,11 @@ class UserServer extends BaseServer {
     return super.requestPostData("user/m/register", param);
   }
 
+  // 重设密码[手机找回密码]
+  Future fetchResetPassword(phone, code, password) async {
+    var param = {"mobile": phone, "code": code, "pwd": password};
+    return super.requestPostData("user/m/reset-pwd", param);
+  }
+
 
 }

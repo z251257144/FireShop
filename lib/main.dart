@@ -1,6 +1,7 @@
-import 'package:fire_shop/pages/index_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fire_shop/server/base_server.dart';
+import 'package:fire_shop/routes/app_routes.dart';
 
 void main() {
   BaseServer.baseUrl = "https://api.it120.cc/aca1c7ec5f68a84eed653a654ef4639e/";
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: IndexPage(),
+        initialRoute: "/",//初始化的时候加载的路由
+        //统一处理命名路由
+        onGenerateRoute: onGenerateRoute
     );
   }
 }

@@ -16,7 +16,7 @@ class ValidatorUtil {
 
   // 手机验证码校验
   static bool isSmsCode(String input) {
-    RegExp emailRegExp = RegExp(r"^[0-9]{4-6}$");
+    RegExp emailRegExp = RegExp(r"^[0-9]{4,6}$");
     return emailRegExp.hasMatch(input);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/member/login/login_page.dart';
+import 'package:fire_shop/routes/route_path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,6 @@ class MemberHeaderWidget extends StatelessWidget {
         },
         child: Consumer(builder: (context, UserinfoManager provider, child) {
             return provider.isLogin ? this.hasLoginWidget(context) : this.loginTapWidget(context);
-//          return provider.isLogin ? Text("已登录") : Text("未登录");
         }),
       )
     );
@@ -42,7 +42,7 @@ class MemberHeaderWidget extends StatelessWidget {
                   children: <Widget>[
                     CircleAvatar(
                       radius: 28,
-                      backgroundImage: NetworkImage(UserinfoManager.shared.user.avatarUrl),
+                      backgroundImage: UserinfoManager.shared.user.avatarUrl != null ? NetworkImage(UserinfoManager.shared.user.avatarUrl) : AssetImage("images/member/photo_MyAccount.png"),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10),
@@ -113,10 +113,6 @@ class MemberHeaderWidget extends StatelessWidget {
   }
   /* 显示登录界面 */
   void showLoginPage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return LoginPage();
-      }
-    ));
+    Navigator.of(context).pushNamed(RoutePath.login);
   }
 }

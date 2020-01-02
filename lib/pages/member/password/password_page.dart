@@ -1,34 +1,31 @@
+import 'package:fire_shop/utils/const.dart';
+import 'package:fire_shop/utils/view_util.dart';
+import 'package:fire_shop/view_model/member/password_view_model.dart';
+import 'package:fire_shop/widgets/common_input_bg_widget.dart';
+import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:fire_shop/utils/view_util.dart';
-import 'package:fire_shop/view_model/member/resigter_view_model.dart';
-
-import 'package:flutter/material.dart';
-import 'package:fire_shop/utils/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fire_shop/widgets/common_input_bg_widget.dart';
 
-class RegisterPage extends StatefulWidget {
-  final Map arguments;
-
-  RegisterPage({Key key, this.arguments}) : super(key: key);
-
-  @override
-  _RegisterPageState createState() => _RegisterPageState(phone: this.arguments["phone"]);
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-
+class PasswordPage extends StatefulWidget {
   final String phone;
 
-  _RegisterPageState({this.phone});
+  const PasswordPage({Key key, this.phone}) : super(key: key);
+
+  @override
+  _PasswordPageState createState() => _PasswordPageState(phone);
+}
+
+class _PasswordPageState extends State<PasswordPage> {
+  final String phone;
+
+  _PasswordPageState(this.phone);
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController codeController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController nickController = TextEditingController();
-  
-  RegisterViewModel viewModel = RegisterViewModel();
+
+  PasswordViewModel viewModel = PasswordViewModel();
 
   Timer countTimer;
   String codeButtonTitle = "获取验证码";
@@ -59,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: appCommonBackgroudColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("注册"),
+        title: Text("找回密码"),
       ),
       body: ListView(
         children: <Widget>[
@@ -67,24 +64,21 @@ class _RegisterPageState extends State<RegisterPage> {
           this.phoneTextField(),
           this.codeTextField(),
           this.passwordTextField(),
-          this.nickTextField(),
-          this.registerButton()
+          this.passwordButton()
         ],
       ),
     );
   }
 
-  // 手机号输入框
   Widget phoneTextField() {
-    Widget eamilField = TextField(
-      controller: phoneController,
+    var textField = TextField(
       maxLength: 11,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.phone,
       decoration: InputDecoration(
+        icon: Image.asset("images/member/login_icon_member.png"),
         hintText: "手机号",
-        icon: Icon(Icons.phone_iphone),
         border: InputBorder.none,
-        counterText: ""
+        counterText: "",
       ),
     );
     return Container(
@@ -92,47 +86,46 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: Colors.grey,
-            width: 0.5
+              color: Colors.grey,
+              width: 0.5
           )
         )
       ),
-      child: CommonInputBgWidget(subWidget: eamilField),
+      child: CommonInputBgWidget(subWidget: textField),
     );
   }
 
-  // 验证码输入框
   Widget codeTextField() {
-    Row codeField = Row(
+    var textField = TextField(
+      maxLength: 6,
+      decoration: InputDecoration(
+        icon: Icon(Icons.lock),
+        hintText: "验证码",
+        border: InputBorder.none,
+        counterText: ""
+      ),
+    );
+
+    var codeWidget = Row(
       children: <Widget>[
-        Expanded(
-          child: TextField(
-            controller: this.codeController,
-            maxLength: 6,
-            decoration: InputDecoration(
-              hintText: "验证码",
-              icon: Icon(Icons.collections),
-              border: InputBorder.none,
-              counterText: ""
+        Expanded(child: textField),
+        FlatButton(
+          disabledColor: Colors.grey,
+          color: appCommonColor,
+          child: Text("获取验证码",
+            style: TextStyle(
+              color: codeButtonEnable ? Colors.white : Colors.grey
             ),
-          )
-        ),
-        Container(
-          child: FlatButton(
-            disabledTextColor: Colors.grey,
-            textColor: appCommonColor,
-            child: Text(this.codeButtonTitle),
-            onPressed: !this.codeButtonEnable ? null : (){
-              this.getVerificationCode();
-            }
           ),
-        )
+          onPressed: (){
+            this.getVerificationCode();
+          }
+        ),
       ],
     );
-    return CommonInputBgWidget(subWidget: codeField);
+    return CommonInputBgWidget(subWidget: codeWidget);
   }
 
-  // 密码输入框
   Widget passwordTextField() {
     TextField codeField = TextField(
       controller: this.passwordController,
@@ -146,29 +139,16 @@ class _RegisterPageState extends State<RegisterPage> {
     return CommonInputBgWidget(subWidget: codeField);
   }
 
-  // 昵称输入框
-  Widget nickTextField() {
-    TextField codeField = TextField(
-      controller: this.nickController,
-      decoration: InputDecoration(
-        hintText: "昵称",
-        icon: Icon(Icons.perm_contact_calendar),
-        border: InputBorder.none,
-      ),
-    );
-    return CommonInputBgWidget(subWidget: codeField, fullLine: true);
-  }
-
-  Widget registerButton() {
+  Widget passwordButton() {
     return Container(
       margin: EdgeInsets.fromLTRB(15, 20, 15, 0),
       height: 48,
       child: FlatButton(
         color: appCommonColor,
         textColor: Colors.white,
-        child: Text("注册", style: TextStyle(fontSize: 16),),
+        child: Text("立即重置", style: TextStyle(fontSize: 16),),
         onPressed: () {
-          this.registerUser();
+          this.resetPassword();
         },
       ),
     );
@@ -180,6 +160,23 @@ class _RegisterPageState extends State<RegisterPage> {
     if (viewModel.checkPhone(phone)) {
       this.fetchPhoneCode(phone);
     }
+  }
+
+  // 获取验证码
+  fetchPhoneCode(phone) async {
+    var phone = this.phoneController.text;
+    if (!viewModel.checkPhone(phone)) { return; }
+
+    showLoadingView(context);
+
+    this.viewModel.getSmsCode(phone).then((result){
+      Fluttertoast.showToast(msg: "验证码已发送，请注意查收");
+      this.regetCodeCountdown();
+    }).catchError((err){
+      Fluttertoast.showToast(msg: err.message);
+    }).whenComplete((){
+      Navigator.of(context).pop();
+    });
   }
 
   // 获取验证码按钮倒计时
@@ -214,25 +211,8 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  // 获取邮箱验证码
-  fetchPhoneCode(phone) async {
-    var phone = this.phoneController.text;
-    if (!viewModel.checkPhone(phone)) { return; }
-
-    showLoadingView(context);
-
-    this.viewModel.getSmsCode(phone).then((result){
-      Fluttertoast.showToast(msg: "验证码已发送，请注意查收");
-      this.regetCodeCountdown();
-    }).catchError((err){
-      Fluttertoast.showToast(msg: err.message);
-    }).whenComplete((){
-      Navigator.of(context).pop();
-    });
-  }
-
-  // 注册用户
-  registerUser() {
+  // 重置密码
+  resetPassword() {
     FocusScope.of(context).requestFocus(FocusNode());
 
     var phone = this.phoneController.text;
@@ -244,12 +224,9 @@ class _RegisterPageState extends State<RegisterPage> {
     var password = this.passwordController.text;
     if (!viewModel.checkPassword(password)) { return; }
 
-    var nick = this.nickController.text;
-    if (!viewModel.checkNick(nick)) { return; }
-
     showLoadingView(context);
 
-    this.viewModel.registerUser(phone, code, password, nick).then((result){
+    this.viewModel.resetPassword(phone, code, password).then((result){
       Future.delayed(Duration(seconds: 1), (){
         Navigator.of(context).pop({"phone":phone, "password": password});
       });

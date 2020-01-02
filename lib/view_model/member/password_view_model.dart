@@ -1,23 +1,18 @@
 import 'package:fire_shop/server/user_server.dart';
 import 'package:fire_shop/utils/validator_util.dart';
-import 'package:fire_shop/view_model/member/login_view_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:fire_shop/model/user_model.dart';
-import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class RegisterViewModel {
+class PasswordViewModel {
   UserServer server = UserServer();
-  LoginViewModel loginViewModel = LoginViewModel();
 
   // 获取短信验证码
   Future getSmsCode(phone) async {
     await server.fetchSmsCode(phone);
   }
 
-  // 用户注册
-  Future registerUser(phone, code, password, nick) async {
-    var result =  await server.fetchRegisterUser(phone, code, password, nick);
+  // 重置密码
+  Future resetPassword(phone, code, password) async {
+    var result =  await server.fetchResetPassword(phone, code, password);
     print(result);
   }
 
@@ -36,7 +31,7 @@ class RegisterViewModel {
     return true;
   }
 
-  // 校验手机号
+  // 校验验证码
   bool checkSmsCode(code) {
     if (code == null || code.length == 0) {
       Fluttertoast.showToast(msg: "请输入验证码");
@@ -60,15 +55,4 @@ class RegisterViewModel {
 
     return true;
   }
-
-  // 校验昵称
-  bool checkNick(nick) {
-    if (nick == null || nick.length == 0) {
-      Fluttertoast.showToast(msg: "请输入昵称");
-      return false;
-    }
-
-    return false;
-  }
-
 }

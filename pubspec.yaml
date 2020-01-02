@@ -30,6 +30,7 @@ dependencies:
   device_info: ^0.4.1+4
   provider: ^3.2.0
   progress_dialog: ^1.2.0
+  fluro: ^1.5.1
 
 dev_dependencies:
   flutter_test:
