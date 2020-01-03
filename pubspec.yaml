@@ -31,6 +31,7 @@ dependencies:
   provider: ^3.2.0
   progress_dialog: ^1.2.0
   fluro: ^1.5.1
+  flutter_screenutil: ^0.7.0
 
 dev_dependencies:
   flutter_test:

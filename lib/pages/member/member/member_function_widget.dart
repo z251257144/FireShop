@@ -8,10 +8,16 @@ class MemberFunctionView extends StatelessWidget {
       height: 200,
       color: Colors.white,
       child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
         itemCount: 5,
-//        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 3
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //横轴元素个数
+            crossAxisCount: 3,
+            //纵轴间距
+            mainAxisSpacing: 0,
+            //横轴间距
+            crossAxisSpacing: 0.0,
         ),
         itemBuilder: (context, index) {
           return this.itemWidget(null);
@@ -32,7 +38,7 @@ class MemberFunctionView extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: border,
-          left: border
+          right: border
         )
       ),
     );

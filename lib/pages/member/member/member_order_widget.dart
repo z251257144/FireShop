@@ -48,11 +48,10 @@ class MemberOrderWidget extends StatelessWidget {
       child: GridView.builder(
         padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
         itemCount: orderData.length,
-//        shrinkWrap: true,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //横轴元素个数
+            //横轴元素个数
             crossAxisCount: 4,
             //纵轴间距
             mainAxisSpacing: 0,
