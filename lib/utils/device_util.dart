@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:device_info/device_info.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+export 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DeviceUtil {
 //  获取当前设备名称
@@ -31,5 +33,12 @@ class DeviceUtil {
     return "Unknown ID";
   }
 
+  static double screenWidth = 828;
+  static double screenHeight = 1792;
+
+  static setScreenSize(context) {
+    ScreenUtil.instance = ScreenUtil(width: DeviceUtil.screenWidth, height: DeviceUtil.screenHeight)..init(context);
+  }
   
+
 }

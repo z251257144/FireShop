@@ -4,6 +4,7 @@ import 'package:fire_shop/pages/home/home_page.dart';
 import 'package:fire_shop/pages/member/member/member_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fire_shop/utils/device_util.dart';
 
 class IndexPage extends StatefulWidget {
   IndexPage({Key key}) : super(key: key);
@@ -49,6 +50,8 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    DeviceUtil.setScreenSize(context);
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

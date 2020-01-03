@@ -19,9 +19,8 @@ class _MemberPageState extends State<MemberPage> {
         padding: EdgeInsets.only(top: 0),
           children: <Widget>[
             MemberHeaderWidget(),
-           MemberOrderWidget(),
-           MemberFunctionView()
-//            MemberFunctionView(),
+            MemberOrderWidget(),
+            MemberFunctionView()
           ],
       ),
     );
