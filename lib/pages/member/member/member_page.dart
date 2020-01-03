@@ -2,8 +2,8 @@
 import 'package:fire_shop/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'member_header_widget.dart';
-//import 'member_order_widget.dart';
-//import 'member_function_widget.dart';
+import 'member_order_widget.dart';
+import 'member_function_widget.dart';
 
 class MemberPage extends StatefulWidget {
   @override
@@ -19,8 +19,8 @@ class _MemberPageState extends State<MemberPage> {
         padding: EdgeInsets.only(top: 0),
           children: <Widget>[
             MemberHeaderWidget(),
-//            MemberOrderWidget(),
-//            MemberFunctionView()
+           MemberOrderWidget(),
+           MemberFunctionView()
 //            MemberFunctionView(),
           ],
       ),

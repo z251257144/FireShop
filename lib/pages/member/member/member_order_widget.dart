@@ -27,7 +27,7 @@ class MemberOrderWidget extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-//          Image.asset("images/member/profile_dfunding.png", width: 20, height: 20,),
+         Image.asset("images/member/profile_dfunding.png", width: 20, height: 20,),
           Container(
             padding: EdgeInsets.only(left: 7),
             child: Text("我的订单",
@@ -72,7 +72,7 @@ class MemberOrderWidget extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Column(
         children: <Widget>[
-//          Image.asset(data["icon"], width: 20, height: 20,),
+         Image.asset(data["icon"], width: 20, height: 20,),
           Container(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Text(data["title"],
