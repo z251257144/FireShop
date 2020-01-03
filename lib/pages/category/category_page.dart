@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CategoryPage extends StatelessWidget {
-  ScrollController _controller;//ListView 控制器
   
   @override
   Widget build(BuildContext context) {

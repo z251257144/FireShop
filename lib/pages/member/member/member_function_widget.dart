@@ -8,6 +8,8 @@ class MemberFunctionView extends StatelessWidget {
       height: 200,
       color: Colors.white,
       child: GridView.builder(
+        itemCount: 5,
+//        shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 3
         ),
@@ -25,6 +27,8 @@ class MemberFunctionView extends StatelessWidget {
     );
 
     return Container(
+      width: 60,
+      height: 60,
       decoration: BoxDecoration(
         border: Border(
           bottom: border,

@@ -48,7 +48,10 @@ class MemberOrderWidget extends StatelessWidget {
       child: GridView.builder(
         padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
         itemCount: orderData.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//        shrinkWrap: true,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           //横轴元素个数
             crossAxisCount: 4,
             //纵轴间距
@@ -62,13 +65,14 @@ class MemberOrderWidget extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget orderItemWidget(data) {
     return Container(
+//      height: 90,
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Column(
         children: <Widget>[
-          Image.asset(data["icon"], width: 20, height: 20,),
+//          Image.asset(data["icon"], width: 20, height: 20,),
           Container(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Text(data["title"],
