@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'member_header_widget.dart';
 import 'member_order_widget.dart';
 import 'member_function_widget.dart';
+import 'package:fire_shop/view_model/member/member_view_model.dart';
 
-class MemberPage extends StatefulWidget {
-  @override
-  _MemberPageState createState() => _MemberPageState();
-}
+class MemberPage extends StatelessWidget {
 
-class _MemberPageState extends State<MemberPage> {
+  MemeberViewModel viewModel = MemeberViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +18,8 @@ class _MemberPageState extends State<MemberPage> {
         padding: EdgeInsets.only(top: 0),
           children: <Widget>[
             MemberHeaderWidget(),
-            MemberOrderWidget(),
-            MemberFunctionView()
+            MemberOrderWidget(orderData: viewModel.orderData,),
+            MemberFunctionView(functionData: viewModel.functionData,)
           ],
       ),
     );

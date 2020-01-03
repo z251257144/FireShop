@@ -2,11 +2,14 @@ import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 
 class MemberFunctionView extends StatelessWidget {
+  final List functionData;
+
+  const MemberFunctionView({Key key, this.functionData}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 15),
-      height: ScreenUtil().setHeight(DeviceUtil.screenWidth / (3*1.2) *2 ),
       color: Colors.white,
       child: GridView.builder(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -64,34 +67,4 @@ class MemberFunctionView extends StatelessWidget {
       ),
     );
   }
-
-    final functionData = [
-    {
-      "title": "我的余额",
-      "value": "0 元",
-      "icon": "images/member/profile_tegral.png",
-      "type": 1,
-    },
-    {
-      "title": "我的积分",
-      "value": "3 积分",
-      "icon": "images/member/jifen.png",
-      "type": 1,
-    },
-    {
-      "title": "我的礼券",
-      "icon": "images/member/profile_ticket.png",
-      "type": 1,
-    },
-    {
-      "title": "我的收藏",
-      "icon": "images/member/profile_collection.png",
-      "type": 1,
-    },
-    {
-      "title": "我的地址",
-      "icon": "images/member/profile_address.png",
-      "type": 1,
-    }
-  ];
 }

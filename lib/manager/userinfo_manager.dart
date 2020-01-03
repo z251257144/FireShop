@@ -1,4 +1,4 @@
-import 'package:fire_shop/model/user_model.dart';
+import 'package:fire_shop/model/member/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 

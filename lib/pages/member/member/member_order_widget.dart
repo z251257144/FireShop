@@ -1,6 +1,11 @@
+import 'package:fire_shop/view_model/member/member_view_model.dart';
 import 'package:flutter/material.dart';
 
 class MemberOrderWidget extends StatelessWidget {
+  final List orderData;
+
+  const MemberOrderWidget({Key key, this.orderData}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,7 +72,6 @@ class MemberOrderWidget extends StatelessWidget {
 
   Widget orderItemWidget(data) {
     return Container(
-//      height: 90,
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Column(
         children: <Widget>[
@@ -84,27 +88,4 @@ class MemberOrderWidget extends StatelessWidget {
       ),
     );
   }
-
-  final orderData = [
-    {
-      "title": "待付款",
-      "icon": "images/member/orderform_pay.png",
-      "type": 1,
-    },
-    {
-      "title": "待发货",
-      "icon": "images/member/orderform_ship.png",
-      "type": 1,
-    },
-    {
-      "title": "待收货",
-      "icon": "images/member/delivering.png",
-      "type": 1,
-    },
-    {
-      "title": "待评价",
-      "icon": "images/member/orderform.png",
-      "type": 1,
-    }
-  ];
 }

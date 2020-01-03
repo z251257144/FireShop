@@ -1,6 +1,6 @@
 import 'package:fire_shop/server/user_server.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fire_shop/model/user_model.dart';
+import 'package:fire_shop/model/member/user_model.dart';
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fire_shop/utils/validator_util.dart';
