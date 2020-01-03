@@ -72,6 +72,7 @@ class _PasswordPageState extends State<PasswordPage> {
 
   Widget phoneTextField() {
     var textField = TextField(
+      controller: phoneController,
       maxLength: 11,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
@@ -98,6 +99,7 @@ class _PasswordPageState extends State<PasswordPage> {
   Widget codeTextField() {
     var textField = TextField(
       maxLength: 6,
+      controller: codeController,
       decoration: InputDecoration(
         icon: Icon(Icons.lock),
         hintText: "验证码",
@@ -110,14 +112,14 @@ class _PasswordPageState extends State<PasswordPage> {
       children: <Widget>[
         Expanded(child: textField),
         FlatButton(
-          disabledColor: Colors.grey,
+          disabledColor: null,
           color: appCommonColor,
-          child: Text("获取验证码",
+          child: Text(this.codeButtonTitle,
             style: TextStyle(
               color: codeButtonEnable ? Colors.white : Colors.grey
             ),
           ),
-          onPressed: (){
+          onPressed: !codeButtonEnable ? null : (){
             this.getVerificationCode();
           }
         ),
@@ -227,6 +229,7 @@ class _PasswordPageState extends State<PasswordPage> {
     showLoadingView(context);
 
     this.viewModel.resetPassword(phone, code, password).then((result){
+      Fluttertoast.showToast(msg: "密码重置成功");
       Future.delayed(Duration(seconds: 1), (){
         Navigator.of(context).pop({"phone":phone, "password": password});
       });

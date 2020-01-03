@@ -1,5 +1,8 @@
-import 'package:fire_shop/pages/member/member/member_header_widget.dart';
+import 'package:fire_shop/pages/member/member/member_function_widget.dart';
+import 'package:fire_shop/utils/const.dart';
 import 'package:flutter/material.dart';
+import 'member_header_widget.dart';
+import 'member_order_widget.dart';
 
 class MemberPage extends StatefulWidget {
   @override
@@ -9,11 +12,16 @@ class MemberPage extends StatefulWidget {
 class _MemberPageState extends State<MemberPage> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.only(top: 0),
-      children: <Widget>[
-        MemberHeaderWidget()
-      ],
+    return Scaffold(
+      backgroundColor: appCommonBackgroudColor,
+      body: ListView(
+        padding: EdgeInsets.only(top: 0),
+          children: <Widget>[
+            MemberHeaderWidget(),
+            MemberOrderWidget(),
+            MemberFunctionView(),
+          ],
+      ),
     );
   }
 }
