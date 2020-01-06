@@ -1,20 +1,18 @@
 
-
 class MemberType {
   final int _value;
   const MemberType(this._value);
   toString() => 'Enum.$_value';
-
-
 
   static const orderPay = const MemberType(1);
   static const orderDelivering = const MemberType(2);
   static const orderShip = const MemberType(3);
   static const orderComment = const MemberType(4);
 
+  static const address = const MemberType(15);
+
   @override
   bool operator ==(other) {
-    // TODO: implement ==
     return _value == other._value;
   }
 }

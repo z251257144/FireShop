@@ -1,3 +1,5 @@
+import 'package:fire_shop/model/member/member_model.dart';
+import 'package:fire_shop/routes/route_path.dart';
 import 'package:fire_shop/view_model/member/member_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -64,28 +66,37 @@ class MemberOrderWidget extends StatelessWidget {
             crossAxisSpacing: 20.0,
         ),
         itemBuilder: (context, index){
-          return orderItemWidget(orderData[index]);
+          return orderItemWidget(context, orderData[index]);
         }
       ),
     );
   }
 
-  Widget orderItemWidget(data) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      child: Column(
-        children: <Widget>[
-         Image.asset(data["icon"], width: 20, height: 20,),
-          Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Text(data["title"],
-              style: TextStyle(
-                  fontSize: 15
+  Widget orderItemWidget(context, MemberModel data) {
+    return InkWell(
+      onTap: (){
+        this.showOrderList(context, data);
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        child: Column(
+          children: <Widget>[
+            Image.asset(data.icon, width: 20, height: 20,),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Text(data.title,
+                style: TextStyle(
+                    fontSize: 15
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  showOrderList(context, data) {
+    Navigator.of(context).pushNamed(RoutePath.orderList);
   }
 }

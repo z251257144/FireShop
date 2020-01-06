@@ -4,4 +4,9 @@ class RoutePath {
   static String register = "/register";
   static String password = "/password";
 
+  static String orderList = "/orderList";
+
+
+  static String addressList = "/addressList";
+
 }

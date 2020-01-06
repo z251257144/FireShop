@@ -1,3 +1,4 @@
+import 'package:fire_shop/pages/member/address/address_list_page.dart';
 import 'package:fire_shop/pages/member/login/login_page.dart';
 import 'package:fire_shop/pages/member/password/password_page.dart';
 import 'package:fire_shop/pages/member/resigter/register_page.dart';
@@ -11,3 +12,6 @@ final registerFunction = (context, {arguments}) => RegisterPage(
 final passwordFunction = (context, {arguments}) => PasswordPage(
   phone: arguments["phone"],
 );
+
+
+final addressListFunction = (context, {arguments}) => AddressListPage();

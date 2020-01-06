@@ -1,5 +1,5 @@
+import 'package:fire_shop/routes/cart_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fluro/fluro.dart';
 import 'package:fire_shop/pages/index_page.dart';
 import 'route_path.dart';
 import 'member_route.dart';
@@ -13,6 +13,10 @@ final routes = {
   RoutePath.login: loginFunction,
   RoutePath.register: registerFunction,
   RoutePath.password: passwordFunction,
+
+  RoutePath.orderList: orderListFunction,
+
+  RoutePath.addressList: addressListFunction,
 };
 
 //统一处理命名路由
