@@ -17,6 +17,7 @@ final routes = {
   RoutePath.orderList: orderListFunction,
 
   RoutePath.addressList: addressListFunction,
+  RoutePath.addAddress: addAddressFunction,
 };
 
 //统一处理命名路由

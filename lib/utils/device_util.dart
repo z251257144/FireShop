@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 
+const double appScreenWidth = 828;
+const double appScreenHeight = 1792;
+
 class DeviceUtil {
 //  获取当前设备名称
   static Future<String> deviceName() async {
@@ -33,11 +36,9 @@ class DeviceUtil {
     return "Unknown ID";
   }
 
-  static double screenWidth = 828;
-  static double screenHeight = 1792;
 
   static setScreenSize(context) {
-    ScreenUtil.instance = ScreenUtil(width: DeviceUtil.screenWidth, height: DeviceUtil.screenHeight)..init(context);
+    ScreenUtil.instance = ScreenUtil(width: appScreenWidth, height: appScreenHeight)..init(context);
   }
   
 
