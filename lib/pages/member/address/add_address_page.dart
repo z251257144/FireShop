@@ -14,6 +14,7 @@ class AddAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("AddAddressPage build");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -31,10 +32,11 @@ class AddAddressPage extends StatelessWidget {
           concactView(),
           phoneWidget(),
           areaWidget(),
+          cityWidget(),
+          districtWidget(),
           addressWidget(),
           zipCodeWidget(),
           submitWidget(),
-//          nextWidget(context)
         ],
       ),
     );
@@ -87,7 +89,6 @@ class AddAddressPage extends StatelessWidget {
   }
 
   Widget areaWidget() {
-
     var label = ChangeNotifierProvider(
         create: (context){
           return this.viewModel;
@@ -101,7 +102,49 @@ class AddAddressPage extends StatelessWidget {
           );
         }),
     );
-    return commonBgWidget("选择地区", label);
+    return commonBgWidget("选择省", label);
+  }
+
+  Widget cityWidget() {
+    if (this.viewModel.provinceIndex < 0) {
+      return Container();
+    }
+
+    var label = ChangeNotifierProvider(
+      create: (context){
+        return this.viewModel;
+      },
+      child: Consumer(builder: (context, AddAddressViewModel provider, child) {
+        return InkWell(
+          onTap: () {
+            this.showAreaPickerView(context);
+          },
+          child: Text("请选择"),
+        );
+      }),
+    );
+    return commonBgWidget("选择市", label);
+  }
+
+  Widget districtWidget() {
+    if (this.viewModel.provinceIndex < 0 || this.viewModel.cityIndex < 0) {
+      return Container();
+    }
+
+    var label = ChangeNotifierProvider(
+      create: (context){
+        return this.viewModel;
+      },
+      child: Consumer(builder: (context, AddAddressViewModel provider, child) {
+        return InkWell(
+          onTap: () {
+            this.showAreaPickerView(context);
+          },
+          child: Text("请选择"),
+        );
+      }),
+    );
+    return commonBgWidget("选择区", label);
   }
 
   Widget addressWidget() {
@@ -164,12 +207,10 @@ class AddAddressPage extends StatelessWidget {
   }
 
   showPicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SinglePicker(data: viewModel.provinceList,);
-      },
-    );
+    SinglePicker(data: viewModel.provinceList, selectIndex: viewModel.provinceIndex, confirmCallback: (index) {
+      viewModel.provinceIndex = index;
+      print(viewModel.provinceList[index].title());
+    },).show(context);
   }
 
 

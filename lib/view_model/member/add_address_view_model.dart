@@ -8,8 +8,9 @@ class AddAddressViewModel with ChangeNotifier {
   UserServer server = UserServer();
 
   List<AddressModel> provinceList;
-
-  int count = 0;
+  int provinceIndex = -1;
+  int cityIndex = -1;
+  int districtIndex = -1;
 
   // 获取省份列表
   fetchProvinceList() async {
