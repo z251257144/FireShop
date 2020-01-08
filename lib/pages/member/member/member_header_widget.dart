@@ -19,7 +19,7 @@ class MemberHeaderWidget extends StatelessWidget {
         )
       ),
       child: ChangeNotifierProvider(
-        builder: (context) {
+        create: (context) {
             return UserinfoManager();
         },
         child: Consumer(builder: (context, UserinfoManager provider, child) {

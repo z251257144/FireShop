@@ -24,6 +24,7 @@ class LoginViewModel {
       debugPrint(result['base'].toString());
 
       var model = UserModel.fromJson(result['base']);
+      model.token = token;
       UserinfoManager.shared.setLoginInfo(model);
       print(UserinfoManager.shared.isLogin ? "用户已登录" : "用户未登录");
     });

@@ -196,6 +196,7 @@ class _LoginPageState extends State<LoginPage> {
 
   //登录方法
   doLogin() {
+
     // 隐藏键盘
     FocusScope.of(context).requestFocus(FocusNode());
 
@@ -203,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
     if ( !_viewModel.checkPhone(phone) ) {return;}
 
     var password = this.passwordController.text;
-    if (_viewModel.checkPassword(password)) {return;}
+    if (!_viewModel.checkPassword(password)) {return;}
 
     showLoadingView(context);
 

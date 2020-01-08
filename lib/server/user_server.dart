@@ -39,5 +39,19 @@ class UserServer extends BaseServer {
     return super.requestPostData("user/m/reset-pwd", param);
   }
 
+  // 获取所有的收货地址
+  Future fetchShippingAddressList(token) async {
+    var param = {"token": token};
+    return super.requestPostData("user/shipping-address/list", param);
+  }
+
+  // 获取省份列表
+  Future fetchProvinceList() async {
+    var param = {};
+    return super.requestGetData("https://api.it120.cc/common/region/v2/province", null);
+  }
+
+
+
 
 }

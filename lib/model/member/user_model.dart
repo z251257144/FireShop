@@ -14,6 +14,7 @@ class UserModel {
   String sourceStr;
   int status;
   String statusStr;
+  String token;
 
   UserModel(
       {this.avatarUrl,

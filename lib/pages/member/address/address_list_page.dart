@@ -18,7 +18,7 @@ class AddressListPage extends StatelessWidget {
       ),
       body: Stack(
         children: <Widget>[
-          this.addressListWidget(),
+          addressListFutureBuild(),
           Positioned(
             bottom: 0,
             right: 0,
@@ -31,6 +31,19 @@ class AddressListPage extends StatelessWidget {
     );
   }
 
+  FutureBuilder addressListFutureBuild() {
+    return FutureBuilder(
+      future: viewModel.fetchShippingAddressList(),
+      builder: (context, AsyncSnapshot snapshot){
+        if (snapshot.hasData) {
+          return addressListWidget();
+        }
+        if (snapshot.hasError) return addressListErrorWidget(snapshot.error);
+        return Center(child: CircularProgressIndicator());
+        return addressListWidget();
+    });
+  }
+
   Widget addressListWidget() {
     return Container(
       padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(96)),
@@ -40,6 +53,13 @@ class AddressListPage extends StatelessWidget {
           return AddressListItemWidget(address: "${index}");
         }),
     );
+  }
+
+  Widget addressListErrorWidget(FormatException error) {
+    if (error.offset == 700) {
+      return Center(child: Text("还没有添加地址！"));
+    }
+    return Center(child: Text(error.message));
   }
 
   Widget addAddressButton(context) {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 class BaseServer {
   static String baseUrl = "";
@@ -20,6 +21,9 @@ class BaseServer {
   Future requestPostData(url, param) async {
     print("requestPostDataUrl 开始请求 ");
 
+    debugPrint("请求地址：${BaseServer.baseUrl}${url}");
+    debugPrint("请求参数： ${param}");
+
     Dio dio = this.client();
 
     try {
@@ -27,7 +31,7 @@ class BaseServer {
       var exception = this.checkException(response);
       if (exception == null) {
         print(response.data);
-        return  response.data["data"];
+        return response.data["data"];
       }
       else {
         print(exception.toString());
@@ -51,7 +55,7 @@ class BaseServer {
       Response response = await dio.get(url, queryParameters: param);
       var exception = this.checkException(response);
       if (exception == null) {
-        return  response.data["data"];
+        return response.data["data"];
       }
       else {
         print(exception.toString());
