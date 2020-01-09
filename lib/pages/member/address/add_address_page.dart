@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 
 // ignore: must_be_immutable
 class AddAddressPage extends StatelessWidget {

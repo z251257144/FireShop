@@ -1,3 +1,4 @@
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/routes/route_path.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,9 @@ class MemberFunctionView extends StatelessWidget {
     print("MemberType.address = ${MemberType.address}");
 
     if (data.memberType == MemberType.address) {
-      Navigator.of(context).pushNamed(RoutePath.addressList);
+      if (UserinfoManager.shared.isShowLogin(context)) {
+        Navigator.of(context).pushNamed(RoutePath.addressList);
+      }
     }
   }
 }

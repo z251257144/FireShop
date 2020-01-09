@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/member/user_model.dart';
+import 'package:fire_shop/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -26,5 +27,13 @@ class UserinfoManager with ChangeNotifier {
   void setLoginInfo(UserModel user) {
     _instance.user = user;
     notifyListeners();
+  }
+
+  bool isShowLogin(context) {
+    if (!isLogin) {
+      Navigator.of(context).pushNamed(RoutePath.login);
+    }
+
+    return isLogin;
   }
 }

@@ -51,10 +51,9 @@ class AddressListItemWidget extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-//      width: 40,
         padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
         child: Image.asset("images/member/addr-edit.png"),
-      )
+    )
     );
   }
 

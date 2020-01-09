@@ -1,4 +1,5 @@
 
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/member/region_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fire_shop/server/user_server.dart';
@@ -99,7 +100,7 @@ class AddAddressViewModel with ChangeNotifier {
 
   // 提交地址信息
   Future submitAddressInfo(linkMan, mobile, address, code) async {
-    var token = "b950b416-dc25-4a82-b76b-70e747c25d12";
+    var token = UserinfoManager.shared.user.token;
 
     var province = provinceList[provinceIndex];
     var city = province.sublist[cityIndex];

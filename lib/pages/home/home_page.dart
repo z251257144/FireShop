@@ -1,6 +1,8 @@
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/home/home_hot_widget.dart';
 import 'package:fire_shop/pages/home/home_sales_widget.dart';
 import 'package:fire_shop/pages/home/home_top_bannar_widget.dart';
+import 'package:fire_shop/view_model/member/login_view_model.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,6 +28,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    this.autoLogin();
+
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 242, 241, 241),
       appBar: AppBar(
@@ -40,6 +45,10 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  autoLogin() {
+    LoginViewModel().autoLogin();
   }
 }
 
