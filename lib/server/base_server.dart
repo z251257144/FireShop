@@ -47,7 +47,8 @@ class BaseServer {
   * 发送get请求
   * */
   Future requestGetData(url, param) async {
-    print("requestGetData 开始请求 ");
+    debugPrint("请求地址：${BaseServer.baseUrl}${url}");
+    debugPrint("请求参数： ${param}");
 
     Dio dio = this.client();
 

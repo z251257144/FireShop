@@ -1,28 +1,47 @@
+import 'package:fire_shop/model/home/home_bannar_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeHotWidget extends StatelessWidget {
+  final List<HomeBannarModel> data;
+
+  const HomeHotWidget({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    if (data == null || data.length == 0) {
+      return Container();
+    }
+
     return Container(
       // color: Colors.white,
       margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
       height: 300,
-      child: GridView.count(
-        crossAxisCount: 2,
-        children: <Widget>[
-          _hotItemWidget(),
-          _hotItemWidget(),
-          _hotItemWidget(),
-        ],
+      child: GridView.builder(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //横轴元素个数
+            crossAxisCount: 2,
+            //纵轴间距
+            mainAxisSpacing: 0,
+            //横轴间距
+            crossAxisSpacing: 0.0,
+            childAspectRatio: 1.2
+        ),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return _hotItemWidget(data[index]);
+        },
       ),
     );
   }
 
-  Widget _hotItemWidget() {
+  Widget _hotItemWidget(HomeBannarModel model) {
     return Container(
       width: 150,
       height: 120,
-      child: Image.network("https://cdn.it120.cc/apifactory/2019/07/11/e8315cf4-d24d-42e3-9523-6fc63f01a4a8.jpg"),
+      child: Image.network(model.picUrl),
     );
   }
 }

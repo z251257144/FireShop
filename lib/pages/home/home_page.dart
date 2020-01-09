@@ -2,34 +2,29 @@ import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/home/home_hot_widget.dart';
 import 'package:fire_shop/pages/home/home_sales_widget.dart';
 import 'package:fire_shop/pages/home/home_top_bannar_widget.dart';
+import 'package:fire_shop/view_model/home/home_banner_view_model.dart';
 import 'package:fire_shop/view_model/member/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:async/async.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
 
-  List salesData() {
-    List list = new List();
+  HomePage({Key key});
 
-    var map1 = {'fisrt': 'dart', 'second': 'java'};
-    list.add(map1);
+  HomeBannerViewModel viewModel = HomeBannerViewModel();
 
-    var map2 = {'fisrt': 'dart', 'second': 'java'};
-    list.add(map1);
-    
-    var map3 = {'fisrt': 'dart', 'second': 'java'};
-    list.add(map1);
-    
-    var map4 = {'fisrt': 'dart', 'second': 'java'};
-    list.add(map1);
-    
-    return list;
-  }
+  AsyncMemoizer memoizer = AsyncMemoizer();
 
   @override
   Widget build(BuildContext context) {
 
-    this.autoLogin();
+    memoizer.runOnce(() async {
+      this.autoLogin();
+      viewModel.getTopData();
+      viewModel.getSaleData();
+      viewModel.getHotData();
+    });
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 242, 241, 241),
@@ -39,11 +34,38 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          HomeTopBannarWidget(imageUrl: "https://image.crov.com/pd5-bsVgDvqyNovW/diercon-tactical-water-micro-filter-tw01--reusable-personal-hand-pump-water-purifier-camping-emergency-survival-gear-3-stage-process-removes-999999-of-waterborne-bacteria.jpg",),
-          HomeSalesWidget(salesList: this.salesData(),),
-          HomeHotWidget()
+          this.topWidget(),
+          this.salesWidget(),
+          this.hotWidget(),
         ],
       ),
+    );
+  }
+
+  Widget topWidget() {
+    return ChangeNotifierProvider.value(
+      value: viewModel,
+      child: Consumer(builder: (BuildContext context, HomeBannerViewModel value, Widget child){
+        return HomeTopBannarWidget(data: value.topData);
+      }),
+    );
+  }
+
+  Widget salesWidget() {
+    return ChangeNotifierProvider.value(
+      value: viewModel,
+      child: Consumer(builder: (BuildContext context, HomeBannerViewModel value, Widget child){
+        return HomeSalesWidget(salesList: value.salesData);
+      }),
+    );
+  }
+
+  Widget hotWidget() {
+    return ChangeNotifierProvider.value(
+      value: viewModel,
+      child: Consumer(builder: (BuildContext context, HomeBannerViewModel value, Widget child){
+        return HomeHotWidget(data: value.hotData);
+      }),
     );
   }
 
