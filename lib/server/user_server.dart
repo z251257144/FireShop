@@ -47,9 +47,33 @@ class UserServer extends BaseServer {
 
   // 获取省份列表
   Future fetchProvinceList() async {
-    var param = {};
     return super.requestGetData("https://api.it120.cc/common/region/v2/province", null);
   }
+
+  // 获取下级省市区数据
+  Future fetchChildRegionList(pid) async {
+    var param = {"pid": pid};
+    return super.requestGetData("https://api.it120.cc/common/region/v2/child", param);
+  }
+
+  // 获取下级省市区数据
+  Future fetchAddArrress(token, linkMan, mobile, provinceId, cityId, districtId, address, code) async {
+    var param = {"token": token,
+      "linkMan":linkMan,
+      "mobile": mobile,
+      "provinceId": provinceId,
+      "cityId": cityId,
+      "districtId": districtId,
+      "address": address,
+      "code": code,
+      "isDefault": "true"
+    };
+    return super.requestGetData("user/shipping-address/add", param);
+  }
+
+
+
+
 
 
 

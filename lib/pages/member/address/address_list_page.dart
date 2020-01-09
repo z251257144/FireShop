@@ -48,9 +48,9 @@ class AddressListPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(96)),
       child: ListView.builder(
-        itemCount: 20,
+        itemCount: viewModel.addressList.length,
         itemBuilder: (context, index) {
-          return AddressListItemWidget(address: "${index}");
+          return AddressListItemWidget(address: viewModel.addressList[index]);
         }),
     );
   }
