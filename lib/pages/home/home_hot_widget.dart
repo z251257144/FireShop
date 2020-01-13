@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/home/home_bannar_model.dart';
+import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 
 class HomeHotWidget extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomeHotWidget extends StatelessWidget {
 
     return Container(
       // color: Colors.white,
-      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
       height: 300,
       child: GridView.builder(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -27,7 +28,7 @@ class HomeHotWidget extends StatelessWidget {
             mainAxisSpacing: 0,
             //横轴间距
             crossAxisSpacing: 0.0,
-            childAspectRatio: 1.2
+            childAspectRatio: 338.0/260.0
         ),
         itemCount: data.length,
         itemBuilder: (context, index) {
@@ -38,10 +39,15 @@ class HomeHotWidget extends StatelessWidget {
   }
 
   Widget _hotItemWidget(HomeBannarModel model) {
-    return Container(
-      width: 150,
-      height: 120,
-      child: Image.network(model.picUrl),
+    return InkWell(
+      onTap: (){
+        print(model);
+      },
+      child: Container(
+        child: Image.network(model.picUrl,
+          fit: BoxFit.fill,
+        ),
+      ),
     );
   }
 }

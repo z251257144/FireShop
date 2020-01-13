@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fire_shop/pages/index_page.dart';
 import 'route_path.dart';
 import 'member_route.dart';
-
+import 'goods_toute.dart';
 export 'route_path.dart';
 
 //配置命名路由信息
@@ -18,6 +18,8 @@ final routes = {
 
   RoutePath.addressList: addressListFunction,
   RoutePath.addAddress: addAddressFunction,
+
+  RoutePath.goodsDetail: goodsDetailFunction,
 };
 
 //统一处理命名路由

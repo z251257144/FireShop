@@ -9,4 +9,7 @@ class RoutePath {
 
   static String addressList = "/addressList";
   static String addAddress = "/addAddress";
+
+  static String goodsDetail = "/goodsDetail";
+
 }

@@ -8,6 +8,13 @@ class GoodsServer extends BaseServer {
     return super.requestGetData("banner/list", param);
   }
 
+  // 商品详情
+  Future fetchGoodsDetail(id) async {
+    var param = {"id": id};
+    return super.requestGetData("shop/goods/detail", param);
+  }
+
+
 
 
 

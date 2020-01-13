@@ -1,6 +1,8 @@
 import 'package:fire_shop/model/home/home_bannar_model.dart';
+import 'package:fire_shop/routes/app_routes.dart';
+import 'package:fire_shop/utils/const.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeTopBannarWidget extends StatelessWidget {
   final List<HomeBannarModel> data;
@@ -18,18 +20,49 @@ class HomeTopBannarWidget extends StatelessWidget {
       );
     }
     
-    return CarouselSlider.builder(
+    return Container(
       height: this.height,
-      autoPlay: true,
-      viewportFraction: 1.0,
-      itemCount: data.length,
-      itemBuilder: (BuildContext context, int itemIndex) {
-        return Container(
-          child: Image.network(data[itemIndex].picUrl,
-            fit: BoxFit.fill,
-          ),
-        );
-      }
+      color: Colors.white,
+      child: Swiper(
+        itemBuilder: (BuildContext context,int index){
+          return this.itemWidget(data[index], context);
+        },
+        autoplay: true,
+        itemCount: data.length,
+        pagination: this.paginationWidget(),
+      ),
     );
   }
+
+  Widget itemWidget(HomeBannarModel model, context) {
+    return InkWell(
+      onTap: (){
+        this.onTap(model, context);
+      },
+      child: Container(
+        height: this.height,
+        child: Image.network(model.picUrl,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+
+  SwiperPagination paginationWidget() {
+    return SwiperPagination(
+      builder: DotSwiperPaginationBuilder(
+        color: Colors.white,
+        activeColor: appCommonColor,
+        size: 10
+      )
+    );
+  }
+
+  onTap(HomeBannarModel model, context) {
+    if (model.linkUrl == RoutePath.goodsDetail) {
+      Navigator.of(context).pushNamed(RoutePath.goodsDetail, arguments: {"id": model.remark});
+    }
+  }
+
+
 }

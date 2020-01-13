@@ -32,21 +32,25 @@ class HomeSalesWidget extends StatelessWidget {
   }
 
   Widget _homeSalesItemWidget(HomeBannarModel info) {
-    // print(info);
-    return Container(
-      width: 50,
-      child: Column(
-        children: <Widget>[
-          Image.network(info.picUrl,
-            width: 46,
-            height: 46,
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Text(info.title),
-          )
-        ],
-      ),
+    return InkWell(
+      onTap: () {
+        print(info);
+      },
+      child: Container(
+        width: 50,
+        child: Column(
+          children: <Widget>[
+            Image.network(info.picUrl,
+              width: 46,
+              height: 46,
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Text(info.title),
+            )
+          ],
+        ),
+      )
     );
   }
 }

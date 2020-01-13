@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:fire_shop/server/goods_server.dart';
 import 'package:fire_shop/model/home/home_bannar_model.dart';
 

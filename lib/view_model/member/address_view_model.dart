@@ -13,7 +13,6 @@ class AddressViewModel {
     addressList = (data as List).map((item){
       return AddressModel.fromJson(item);
     }).toList();
-    print(addressList);
     return 1;
   }
 }
