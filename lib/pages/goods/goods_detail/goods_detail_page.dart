@@ -1,4 +1,6 @@
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_image_widget.dart';
+import 'package:fire_shop/pages/goods/goods_detail/goods_detail_info_widget.dart';
+import 'package:fire_shop/pages/goods/goods_detail/goods_detail_specification_bar.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_details_bottom_bar.dart';
 import 'package:fire_shop/view_model/goods/goods_detail_view_model.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +66,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     return ListView(
       children: <Widget>[
         GoodsDetailImageWidget(pics: _viewModel.model.pics),
-        Text(_viewModel.model.name)
+        GoodsDetailInfoWidget(model: _viewModel.model),
+        GoodsDetailSpecificationBar(),
       ],
     );
   }
