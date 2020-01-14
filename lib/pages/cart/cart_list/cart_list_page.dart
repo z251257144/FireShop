@@ -1,6 +1,7 @@
 import 'package:fire_shop/manager/cart_manager.dart';
 import 'package:fire_shop/model/cart/cart_goods_model.dart';
 import 'package:fire_shop/pages/cart/cart_list/cart_item_widget.dart';
+import 'package:fire_shop/pages/cart/cart_list/cart_list_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,17 @@ class _CartListPageState extends State<CartListPage> {
       body: ChangeNotifierProvider.value(
         value: CartManager(),
         child: Consumer(builder: (_, CartManager value, child) {
-          return listView(value);
+          return Stack(
+            children: <Widget>[
+              listView(value),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: bottomBar()
+              ),
+            ],
+          );
         }),
       ),
     );
@@ -33,9 +44,37 @@ class _CartListPageState extends State<CartListPage> {
       itemCount: value.goodsList.length,
       itemBuilder: (_, index) {
         CartGoodsModel model = value.goodsList[index];
-        return CartItemWidget(model: model);
+        return CartItemWidget(
+          model: model,
+          selectCallback: (_) {
+            value.selectGoods(model);
+          },
+        );
       }
     );
+  }
+
+  bottomBar() {
+    bool isSelectAll = CartManager.shared.isSelectAll();
+    bool canOrder = CartManager.shared.canOrder();
+    double price = CartManager.shared.goodsPrice();
+
+    return CartListBottomBar(
+      isSelectAll: isSelectAll,
+      canOrder: canOrder,
+      price: price,
+      selectCallBack: () {
+        this.selectAll(!isSelectAll);
+      },
+      orderCallBack: (){
+
+      },
+    );
+  }
+
+  // 设置全部商品是否选中
+  selectAll(bool select) {
+    CartManager.shared.selectAllGoods(select);
   }
   
 }

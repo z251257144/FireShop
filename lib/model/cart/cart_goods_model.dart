@@ -5,7 +5,7 @@ class CartGoodsModel {
 
   int id;
   String name;
-  double originalPrice;
+  double minPrice;
   String pic;
   int count = 0;
   bool selected = true;
@@ -13,7 +13,7 @@ class CartGoodsModel {
   CartGoodsModel(
       {this.id,
         this.name,
-        this.originalPrice,
+        this.minPrice,
         this.pic,
         this.count,
         this.selected});
@@ -21,14 +21,14 @@ class CartGoodsModel {
   CartGoodsModel.fromGoodsDetail(GoodsDetailModel model) {
     id = model.id;
     name = model.name;
-    originalPrice = model.originalPrice;
+    minPrice = model.minPrice;
     pic = model.pic;
   }
 
   CartGoodsModel.fromJson(Map json) {
     id = json["id"];
     name = json["name"];
-    originalPrice = json["originalPrice"];
+    minPrice = json["minPrice"];
     pic = json["pic"];
     count = json["count"];
     selected = json["selected"];
@@ -38,7 +38,7 @@ class CartGoodsModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['originalPrice'] = this.originalPrice;
+    data['minPrice'] = this.minPrice;
     data['pic'] = this.pic;
     data['count'] = this.count;
     data['selected'] = this.selected;

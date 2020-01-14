@@ -18,8 +18,6 @@ class AddAddressPage extends StatelessWidget {
   TextEditingController addressController = TextEditingController();
   TextEditingController zipController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     print("AddAddressPage build");

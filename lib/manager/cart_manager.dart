@@ -23,6 +23,7 @@ class CartManager with ChangeNotifier {
 
   List<CartGoodsModel> goodsList = List<CartGoodsModel>();
 
+  // 向购物车添加商品
   addGoodsDetail(GoodsDetailModel model) {
     CartGoodsModel goods = getCartGoods(model.id);
     if (goods == null) {
@@ -36,6 +37,7 @@ class CartManager with ChangeNotifier {
     save();
   }
 
+  // 根据商品ID获取购物车商品model
   getCartGoods(id) {
     if (id == null) {
       return null;
@@ -50,6 +52,7 @@ class CartManager with ChangeNotifier {
     return model;
   }
 
+  // 获取购物车所有商品数量
   int cartCount() {
     int count = 0;
     goodsList.forEach((item){
@@ -58,6 +61,71 @@ class CartManager with ChangeNotifier {
     return count;
   }
 
+  // 设置商品是否选中
+  selectGoods(CartGoodsModel model) {
+    model.selected = !model.selected;
+    notifyListeners();
+    save();
+  }
+
+  // 设置全部商品是否选中
+  selectAllGoods(bool select) {
+    for (CartGoodsModel item in goodsList) {
+      item.selected = select;
+    }
+    notifyListeners();
+    save();
+  }
+
+  // 是否已经全选
+  bool isSelectAll() {
+    if (goodsList.length == 0) {
+      return false;
+    }
+
+    for (CartGoodsModel item in goodsList) {
+      if (!item.selected) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // 是否已经全选
+  bool canOrder() {
+    if (goodsList.length == 0) {
+      return false;
+    }
+
+    for (CartGoodsModel item in goodsList) {
+      if (item.selected) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // 获取商品合计价格
+  double goodsPrice() {
+    if (goodsList.length == 0) {
+      return 0;
+    }
+
+    double price = 0;
+    for (CartGoodsModel item in goodsList) {
+      if (item.selected) {
+        price += item.minPrice * item.count;
+      }
+    }
+
+    return price;
+  }
+
+
+
+  // 缓存购物车商品数据
   save() {
     List<String> list = goodsList.map((item){
       return jsonEncode(item.toJson());
@@ -66,6 +134,7 @@ class CartManager with ChangeNotifier {
     StorageUtil.save(kCartGoodsKey, list);
   }
 
+  // 读取购物车缓存数据
   read() async {
     List list = await StorageUtil.getValue<List<String>>(kCartGoodsKey);
     print(list.toString());
@@ -77,6 +146,7 @@ class CartManager with ChangeNotifier {
     }
   }
 
+  // 清空购物车缓存
   clear() {
     StorageUtil.remove(kCartGoodsKey);
   }
