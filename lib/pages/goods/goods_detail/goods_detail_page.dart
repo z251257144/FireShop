@@ -1,9 +1,14 @@
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_image_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_info_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_specification_bar.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_details_bottom_bar.dart';
+import 'package:fire_shop/routes/app_routes.dart';
+import 'package:fire_shop/utils/view_util.dart';
 import 'package:fire_shop/view_model/goods/goods_detail_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class GoodsDetailPage extends StatefulWidget {
   final String id;
@@ -19,6 +24,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
 
   _GoodsDetailPageState(String id) {
     _viewModel = GoodsDetailViewModel(id);
+    _viewModel.checkGoodsFavorite();
   }
 
   @override
@@ -36,7 +42,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: GoodsDetailBottomBar()
+            child: bottomBar()
           )
         ],
       ),
@@ -62,13 +68,52 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     return Center(child: Text(error.message));
   }
 
+  bottomBar() {
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: Consumer(builder: (BuildContext context, GoodsDetailViewModel value, Widget child){
+        return GoodsDetailBottomBar(
+          model: _viewModel.model,
+          cartCount: 3,
+          isFavorite: value.isFavorite,
+          onTap: (index) {
+            if (index == 1) {
+              favButtonTap();
+            }
+          }
+        );
+      }),
+    );
+  }
+
   Widget goodsDetailList() {
     return ListView(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 48),
       children: <Widget>[
         GoodsDetailImageWidget(pics: _viewModel.model.pics),
         GoodsDetailInfoWidget(model: _viewModel.model),
-        GoodsDetailSpecificationBar(),
+        GoodsDetailSpecificationBar(model: _viewModel.model),
       ],
     );
   }
+
+  // 收藏按钮点击事件
+  favButtonTap() {
+    if (!UserinfoManager.shared.isLogin) {
+      Navigator.of(context).pushNamed(RoutePath.login);
+      return;
+    }
+
+    Future future = _viewModel.isFavorite ? _viewModel.deleteGoodsFavorite()
+        : _viewModel.addGoodsFavorite();
+
+    showLoadingView(context);
+
+    future.catchError((err){
+      Fluttertoast.showToast(msg: err.message);
+    }).whenComplete((){
+      Navigator.of(context).pop();
+    });
+  }
+
 }

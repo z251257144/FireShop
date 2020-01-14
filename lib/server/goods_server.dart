@@ -14,6 +14,24 @@ class GoodsServer extends BaseServer {
     return super.requestGetData("shop/goods/detail", param);
   }
 
+  // 检测是否已收藏
+  Future fetchGoodsFavorite(id, token) async {
+    var param = {"goodsId": id, "token": token};
+    return super.requestGetData("shop/goods/fav/check", param);
+  }
+
+  // 添加商品收藏
+  Future fetchAddGoodsFavorite(id, token) async {
+    var param = {"goodsId": id, "token": token};
+    return super.requestGetData("shop/goods/fav/add", param);
+  }
+
+  // 删除商品收藏
+  Future fetchDeleteGoodsFavorite(id, token) async {
+    var param = {"goodsId": id, "token": token};
+    return super.requestGetData("shop/goods/fav/delete", param);
+  }
+
 
 
 

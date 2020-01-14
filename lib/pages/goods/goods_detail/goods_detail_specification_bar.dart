@@ -1,6 +1,12 @@
+import 'package:fire_shop/model/goods_detail_model.dart';
 import 'package:flutter/material.dart';
 
 class GoodsDetailSpecificationBar extends StatelessWidget {
+
+  final GoodsDetailModel model;
+
+  const GoodsDetailSpecificationBar({Key key, this.model}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
