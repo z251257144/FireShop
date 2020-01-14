@@ -12,7 +12,7 @@ class GoodsDetailBottomBar extends StatelessWidget {
     Key key,
     this.model,
     this.onTap,
-    this.cartCount,
+    this.cartCount = 0,
     this.isFavorite = false,
   }) : super(key: key);
 
@@ -63,20 +63,44 @@ class GoodsDetailBottomBar extends StatelessWidget {
   cartButton() {
     return InkWell(
       onTap: (){},
-      child: Container(
-        width: 60,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border(
-            right: BorderSide(
-              color: Colors.black26,
-              width: 0.5
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: 60,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(
+                      color: Colors.black26,
+                      width: 0.5
+                  )
+              )
+            ),
+            child: Image.asset("images/goods/shopping_cart.png",
+              width: 20,
+            )
+          ),
+          Positioned(
+            top: 5,
+            right: 10,
+            child: Container(
+              width: 16,
+              height: 16,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(8)
+                ),
+                color: appCommonColor
+              ),
+              alignment: Alignment.center,
+              child: Text(cartCount.toString(),
+                style: TextStyle(
+                  color: Colors.white
+                ),
+              ),
             )
           )
-        ),
-        child: Image.asset("images/goods/shopping_cart.png",
-          width: 20,
-        )
+        ],
       )
     );
   }
@@ -122,7 +146,9 @@ class GoodsDetailBottomBar extends StatelessWidget {
 
   addToCartButton() {
     return InkWell(
-        onTap: (){},
+        onTap: (){
+          onTap(3);
+        },
         child: Container(
           width: (ScreenUtil().setWidth(appScreenWidth)-120)/2.0,
           alignment: Alignment.center,

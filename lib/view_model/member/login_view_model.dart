@@ -14,8 +14,8 @@ class LoginViewModel {
 
   autoLogin() async {
 
-    String username = await StorageUtil.getValue(kLoginUserName);
-    String password = await StorageUtil.getValue(kLoginPassword);
+    String username = await StorageUtil.getValue<String>(kLoginUserName);
+    String password = await StorageUtil.getValue<String>(kLoginPassword);
     if (username != null && password != null) {
       print("开始自动登录");
       this.doLogin(username, password);

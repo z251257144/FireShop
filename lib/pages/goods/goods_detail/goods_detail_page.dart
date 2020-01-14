@@ -5,6 +5,7 @@ import 'package:fire_shop/pages/goods/goods_detail/goods_detail_specification_ba
 import 'package:fire_shop/pages/goods/goods_detail/goods_details_bottom_bar.dart';
 import 'package:fire_shop/routes/app_routes.dart';
 import 'package:fire_shop/utils/view_util.dart';
+import 'package:fire_shop/manager/cart_manager.dart';
 import 'package:fire_shop/view_model/goods/goods_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -69,20 +70,29 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   }
 
   bottomBar() {
-    return ChangeNotifierProvider.value(
-      value: _viewModel,
-      child: Consumer(builder: (BuildContext context, GoodsDetailViewModel value, Widget child){
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: _viewModel
+        ),
+        ChangeNotifierProvider.value(value: CartManager())
+      ], 
+      child: Consumer2(builder: (BuildContext context, GoodsDetailViewModel value, CartManager value2, Widget child) {
         return GoodsDetailBottomBar(
           model: _viewModel.model,
-          cartCount: 3,
-          isFavorite: value.isFavorite,
+          cartCount: value2.cartCount(),
+          isFavorite: _viewModel.isFavorite,
           onTap: (index) {
             if (index == 1) {
               favButtonTap();
             }
+            else if (index == 3) {
+              value2.addGoodsDetail(_viewModel.model);
+              addGoodsToCart();
+            }
           }
         );
-      }),
+      })
     );
   }
 
@@ -114,6 +124,11 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     }).whenComplete((){
       Navigator.of(context).pop();
     });
+  }
+
+  addGoodsToCart() {
+//    var cart = Provider.of<CartViewModel>(context, listen: false);
+//    cart.addGoodsDetail(_viewModel.model);
   }
 
 }

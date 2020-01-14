@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageUtil {
-  static save<T>(String key, T value) async {
+  static save(String key, value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (value is bool) {
       await preferences.setBool(key, value);
@@ -25,21 +25,30 @@ class StorageUtil {
 
   // 获取value，默认返回string类型的，其他类型请指定泛型
   static Future getValue<T>(String key) async {
+    assert(T != null, "must set <T>");
+
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (T is bool) {
+    if (T == bool) {
       return preferences.getBool(key);
     }
-    else if (T is int) {
+    else if (T == int) {
       return preferences.getInt(key);
     }
-    else if (T is double) {
+    else if (T == double) {
       return preferences.getDouble(key);
     }
-    else if (T is List<String>) {
-      return preferences.getStringList(key);
-    }
-    else {
+    else if (T == String) {
+      print("getString");
       return preferences.getString(key);
     }
+    else {
+      print("getStringList");
+      return preferences.getStringList(key);
+    }
+  }
+
+  static remove(String key) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove(key);
   }
 }
