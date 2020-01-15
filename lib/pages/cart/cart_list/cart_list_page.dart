@@ -38,6 +38,7 @@ class _CartListPageState extends State<CartListPage> {
     );
   }
 
+  // 购物车商品列表
   listView(CartManager value) {
     return ListView.builder(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 48),
@@ -54,6 +55,7 @@ class _CartListPageState extends State<CartListPage> {
     );
   }
 
+  // 购物车底部操作栏
   bottomBar() {
     bool isSelectAll = CartManager.shared.isSelectAll();
     bool canOrder = CartManager.shared.canOrder();

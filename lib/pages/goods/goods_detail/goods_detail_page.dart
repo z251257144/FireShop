@@ -10,6 +10,7 @@ import 'package:fire_shop/view_model/goods/goods_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class GoodsDetailPage extends StatefulWidget {
   final String id;
@@ -103,6 +104,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
         GoodsDetailImageWidget(pics: _viewModel.model.pics),
         GoodsDetailInfoWidget(model: _viewModel.model),
         GoodsDetailSpecificationBar(model: _viewModel.model),
+        Html(data: _viewModel.model.content,)
       ],
     );
   }
