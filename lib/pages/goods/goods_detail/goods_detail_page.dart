@@ -2,6 +2,7 @@ import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_image_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_info_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_specification_bar.dart';
+import 'package:fire_shop/pages/goods/goods_detail/goods_detail_tab_bar.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_details_bottom_bar.dart';
 import 'package:fire_shop/routes/app_routes.dart';
 import 'package:fire_shop/utils/view_util.dart';
@@ -29,6 +30,17 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     _viewModel.checkGoodsFavorite();
   }
 
+  Future future;
+  int index = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    future = _viewModel.fetchGoodsDetial();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +65,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
 
   FutureBuilder futureBuilder() {
     return FutureBuilder(
-      future: _viewModel.fetchGoodsDetial(),
+      future: future,
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if (snapshot.hasData) {
           return goodsDetailList();
@@ -97,6 +109,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     );
   }
 
+  // 商品详情列表
   Widget goodsDetailList() {
     return ListView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 48),
@@ -104,6 +117,9 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
         GoodsDetailImageWidget(pics: _viewModel.model.pics),
         GoodsDetailInfoWidget(model: _viewModel.model),
         GoodsDetailSpecificationBar(model: _viewModel.model),
+        GoodsDetailTabBar(index: index, onChange: (index) {
+          this.change(index);
+        },),
         Html(data: _viewModel.model.content,)
       ],
     );
@@ -131,6 +147,12 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   addGoodsToCart() {
 //    var cart = Provider.of<CartViewModel>(context, listen: false);
 //    cart.addGoodsDetail(_viewModel.model);
+  }
+
+  change(index) {
+    setState(() {
+      this.index = index;
+    });
   }
 
 }
