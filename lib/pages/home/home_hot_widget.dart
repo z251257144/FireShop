@@ -1,5 +1,4 @@
 import 'package:fire_shop/model/home/home_bannar_model.dart';
-import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 
 class HomeHotWidget extends StatelessWidget {
@@ -15,7 +14,7 @@ class HomeHotWidget extends StatelessWidget {
 
     return Container(
       // color: Colors.white,
-      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
       height: 300,
       child: GridView.builder(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),

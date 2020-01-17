@@ -32,6 +32,11 @@ class GoodsServer extends BaseServer {
     return super.requestGetData("shop/goods/fav/delete", param);
   }
 
+  // 商品列表
+  Future fetchGoodsList(param) async {
+    return super.requestGetData("shop/goods/list", param);
+  }
+
 
 
 

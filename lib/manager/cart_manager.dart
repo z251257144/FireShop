@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:fire_shop/model/cart/cart_goods_model.dart';
-import 'package:fire_shop/model/goods_detail_model.dart';
+import 'package:fire_shop/model/goods/goods_detail_model.dart';
 import 'package:fire_shop/utils/storage_util.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,4 @@
-import 'package:fire_shop/model/goods_detail_model.dart';
+import 'package:fire_shop/model/goods/goods_detail_model.dart';
 import 'package:flutter/material.dart';
 
 class GoodsDetailSpecificationBar extends StatelessWidget {

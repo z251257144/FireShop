@@ -2,7 +2,7 @@ import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fire_shop/model/goods_detail_model.dart';
+import 'package:fire_shop/model/goods/goods_detail_model.dart';
 
 typedef GoodsDetailBottomBarCallback = void Function(int index);
 
