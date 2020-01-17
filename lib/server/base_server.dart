@@ -18,7 +18,7 @@ class BaseServer {
   /*
   * 发送post请求
   * */
-  Future requestPostData(url, param) async {
+  Future requestPostData(url, {param}) async {
     print("requestPostDataUrl 开始请求 ");
 
     debugPrint("请求地址：${BaseServer.baseUrl}${url}");
@@ -46,7 +46,7 @@ class BaseServer {
   /*
   * 发送get请求
   * */
-  Future requestGetData(url, param) async {
+  Future requestGetData(url, {param}) async {
     debugPrint("请求地址：${BaseServer.baseUrl}${url}");
     debugPrint("请求参数： ${param}");
 
