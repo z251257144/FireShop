@@ -17,7 +17,15 @@ class CategoryLeftWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      width: ScreenUtil().setWidth(appScreenWidth/3),
+      width: 110,
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.black12,
+            width: 0.5
+          )
+        )
+      ),
       child: data == null ? null : listView(),
     );
   }

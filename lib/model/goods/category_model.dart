@@ -10,6 +10,8 @@ class CategoryModel {
   int pid;
   int userId;
 
+  List<CategoryModel> subCategoryList;
+
   CategoryModel(
       {this.dateAdd,
         this.dateUpdate,

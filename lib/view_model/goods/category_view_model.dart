@@ -9,20 +9,59 @@ class CategoryViewModel with ChangeNotifier {
   List<CategoryModel> categoryData;
   int leftIndex = 0;
 
-  // 商品类别
+
+
+
+  // 获取商品类别
   Future getAllCategoryList() async {
     List result = await _server.fetchAllCategoryList();
-    categoryData = result.map((item){
-      return CategoryModel.fromJson(item);
-    }).toList();
 
-    print(categoryData);
-//    notifyListeners();
+    categoryData = [];
+    Map<int, List<CategoryModel>> map = {};
+
+    result.forEach((item){
+      var model = CategoryModel.fromJson(item);
+
+      if (model.level == 1) {
+        categoryData.add(model);
+
+        List list = map[model.id];
+        if (list == null) {
+          map[model.id] = [];
+          list = map[model.id];
+        }
+        model.subCategoryList = list;
+      }
+      else {
+        List list = map[model.pid];
+        if (list == null) {
+          map[model.pid] = [];
+          list = map[model.pid];
+        }
+
+        list.add(model);
+      }
+    });
   }
 
   changeLeftIndex(index) {
     leftIndex = index;
+    var list = categoryData[leftIndex];
+    print(list.subCategoryList);
     notifyListeners();
+  }
+
+  // 子目录数据
+  List<CategoryModel> reghtCategoryData() {
+    if (categoryData == null || categoryData.length == 0) {
+      return null;
+    }
+
+    if (leftIndex < 0 || leftIndex >= categoryData.length) {
+      return null;
+    }
+
+    return categoryData[leftIndex].subCategoryList;
   }
 
 }

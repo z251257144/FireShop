@@ -15,15 +15,14 @@ class CategoryPage extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text("目录"),
       ),
+      backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _viewModel.getAllCategoryList(),
         builder: (context, anp){
           return Row(
             children: <Widget>[
               leftWidget(),
-              Expanded(
-                  child: CategoryRightWidget()
-              )
+              rightWidget()
             ],
           );
       }),
@@ -42,6 +41,17 @@ class CategoryPage extends StatelessWidget {
             }
         );
       })
+    );
+  }
+
+  rightWidget() {
+    return ChangeNotifierProvider.value(
+        value: _viewModel,
+        child: Consumer(builder: (BuildContext context, CategoryViewModel value, Widget child) {
+          return Expanded(
+              child: CategoryRightWidget(data: value.reghtCategoryData())
+          );
+        })
     );
   }
 
