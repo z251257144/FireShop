@@ -1,4 +1,6 @@
+import 'package:fire_shop/model/goods/category_model.dart';
 import 'package:fire_shop/view_model/goods/category_view_model.dart';
+import 'package:fire_shop/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'category_left_widget.dart';
@@ -13,7 +15,7 @@ class CategoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("目录"),
+        title: SearchBar(),
       ),
       backgroundColor: Colors.white,
       body: FutureBuilder(
@@ -48,8 +50,11 @@ class CategoryPage extends StatelessWidget {
     return ChangeNotifierProvider.value(
         value: _viewModel,
         child: Consumer(builder: (BuildContext context, CategoryViewModel value, Widget child) {
+          CategoryModel model = value.selectCategory();
+          var list = model == null ? null : model.subCategoryList;
+          var pic = model == null ? null : model.icon;
           return Expanded(
-              child: CategoryRightWidget(data: value.reghtCategoryData())
+              child: CategoryRightWidget(data: list, pic: pic)
           );
         })
     );

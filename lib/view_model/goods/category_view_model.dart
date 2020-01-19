@@ -9,9 +9,6 @@ class CategoryViewModel with ChangeNotifier {
   List<CategoryModel> categoryData;
   int leftIndex = 0;
 
-
-
-
   // 获取商品类别
   Future getAllCategoryList() async {
     List result = await _server.fetchAllCategoryList();
@@ -51,8 +48,8 @@ class CategoryViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // 子目录数据
-  List<CategoryModel> reghtCategoryData() {
+  // 已选中的目录
+  CategoryModel selectCategory() {
     if (categoryData == null || categoryData.length == 0) {
       return null;
     }
@@ -61,7 +58,7 @@ class CategoryViewModel with ChangeNotifier {
       return null;
     }
 
-    return categoryData[leftIndex].subCategoryList;
+    return categoryData[leftIndex];
   }
 
 }

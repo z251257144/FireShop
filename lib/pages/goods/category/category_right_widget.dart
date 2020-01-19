@@ -1,12 +1,15 @@
 import 'package:fire_shop/model/goods/category_model.dart';
 import 'package:fire_shop/utils/device_util.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategoryRightWidget extends StatelessWidget {
 
   final List<CategoryModel> data;
 
-  const CategoryRightWidget({Key key, this.data}) : super(key: key);
+  final String pic;
+
+  const CategoryRightWidget({Key key, this.data, this.pic}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +17,45 @@ class CategoryRightWidget extends StatelessWidget {
       return Container();
     }
 
-    return gridView();
+    print(pic);
+
+    return ListView(
+      children: <Widget>[
+        headerImageView(),
+        gridView()
+      ],
+    );
+  }
+  
+  headerImageView() {
+    if (pic == null) {
+      return Container();
+    }
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(10, 15, 10, 5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(5)
+        ),
+        child: Image.network(pic),
+      ),
+    );
   }
 
   gridView() {
-
-    print(ScreenUtil().setWidth(appScreenWidth).toString());
     double width = (ScreenUtil().setWidth(appScreenWidth) - 110) / 3.0;
-    double height = ScreenUtil().setWidth(200)+50;
+    double height = ScreenUtil().setWidth(100) + 18 + 30;
 
     return GridView.builder(
       itemCount: data.length,
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: width/height,
-        mainAxisSpacing: 10,
-          crossAxisSpacing: 10
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5
       ),
       itemBuilder: (context, index){
         return itemWidget(index);
@@ -49,14 +74,15 @@ class CategoryRightWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              child: Image.network(model.icon,
-                  width: ScreenUtil().setWidth(100),
-                  height: ScreenUtil().setWidth(200)
-              ),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+              width: ScreenUtil().setWidth(100),
+              height: ScreenUtil().setWidth(100),
+              child: Image.network(model.icon),
             ),
             Text(model.name,
                 maxLines: 1,
                 style: TextStyle(
+                  fontSize: ScreenUtil().setSp(26)
 
                 )
             )
