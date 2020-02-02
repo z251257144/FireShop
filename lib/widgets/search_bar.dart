@@ -1,13 +1,17 @@
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 
+typedef searchCallBack = void Function();
+
 class SearchBar extends StatelessWidget {
 
   final double height;
 
   final Color backgroundColor;
 
-  const SearchBar({Key key, this.height = 36, this.backgroundColor = Colors.black12}) : super(key: key);
+  final searchCallBack onTap;
+
+  const SearchBar({Key key, this.height = 36, this.backgroundColor = Colors.black12, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,9 @@ class SearchBar extends StatelessWidget {
         ),
         onTap: (){
           print("onTap");
+          if (this.onTap != null) {
+            this.onTap();
+          }
         },
       ),
     );

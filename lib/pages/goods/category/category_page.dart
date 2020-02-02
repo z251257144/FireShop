@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/goods/category_model.dart';
+import 'package:fire_shop/routes/app_routes.dart';
 import 'package:fire_shop/view_model/goods/category_view_model.dart';
 import 'package:fire_shop/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,9 @@ class CategoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: SearchBar(),
+        title: SearchBar(onTap: (){
+          this.showSearchView(context);
+        }),
       ),
       backgroundColor: Colors.white,
       body: FutureBuilder(
@@ -62,5 +65,9 @@ class CategoryPage extends StatelessWidget {
 
   leftChange(index) {
     _viewModel.changeLeftIndex(index);
+  }
+
+  showSearchView(context) {
+    Navigator.of(context).pushNamed(RoutePath.goodsSearch);
   }
 }

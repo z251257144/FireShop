@@ -16,7 +16,6 @@ class GoodsDetailViewModel with ChangeNotifier {
 
   Future fetchGoodsDetial() async {
     var result = await _server.fetchGoodsDetail(id);
-//    print(result["basicInfo"]);
     model = GoodsDetailModel.fromJson(result["basicInfo"]);
     model.content = result["content"];
     model.pics = (result["pics"] as List).map((item){

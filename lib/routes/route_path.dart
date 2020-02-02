@@ -11,5 +11,6 @@ class RoutePath {
   static String addAddress = "/addAddress";
 
   static String goodsDetail = "/goodsDetail";
+  static String goodsSearch = "/goodsSearch";
 
 }

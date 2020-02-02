@@ -20,6 +20,7 @@ final routes = {
   RoutePath.addAddress: addAddressFunction,
 
   RoutePath.goodsDetail: goodsDetailFunction,
+  RoutePath.goodsSearch: goodsHistoryFunction,
 };
 
 //统一处理命名路由
