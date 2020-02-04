@@ -1,28 +1,54 @@
 
+import 'package:fire_shop/utils/storage_util.dart';
 import 'package:flutter/foundation.dart';
 
-class GoodsSearchHistoryViewModel with ChangeNotifier{
-//  List<String> words;
+const String GoodsSearchHistoryKey = "GoodsSearchHistoryKey";
 
-  List<String> words = [
-    '面试',
-    'Studio3',
-    '动画dfsfds',
-    '自定义View',
-    '性能优化',
-    'gradle',
-    'Camera',
-    '代码混淆 安全',
-    '逆向加固'
-  ];
+class GoodsSearchHistoryViewModel with ChangeNotifier{
+
+  List<String> words;
+
+  GoodsSearchHistoryViewModel(){
+    this.initWords();
+  }
+
+  // 初始化搜索词
+  initWords() async {
+    words = await StorageUtil.getValue(GoodsSearchHistoryKey);
+    notifyListeners();
+  }
 
   // 添加搜索词
   addWord(String word) {
+    if (words == null) {
+      words = [];
+    }
+
     if (words.contains(word)) {
       words.remove(word);
     }
 
     words.insert(0, word);
+
+    this.save();
+
+    notifyListeners();
+  }
+
+  // 清空搜索历史
+  clearWords() {
+    words = null;
+
+    notifyListeners();
+  }
+
+  // 保存搜索词
+  save(){
+    if (words == null || words.length == 0) {
+      StorageUtil.remove(GoodsSearchHistoryKey);
+    }
+
+    StorageUtil.save(GoodsSearchHistoryKey, words);
   }
 
 }
