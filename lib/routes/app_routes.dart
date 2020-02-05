@@ -21,6 +21,7 @@ final routes = {
 
   RoutePath.goodsDetail: goodsDetailFunction,
   RoutePath.goodsSearch: goodsHistoryFunction,
+  RoutePath.goodsSearchResult: goodsSearchResultFunction,
 };
 
 //统一处理命名路由

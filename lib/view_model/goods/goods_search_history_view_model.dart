@@ -38,6 +38,7 @@ class GoodsSearchHistoryViewModel with ChangeNotifier{
   // 清空搜索历史
   clearWords() {
     words = null;
+    this.save();
 
     notifyListeners();
   }

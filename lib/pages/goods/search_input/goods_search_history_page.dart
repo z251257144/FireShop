@@ -1,9 +1,11 @@
 
+import 'package:fire_shop/pages/goods/search_input/goods_search_history_item_widget.dart';
+import 'package:fire_shop/routes/app_routes.dart';
+import 'package:fire_shop/utils/string_uril.dart';
+import 'package:fire_shop/view_model/goods/goods_search_history_view_model.dart';
 import 'package:fire_shop/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fire_shop/pages/goods/search/goods_search_history_item_widget.dart';
-import 'package:fire_shop/view_model/goods/goods_search_history_view_model.dart';
 import 'package:provider/provider.dart';
 
 typedef SearchWordSelectCallBack = void Function(String word);
@@ -42,14 +44,14 @@ class GoodsSearchHistoryPage extends StatelessWidget {
             SearchBar(
               onSubmitted: (text){
                 searchWord = text;
-                this.searchGoods();
+                this.searchGoods(context);
               },
               onChanged: (text){
                 searchWord = text;
               },
             )
           ),
-          searchButton(),
+          searchButton(context),
         ],
       ),
     );
@@ -69,7 +71,7 @@ class GoodsSearchHistoryPage extends StatelessWidget {
   }
 
   // 搜索按钮
-  searchButton() {
+  searchButton(context) {
     return InkWell(
       child: Container(
         padding: EdgeInsets.only(left: 15),
@@ -80,7 +82,7 @@ class GoodsSearchHistoryPage extends StatelessWidget {
         ),
       ),
       onTap: (){
-        this.searchGoods();
+        this.searchGoods(context);
       },
     );
   }
@@ -97,7 +99,7 @@ class GoodsSearchHistoryPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           this.headView(context),
-          this.contentView()
+          this.contentView(context)
         ],
       ),
     );
@@ -138,7 +140,7 @@ class GoodsSearchHistoryPage extends StatelessWidget {
     );
   }
 
-  contentView() {
+  contentView(context) {
     return Container(
       child: Wrap(
         spacing: 8,
@@ -148,7 +150,7 @@ class GoodsSearchHistoryPage extends StatelessWidget {
               title: item,
               onTap: (text){
                 searchWord = text;
-                this.searchGoods();
+                this.searchGoods(context);
               }
           );
         }).toList(),
@@ -174,17 +176,19 @@ class GoodsSearchHistoryPage extends StatelessWidget {
       ],
     );
 
-    showDialog(context: context, child: alert, barrierDismissible: false
-//        builder: (context){
-//      return alert;
-//    }
-    );
+    showDialog(context: context, child: alert, barrierDismissible: false);
   }
 
   // 开始搜索
-  searchGoods(){
+  searchGoods(context){
+    if (StringUtil.isEmpty(searchWord)) {
+      return;
+    }
+
     print("searchGoods = " + searchWord);
     viewModel.addWord(searchWord);
+    
+    Navigator.of(context).pushNamed(RoutePath.goodsSearchResult, arguments: {"word": searchWord});
   }
 
 }
