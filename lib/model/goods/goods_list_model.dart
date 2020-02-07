@@ -8,6 +8,7 @@ class GoodsListModel {
   int recommendStatus;
   String recommendStatusStr;
   int userId;
+  int numberOrders;
 
   GoodsListModel(
       {this.characteristic,
@@ -18,7 +19,8 @@ class GoodsListModel {
         this.pic,
         this.recommendStatus,
         this.recommendStatusStr,
-        this.userId});
+        this.userId,
+        this.numberOrders});
 
   GoodsListModel.fromJson(Map<String, dynamic> json) {
     characteristic = json['characteristic'];
@@ -30,6 +32,8 @@ class GoodsListModel {
     recommendStatus = json['recommendStatus'];
     recommendStatusStr = json['recommendStatusStr'];
     userId = json['userId'];
+    numberOrders = json['numberOrders'];
+
   }
 
   Map<String, dynamic> toJson() {

@@ -4,7 +4,7 @@ class StringUtil {
 
   // 是否为空
   static bool isEmpty(String string){
-    return string == null && string.length == 0;
+    return string == null || string.length == 0;
   }
 }
 
