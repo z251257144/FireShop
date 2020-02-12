@@ -15,6 +15,7 @@ final routes = {
   RoutePath.password: passwordFunction,
 
   RoutePath.orderList: orderListFunction,
+  RoutePath.addOrder: addOrderFunction,
 
   RoutePath.addressList: addressListFunction,
   RoutePath.addAddress: addAddressFunction,

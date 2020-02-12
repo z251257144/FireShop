@@ -17,13 +17,10 @@ class GoodsDetailViewModel with ChangeNotifier {
   Future fetchGoodsDetial() async {
     var result = await _server.fetchGoodsDetail(id);
     model = GoodsDetailModel.fromJson(result["basicInfo"]);
+    model.addProperties(result["properties"]);
     model.content = result["content"];
-    model.pics = (result["pics"] as List).map((item){
-      for (var key in item.keys) {
-        print("$key  ==  ${item[key].runtimeType}  ==  ${item[key]} ");
-      }
-      return item["pic"];
-    }).toList();
+    model.addPictures(result["pics"]);
+
     notifyListeners();
     return 1;
   }

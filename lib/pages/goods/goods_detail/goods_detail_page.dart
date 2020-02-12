@@ -1,6 +1,7 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_image_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_info_widget.dart';
+import 'package:fire_shop/pages/goods/goods_detail/goods_detail_property_view.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_specification_bar.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_tab_bar.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_details_bottom_bar.dart';
@@ -100,7 +101,6 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
               favButtonTap();
             }
             else if (index == 3) {
-              value2.addGoodsDetail(_viewModel.model);
               addGoodsToCart();
             }
           }
@@ -147,6 +147,9 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   addGoodsToCart() {
 //    var cart = Provider.of<CartViewModel>(context, listen: false);
 //    cart.addGoodsDetail(_viewModel.model);
+
+//    value2.addGoodsDetail(_viewModel.model);
+    GoodsDetailPropertyView(model: _viewModel.model).show(context);
   }
 
   change(index) {

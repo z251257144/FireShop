@@ -8,20 +8,29 @@ import 'package:provider/provider.dart';
 
 class GoodsSearchResultPage extends StatefulWidget {
   final String searchWord;
+  final int categoryId;
 
-  const GoodsSearchResultPage(this.searchWord);
+  const GoodsSearchResultPage({this.searchWord, this.categoryId});
 
   @override
-  _GoodsSearchResultPageState createState() => _GoodsSearchResultPageState(searchWord);
+  _GoodsSearchResultPageState createState() => _GoodsSearchResultPageState(
+    searchWord: searchWord,
+    categoryId: categoryId
+  );
 }
 
 class _GoodsSearchResultPageState extends State<GoodsSearchResultPage> {
 
   final String searchWord;
+  final int categoryId;
 
-  final GoodsSearchResultViewModel _viewModel = GoodsSearchResultViewModel();
+  GoodsSearchResultViewModel _viewModel;
 
-  _GoodsSearchResultPageState(this.searchWord);
+  _GoodsSearchResultPageState({this.searchWord, this.categoryId}) {
+    _viewModel = GoodsSearchResultViewModel();
+    _viewModel.word = searchWord;
+    _viewModel.categoryId = categoryId;
+  }
 
   @override
   Widget build(BuildContext context) {

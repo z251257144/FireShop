@@ -8,4 +8,7 @@ final goodsDetailFunction = (context, {arguments}) => GoodsDetailPage(id: argume
 
 final goodsHistoryFunction = (context, {arguments}) => GoodsSearchHistoryPage();
 
-final goodsSearchResultFunction = (context, {arguments}) => GoodsSearchResultPage(arguments["word"]);
+final goodsSearchResultFunction = (context, {arguments}) => GoodsSearchResultPage(
+  searchWord: arguments["word"],
+  categoryId: arguments["categoryId"]
+);

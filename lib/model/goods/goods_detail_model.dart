@@ -1,3 +1,5 @@
+import 'package:fire_shop/model/goods/goods_property_model.dart';
+
 class GoodsDetailModel {
   int categoryId;
   String characteristic;
@@ -38,6 +40,8 @@ class GoodsDetailModel {
   List pics;
   String content;
 
+  List<GoodsPropertyModel> properties;
+
   GoodsDetailModel(
       {this.categoryId,
         this.characteristic,
@@ -74,7 +78,8 @@ class GoodsDetailModel {
         this.userId,
         this.vetStatus,
         this.views,
-        this.weight});
+        this.weight,
+        this.properties});
 
   GoodsDetailModel.fromJson(Map<String, dynamic> json) {
     categoryId = json['categoryId'];
@@ -155,5 +160,21 @@ class GoodsDetailModel {
     data['views'] = this.views;
     data['weight'] = this.weight;
     return data;
+  }
+
+  addProperties(List json) {
+    if (json != null) {
+      properties = json.map((item){
+        return GoodsPropertyModel.fromJson(item);
+      }).toList();
+    }
+  }
+
+  addPictures(List json) {
+    if (json != null) {
+      pics = json.map((item){
+        return item["pic"];
+      }).toList();
+    }
   }
 }

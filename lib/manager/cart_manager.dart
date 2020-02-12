@@ -13,7 +13,6 @@ class CartManager with ChangeNotifier {
   static final CartManager _instance = CartManager._internal();
 
   CartManager._internal() {
-//    clear();
     read();
   }
 

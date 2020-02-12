@@ -1,5 +1,4 @@
 import 'package:fire_shop/model/goods/goods_list_model.dart';
-import 'package:fire_shop/utils/data_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fire_shop/server/goods_server.dart';
 import 'package:fire_shop/model/home/home_bannar_model.dart';
@@ -51,7 +50,6 @@ class HomeBannerViewModel with ChangeNotifier {
     var param = {"recommendStatus": "1", "pageSize": "20", "page": page};
     List data = await server.fetchGoodsList(param);
     goodsData = data.map((item){
-//      printMapType(item);
       return GoodsListModel.fromJson(item);
     }).toList();
     print(data);

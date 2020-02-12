@@ -3,13 +3,17 @@ import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+typedef CategoryRightCallBack = void Function(int);
+
 class CategoryRightWidget extends StatelessWidget {
 
   final List<CategoryModel> data;
 
   final String pic;
 
-  const CategoryRightWidget({Key key, this.data, this.pic}) : super(key: key);
+  final CategoryRightCallBack onTap;
+
+  const CategoryRightWidget({Key key, this.data, this.pic, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,9 @@ class CategoryRightWidget extends StatelessWidget {
     var model = data[index];
     return InkWell(
       onTap: (){
-        print(model.name);
+        if (onTap != null) {
+          onTap(model.id);
+        }
       },
       child: Container(
         child: Column(

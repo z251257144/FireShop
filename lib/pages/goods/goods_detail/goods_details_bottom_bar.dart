@@ -39,7 +39,8 @@ class GoodsDetailBottomBar extends StatelessWidget {
     }
 
     return Container(
-      height: 48,
+      height: (48+MediaQuery.of(context).padding.bottom),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(

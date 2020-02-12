@@ -5,6 +5,7 @@ class RoutePath {
   static String password = "/password";
 
   static String orderList = "/orderList";
+  static String addOrder = "/addOrder";
 
 
   static String addressList = "/addressList";

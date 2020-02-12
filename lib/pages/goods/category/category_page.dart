@@ -17,7 +17,7 @@ class CategoryPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: SearchBar(onTap: (){
-          this.showSearchView(context);
+          this.showSearchInputView(context);
         }),
       ),
       backgroundColor: Colors.white,
@@ -57,7 +57,13 @@ class CategoryPage extends StatelessWidget {
           var list = model == null ? null : model.subCategoryList;
           var pic = model == null ? null : model.icon;
           return Expanded(
-              child: CategoryRightWidget(data: list, pic: pic)
+            child: CategoryRightWidget(
+              data: list,
+              pic: pic,
+              onTap: (categoryId){
+                showGoodsListView(context, categoryId);
+              },
+            )
           );
         })
     );
@@ -67,7 +73,13 @@ class CategoryPage extends StatelessWidget {
     _viewModel.changeLeftIndex(index);
   }
 
-  showSearchView(context) {
+  showSearchInputView(context) {
     Navigator.of(context).pushNamed(RoutePath.goodsSearch);
+  }
+
+  showGoodsListView(context, categordId) {
+    Navigator.of(context).pushNamed(RoutePath.goodsSearchResult,
+        arguments: {"categoryId": categordId}
+    );
   }
 }

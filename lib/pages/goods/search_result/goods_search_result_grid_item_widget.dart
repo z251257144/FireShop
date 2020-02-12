@@ -34,7 +34,10 @@ class GoodsSearchResultGridItemWidget extends StatelessWidget {
   }
 
   imageView(){
-    return Image.network(model.pic);
+    return Image.network(model.pic,
+      width: itemWith(),
+      height: itemWith(),
+    );
   }
 
   nameLabel(){
@@ -64,9 +67,12 @@ class GoodsSearchResultGridItemWidget extends StatelessWidget {
     );
   }
 
+  static double itemWith(){
+    return (ScreenUtil().setWidth(appScreenWidth) - 40) / 2;
+  }
+
   static double aspectRatio(){
-    double width = (ScreenUtil().setWidth(appScreenWidth) - 40) / 2;
-    print(width);
+    double width = itemWith();
     return width / (width+50);
   }
 }
