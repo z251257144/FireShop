@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/cart/cart_goods_model.dart';
+import 'package:fire_shop/pages/cart/cart_list/cart_number_button.dart';
 import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -88,7 +89,10 @@ class CartItemWidget extends StatelessWidget {
               color: appCommonColor
             ),
           ),
-          Text(model.count.toString())
+          CartNumberButton(
+            defaultValue: model.count,
+            maxValue: 5,
+          )
         ],
       ),
     );

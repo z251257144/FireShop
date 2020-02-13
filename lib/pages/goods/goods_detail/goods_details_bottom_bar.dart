@@ -1,10 +1,11 @@
+import 'package:fire_shop/pages/goods/goods_detail/goods_detail_page.dart';
 import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fire_shop/model/goods/goods_detail_model.dart';
 
-typedef GoodsDetailBottomBarCallback = void Function(int index);
+typedef GoodsDetailBottomBarCallback = void Function(GoodsDetailOperateType);
 
 class GoodsDetailBottomBar extends StatelessWidget {
 
@@ -61,9 +62,12 @@ class GoodsDetailBottomBar extends StatelessWidget {
     );
   }
 
+  // 显示购物车按钮
   cartButton() {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        onTap(GoodsDetailOperateType.showCart);
+      },
       child: Stack(
         children: <Widget>[
           Container(
@@ -106,11 +110,12 @@ class GoodsDetailBottomBar extends StatelessWidget {
     );
   }
 
+  // 收藏按钮
   favButton() {
     var image = isFavorite ? "images/goods/goods_collect_checked.png" : "images/goods/goods_collect.png";
     return InkWell(
       onTap: (){
-        onTap(1);
+        onTap(GoodsDetailOperateType.favorite);
       },
       child: Container(
         width: 60,
@@ -130,9 +135,12 @@ class GoodsDetailBottomBar extends StatelessWidget {
     );
   }
 
+  // 立即购买按钮
   buyButton() {
     return InkWell(
-        onTap: (){},
+        onTap: (){
+          onTap(GoodsDetailOperateType.buyNow);
+        },
         child: Container(
           width: (ScreenUtil().setWidth(appScreenWidth)-120)/2.0,
           alignment: Alignment.center,
@@ -145,10 +153,11 @@ class GoodsDetailBottomBar extends StatelessWidget {
     );
   }
 
+  // 加入购物车按钮
   addToCartButton() {
     return InkWell(
         onTap: (){
-          onTap(3);
+          onTap(GoodsDetailOperateType.addToCart);
         },
         child: Container(
           width: (ScreenUtil().setWidth(appScreenWidth)-120)/2.0,

@@ -1,18 +1,34 @@
 import 'package:fire_shop/model/goods/goods_childs_property_model.dart';
 import 'package:fire_shop/model/goods/goods_detail_model.dart';
 import 'package:fire_shop/model/goods/goods_property_model.dart';
+import 'package:fire_shop/pages/goods/goods_detail/goods_detail_page.dart';
 import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:fire_shop/utils/list_util.dart';
 import 'package:flutter/material.dart';
 
+
+typedef GoodsDetailPropertyCallBack = void Function(GoodsDetailOperateType);
+
+//商品规格、购买数量界面
 class GoodsDetailPropertyView extends StatefulWidget {
   final GoodsDetailModel model;
+  final GoodsDetailOperateType type;
+  final GoodsDetailPropertyCallBack callBack;
 
-  const GoodsDetailPropertyView({Key key, this.model}) : super(key: key);
+  const GoodsDetailPropertyView({
+    Key key,
+    this.model,
+    this.type = GoodsDetailOperateType.addToCart,
+    this.callBack
+  }) : super(key: key);
 
   @override
-  _GoodsDetailPropertyViewState createState() => _GoodsDetailPropertyViewState(model);
+  _GoodsDetailPropertyViewState createState() => _GoodsDetailPropertyViewState(
+    model,
+    type,
+    callBack
+  );
 
   show(context){
     showModalBottomSheet(
@@ -23,14 +39,15 @@ class GoodsDetailPropertyView extends StatefulWidget {
       }
     );
   }
-
 }
 
 class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
 
   final GoodsDetailModel model;
+  final GoodsDetailOperateType type;
+  final GoodsDetailPropertyCallBack callBack;
 
-  _GoodsDetailPropertyViewState(this.model);
+  _GoodsDetailPropertyViewState(this.model, this.type, this.callBack);
 
   int selectedIndex = -1;
 
@@ -98,8 +115,12 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
   }
 
   sureButton(){
-    return InkWell(
+    var title = "加入购物车";
+    if (type == GoodsDetailOperateType.buyNow) {
+      title = "立即购买";
+    }
 
+    return InkWell(
       onTap: (){
         
       },
@@ -211,7 +232,5 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
 
     print(index.toString());
   }
-
-
 
 }

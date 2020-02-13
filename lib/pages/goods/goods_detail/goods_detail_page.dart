@@ -14,6 +14,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+enum GoodsDetailOperateType {
+  showCart,
+  favorite,
+  addToCart,
+  buyNow,
+}
+
 class GoodsDetailPage extends StatefulWidget {
   final String id;
 
@@ -96,12 +103,16 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
           model: _viewModel.model,
           cartCount: value2.cartCount(),
           isFavorite: _viewModel.isFavorite,
-          onTap: (index) {
-            if (index == 1) {
-              favButtonTap();
+          onTap: (type) {
+            if (type == GoodsDetailOperateType.favorite) {
+              this.favoriteGoods();
             }
-            else if (index == 3) {
-              addGoodsToCart();
+            else if (type == GoodsDetailOperateType.buyNow ||
+                    type == GoodsDetailOperateType.addToCart ) {
+              this.showPropertyView(type);
+            }
+            else if (type == GoodsDetailOperateType.showCart) {
+              this.showCart();
             }
           }
         );
@@ -125,8 +136,13 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     );
   }
 
-  // 收藏按钮点击事件
-  favButtonTap() {
+  // 显示购物车
+  showCart() {
+    Fluttertoast.showToast(msg: "显示购物车");
+  }
+
+  // 收藏商品
+  favoriteGoods() {
     if (!UserinfoManager.shared.isLogin) {
       Navigator.of(context).pushNamed(RoutePath.login);
       return;
@@ -144,13 +160,35 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     });
   }
 
-  addGoodsToCart() {
+  // 加入购物车
+  addToCart() {
 //    var cart = Provider.of<CartViewModel>(context, listen: false);
 //    cart.addGoodsDetail(_viewModel.model);
 
 //    value2.addGoodsDetail(_viewModel.model);
-    GoodsDetailPropertyView(model: _viewModel.model).show(context);
   }
+
+  // 立即购买
+  buyNow() {
+
+  }
+
+  // 显示商品规格、购买数量界面
+  showPropertyView(type) {
+    GoodsDetailPropertyView(
+      model: _viewModel.model,
+      type: type,
+      callBack: (type) {
+        if (type == GoodsDetailOperateType.addToCart) {
+          this.addToCart();
+        }
+        else if (type == GoodsDetailOperateType.buyNow) {
+          this.buyNow();
+        }
+      },
+    ).show(context);
+  }
+
 
   change(index) {
     setState(() {
