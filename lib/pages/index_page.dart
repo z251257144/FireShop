@@ -1,3 +1,4 @@
+import 'package:fire_shop/manager/cart_manager.dart';
 import 'package:fire_shop/pages/cart/cart_list/cart_list_page.dart';
 import 'package:fire_shop/pages/goods/category/category_page.dart';
 import 'package:fire_shop/pages/home/home_page.dart';
@@ -62,6 +63,9 @@ class _IndexPageState extends State<IndexPage> {
         items: items,
         currentIndex: _index,
         onTap: (index) {
+          if (index == 2) {
+            this.refreshCart();
+          }
           this.setState((){
             _index = index;
           });
@@ -72,6 +76,10 @@ class _IndexPageState extends State<IndexPage> {
         children: pages,
       ),
     );
+  }
+
+  refreshCart() {
+    CartManager.shared.refreshCartData();
   }
 }
 

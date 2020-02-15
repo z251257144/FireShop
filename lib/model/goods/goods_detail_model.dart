@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/goods/goods_property_model.dart';
+import 'package:fire_shop/utils/list_util.dart';
 
 class GoodsDetailModel {
   int categoryId;
@@ -167,6 +168,14 @@ class GoodsDetailModel {
       properties = json.map((item){
         return GoodsPropertyModel.fromJson(item);
       }).toList();
+    }
+  }
+
+  resetProperties() {
+    if (ListUtil.isNotEmpty(properties)) {
+      properties.forEach((item){
+        item.selectedIndex = 0;
+      });
     }
   }
 

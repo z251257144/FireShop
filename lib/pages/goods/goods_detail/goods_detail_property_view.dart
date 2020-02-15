@@ -30,6 +30,7 @@ class GoodsDetailPropertyView extends StatefulWidget {
     callBack
   );
 
+  // 显示
   show(context){
     showModalBottomSheet(
       context: context,
@@ -48,8 +49,6 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
   final GoodsDetailPropertyCallBack callBack;
 
   _GoodsDetailPropertyViewState(this.model, this.type, this.callBack);
-
-  int selectedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +121,9 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
 
     return InkWell(
       onTap: (){
-        
+        if (callBack != null) {
+          callBack(type);
+        }
       },
       child: Container(
         height: 48,
@@ -177,7 +178,6 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
   }
 
   propertyGridView(GoodsPropertyModel propertyModel){
-
     List list = List<Widget>();
     for (int i=0; i<propertyModel.childsProperties.length; i++) {
       list.add(propertyGridItemView(propertyModel, i));
@@ -227,7 +227,6 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
     }
 
     setState(() {
-//      selectedIndex = index;
     });
 
     print(index.toString());

@@ -1,8 +1,11 @@
 
 import 'dart:convert';
 
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/cart/cart_goods_model.dart';
 import 'package:fire_shop/model/goods/goods_detail_model.dart';
+import 'package:fire_shop/server/cart_server.dart';
+import 'package:fire_shop/utils/list_util.dart';
 import 'package:fire_shop/utils/storage_util.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +16,7 @@ class CartManager with ChangeNotifier {
   static final CartManager _instance = CartManager._internal();
 
   CartManager._internal() {
-    read();
+
   }
 
   factory CartManager() => _instance;
@@ -22,40 +25,72 @@ class CartManager with ChangeNotifier {
 
   List<CartGoodsModel> goodsList = List<CartGoodsModel>();
 
-  // 向购物车添加商品
-  addGoodsDetail(GoodsDetailModel model) {
-    CartGoodsModel goods = getCartGoods(model.id);
-    if (goods == null) {
-      goods = CartGoodsModel.fromGoodsDetail(model);
-      goodsList.insert(0, goods);
-    }
-    goods.count += 1;
-    goods.selected = true;
-    notifyListeners();
+  CartServer _server = CartServer();
 
-    save();
+  // 向购物车添加商品
+  addGoodsDetail(GoodsDetailModel model, int count) async {
+    var param = Map<String, dynamic>();
+    param["goodsId"] = model.id;
+    param["number"] = count;
+    param["token"] = UserinfoManager.shared.user.token;
+
+    if (ListUtil.isNotEmpty(model.properties)) {
+      List sku = List();
+      model.properties.forEach((item){
+        var map = Map<String, dynamic>();
+        map["optionId"] = item.id;
+        map["optionValueId"] = item.selectedChildId();
+        sku.add(map);
+      });
+      param["sku"] = sku.toString();
+      print(sku.toString());
+    }
+
+    var result = await _server.fetchCartAdd(param);
+
+    notifyListeners();
   }
 
-  // 根据商品ID获取购物车商品model
-  getCartGoods(id) {
-    if (id == null) {
-      return null;
+  // 刷新购物车数据
+  refreshCartData() async {
+    if (!UserinfoManager.shared.isLogin) {
+      return;
     }
 
-    CartGoodsModel model;
-    goodsList.forEach((item){
-      if (item.id == id) {
-        model = item;
-      }
+    var token = UserinfoManager.shared.user.token;
+    Map result = await _server.fetchCartData(token);
+    print(result.toString());
+
+    // 解析商品状态
+    List goodsStatus = result["goodsStatus"];
+    var goodsStatusMap = Map<int, dynamic>();
+    goodsStatus.map((item) {
+      goodsStatusMap[item["id"]] = item;
     });
-    return model;
+
+    // 解析商品信息
+    List items = result["items"];
+    if (result != null) {
+      items.forEach((item){
+        var goods = CartGoodsModel.fromJson(item);
+        goods.setStatus(goodsStatusMap[goods.goodsId]);
+        goodsList.add(goods);
+      });
+    }
+
+    notifyListeners();
+  }
+
+  // 清空购物车缓存
+  clear() {
+    StorageUtil.remove(kCartGoodsKey);
   }
 
   // 获取购物车所有商品数量
   int cartCount() {
     int count = 0;
     goodsList.forEach((item){
-      count += item.count;
+      count += item.number;
     });
     return count;
   }
@@ -64,7 +99,6 @@ class CartManager with ChangeNotifier {
   selectGoods(CartGoodsModel model) {
     model.selected = !model.selected;
     notifyListeners();
-    save();
   }
 
   // 设置全部商品是否选中
@@ -73,7 +107,6 @@ class CartManager with ChangeNotifier {
       item.selected = select;
     }
     notifyListeners();
-    save();
   }
 
   // 是否已经全选
@@ -115,39 +148,11 @@ class CartManager with ChangeNotifier {
     double price = 0;
     for (CartGoodsModel item in goodsList) {
       if (item.selected) {
-        price += item.minPrice * item.count;
+        price += item.price * item.number;
       }
     }
 
     return price;
-  }
-
-
-
-  // 缓存购物车商品数据
-  save() {
-    List<String> list = goodsList.map((item){
-      return jsonEncode(item.toJson());
-    }).toList();
-    print(list);
-    StorageUtil.save(kCartGoodsKey, list);
-  }
-
-  // 读取购物车缓存数据
-  read() async {
-    List list = await StorageUtil.getValue<List<String>>(kCartGoodsKey);
-    print(list.toString());
-    if (list != null) {
-      list.forEach((item){
-        var json = jsonDecode(item);
-        goodsList.add(CartGoodsModel.fromJson(json));
-      });
-    }
-  }
-
-  // 清空购物车缓存
-  clear() {
-    StorageUtil.remove(kCartGoodsKey);
   }
 
 }

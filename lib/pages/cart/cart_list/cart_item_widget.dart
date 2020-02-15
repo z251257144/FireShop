@@ -83,14 +83,14 @@ class CartItemWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text("￥ ${model.minPrice.toString()}",
+          Text("￥ ${model.price.toString()}",
             maxLines: 2,
             style: TextStyle(
               color: appCommonColor
             ),
           ),
           CartNumberButton(
-            defaultValue: model.count,
+            defaultValue: model.number,
             maxValue: 5,
           )
         ],
@@ -98,3 +98,9 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

@@ -6,6 +6,7 @@ class RoutePath {
 
   static String orderList = "/orderList";
   static String addOrder = "/addOrder";
+  static String orderConfirm = "/orderConfirm";
 
 
   static String addressList = "/addressList";
@@ -14,5 +15,7 @@ class RoutePath {
   static String goodsDetail = "/goodsDetail";
   static String goodsSearch = "/goodsSearch";
   static String goodsSearchResult = "/goodsSearchResult";
+
+
 
 }

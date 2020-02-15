@@ -1,7 +1,11 @@
 import 'package:fire_shop/manager/cart_manager.dart';
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/cart/cart_goods_model.dart';
 import 'package:fire_shop/pages/cart/cart_list/cart_item_widget.dart';
 import 'package:fire_shop/pages/cart/cart_list/cart_list_bottom_bar.dart';
+import 'package:fire_shop/routes/app_routes.dart';
+import 'package:fire_shop/utils/list_util.dart';
+import 'package:fire_shop/widgets/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +15,24 @@ class CartListPage extends StatefulWidget {
 }
 
 class _CartListPageState extends State<CartListPage> {
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print("didChangeDependencies");
+  }
+
+  @override
+  void didUpdateWidget(CartListPage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget");
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("_CartListPageState");
     return Scaffold(
       backgroundColor: Color(0xfff4f4f4),
       appBar: AppBar(
@@ -22,6 +42,10 @@ class _CartListPageState extends State<CartListPage> {
       body: ChangeNotifierProvider.value(
         value: CartManager(),
         child: Consumer(builder: (_, CartManager value, child) {
+          if (ListUtil.isEmpty(CartManager.shared.goodsList)) {
+            return nodataView();
+          }
+
           return Stack(
             children: <Widget>[
               listView(value),
@@ -35,6 +59,22 @@ class _CartListPageState extends State<CartListPage> {
           );
         }),
       ),
+    );
+  }
+
+  nodataView() {
+    var title = "去添加商品吧";
+    var callback = null;
+    if (!UserinfoManager.shared.isLogin) {
+      title = "登录后享受更多优惠...";
+      callback = () {
+        Navigator.of(context).pushNamed(RoutePath.login);
+      };
+    }
+    return EmptyView(
+      image: "images/cart/cart_empty.png",
+      title: title,
+      callback: callback,
     );
   }
 

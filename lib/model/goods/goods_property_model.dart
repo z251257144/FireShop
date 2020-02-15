@@ -50,4 +50,8 @@ class GoodsPropertyModel {
     data['userId'] = this.userId;
     return data;
   }
+
+  selectedChildId() {
+    return childsProperties[selectedIndex].id;
+  }
 }
