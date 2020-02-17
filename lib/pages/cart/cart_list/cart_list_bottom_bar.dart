@@ -90,7 +90,9 @@ class CartListBottomBar extends StatelessWidget {
   // 下单按钮
   orderButton() {
     return InkWell(
-      onTap: canOrder ? (){} : null,
+      onTap: canOrder ? (){
+        orderCallBack();
+      } : null,
       child: Container(
         alignment: Alignment.center,
         height: 48,

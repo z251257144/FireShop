@@ -57,9 +57,6 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
     return SafeArea(
       child: Container(
         height: 300,
-        decoration: BoxDecoration(
-//            color: Colors.white
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -130,7 +127,7 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
         width: ScreenUtil().setWidth(appScreenWidth),
         color: appCommonColor,
         alignment: Alignment.center,
-        child: Text("加入购物车",
+        child: Text(title,
           style: TextStyle(
             color: Colors.white
           ),
@@ -140,24 +137,30 @@ class _GoodsDetailPropertyViewState extends State<GoodsDetailPropertyView> {
   }
 
   goodsInfoView(){
-    return Container(
-      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(model.name,
-            maxLines: 2,
-            style: TextStyle(
-              fontSize: 16
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Text(model.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: TextStyle(
+                    fontSize: 15
+                ),
+              ),
             ),
-          ),
-          Text("￥${model.minPrice.toString()}",
-            style: TextStyle(
-              color: appCommonColor
-            ),
-          )
-        ],
+            Text("￥${model.minPrice.toString()}",
+              style: TextStyle(
+                  color: appCommonColor
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -109,7 +109,7 @@ class _CartListPageState extends State<CartListPage> {
         this.selectAll(!isSelectAll);
       },
       orderCallBack: (){
-
+        this.showOrderConfirm();
       },
     );
   }
@@ -118,5 +118,9 @@ class _CartListPageState extends State<CartListPage> {
   selectAll(bool select) {
     CartManager.shared.selectAllGoods(select);
   }
-  
+
+  // 显示下单确认页
+  showOrderConfirm() {
+    Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": CartManager.shared.goodsList});
+  }
 }

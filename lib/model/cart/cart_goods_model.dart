@@ -1,5 +1,7 @@
 
+import 'package:fire_shop/model/goods/goods_childs_property_model.dart';
 import 'package:fire_shop/model/goods/goods_detail_model.dart';
+import 'package:fire_shop/model/goods/goods_property_model.dart';
 
 class CartGoodsModel {
   String key;
@@ -45,6 +47,20 @@ class CartGoodsModel {
     logisticsId = json['logisticsId'];
   }
 
+  CartGoodsModel.fromGoodsDetail(GoodsDetailModel model, {int num}) {
+    goodsId = model.id;
+    number = num == null ? 1 : num;
+    if (model.properties != null) {
+      sku = new List<CartSkuModel>();
+      model.properties.forEach((v) {
+        sku.add(new CartSkuModel.fromGoodsProperty(v));
+      });
+    }
+    price = model.minPrice;
+    pic = model.pic;
+    name = model.name;
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['key'] = this.key;
@@ -88,6 +104,15 @@ class CartSkuModel {
     optionValueId = json['optionValueId'];
     optionName = json['optionName'];
     optionValueName = json['optionValueName'];
+  }
+
+  CartSkuModel.fromGoodsProperty(GoodsPropertyModel model) {
+    optionId = model.id;
+    optionName = model.name;
+
+    GoodsChildsPropertyModel childsPropertyModel = model.childsProperties[model.selectedIndex];
+    optionValueId = childsPropertyModel.id;
+    optionValueName = childsPropertyModel.name;
   }
 
   Map<String, dynamic> toJson() {

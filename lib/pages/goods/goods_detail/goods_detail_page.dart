@@ -1,5 +1,5 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
-import 'package:fire_shop/pages/cart/order_confirm/order_confirm_page.dart';
+import 'package:fire_shop/model/cart/cart_goods_model.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_image_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_info_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_property_view.dart';
@@ -164,13 +164,19 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   // 加入购物车
   addToCart() {
     Navigator.of(context).pop();
-    CartManager.shared.addGoodsDetail(_viewModel.model, 1);
+    CartManager.shared.addGoodsDetail(_viewModel.model, 1).then((result){
+      Fluttertoast.showToast(msg: "已加入购物车", gravity: ToastGravity.CENTER);
+    }).catchError((err){
+      Fluttertoast.showToast(msg: err.message);
+    });
   }
 
   // 立即购买
   buyNow() {
     Navigator.of(context).pop();
-    Navigator.of(context).pushNamed(RoutePath.orderConfirm);
+
+    var goodsInfo = CartGoodsModel.fromGoodsDetail(_viewModel.model);
+    Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": [goodsInfo]});
   }
 
   // 显示商品规格、购买数量界面

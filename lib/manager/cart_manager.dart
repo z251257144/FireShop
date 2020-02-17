@@ -28,7 +28,7 @@ class CartManager with ChangeNotifier {
   CartServer _server = CartServer();
 
   // 向购物车添加商品
-  addGoodsDetail(GoodsDetailModel model, int count) async {
+  Future addGoodsDetail(GoodsDetailModel model, int count) async {
     var param = Map<String, dynamic>();
     param["goodsId"] = model.id;
     param["number"] = count;
@@ -47,6 +47,7 @@ class CartManager with ChangeNotifier {
     }
 
     var result = await _server.fetchCartAdd(param);
+    print(result);
 
     notifyListeners();
   }
@@ -71,11 +72,11 @@ class CartManager with ChangeNotifier {
     // 解析商品信息
     List items = result["items"];
     if (result != null) {
-      items.forEach((item){
+      goodsList = items.map((item){
         var goods = CartGoodsModel.fromJson(item);
         goods.setStatus(goodsStatusMap[goods.goodsId]);
-        goodsList.add(goods);
-      });
+        return goods;
+      }).toList();
     }
 
     notifyListeners();

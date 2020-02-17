@@ -71,7 +71,10 @@ class CartItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(model.name),
+            Text(model.name,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
             priceWidget(),
           ],
         ),

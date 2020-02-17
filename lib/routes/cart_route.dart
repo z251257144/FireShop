@@ -9,8 +9,9 @@ final orderListFunction = (context, {arguments}) => OrderListPage(
 final addOrderFunction = (context, {arguments}) => AddOrderPage(
 );
 
-
-
-final orderConfirmFunction = (context, {arguments}) => OrderConfirmPage(
-//  phone: arguments["phone"],
-);
+// ignore: top_level_function_literal_block
+final orderConfirmFunction = (context, {arguments}) {
+  return OrderConfirmPage(
+      goodsList: arguments["goodsList"]
+  );
+};
