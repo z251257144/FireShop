@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/cart/cart_goods_model.dart';
+import 'package:fire_shop/pages/cart/order_confirm/order_confirm_ship_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/pages/cart/order_detail/order_goods_list_view.dart';
 
@@ -28,7 +29,12 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
         title: Text("确认订单"),
       ),
       body: Container(
-        child: OrderGoodsListView(goodsList: goodsList,),
+        child: ListView(
+          children: <Widget>[
+            OrderGoodsListView(goodsList: goodsList),
+            OrderConformShipWidget()
+          ],
+        ),
       ),
     );
   }

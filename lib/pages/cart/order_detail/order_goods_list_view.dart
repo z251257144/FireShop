@@ -14,8 +14,12 @@ class OrderGoodsListView extends StatelessWidget {
     List list = <Widget>[header()];
     list.addAll(goodsViewList());
 
+    double height = OrderGoodsItemWidgetHeight*goodsList.length + 44;
+
     return Container(
+      height: height,
       child: ListView(
+        physics: NeverScrollableScrollPhysics(),
         children: list,
       ),
     );
@@ -23,16 +27,10 @@ class OrderGoodsListView extends StatelessWidget {
 
   header() {
     return Container(
-      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12,
-            width: 0.5
-          )
-        )
-      ),
+      height: 44,
+      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+      alignment: Alignment.centerLeft,
+      color: Colors.white,
       child: Text("商品信息"),
     );
   }

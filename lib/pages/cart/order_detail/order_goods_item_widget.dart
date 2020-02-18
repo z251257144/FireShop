@@ -3,6 +3,8 @@ import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 
+final double OrderGoodsItemWidgetHeight = ScreenUtil().setWidth(175)+30;
+
 class OrderGoodsItemWidget extends StatelessWidget {
   final CartGoodsModel model;
 
@@ -11,12 +13,12 @@ class OrderGoodsItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setWidth(175)+30,
+      height: OrderGoodsItemWidgetHeight,
       padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-              bottom: BorderSide(
+              top: BorderSide(
                   color: Colors.black12,
                   width: 0.5
               )
@@ -25,7 +27,8 @@ class OrderGoodsItemWidget extends StatelessWidget {
       child: Row(
         children: <Widget>[
           imageWidget(),
-          goodsInfoWidget(),
+          centerWidget(),
+          rightWidget()
         ],
       ),
     );
@@ -42,34 +45,47 @@ class OrderGoodsItemWidget extends StatelessWidget {
     );
   }
 
-  goodsInfoWidget() {
+  centerWidget() {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(model.name),
-          priceWidget(),
+          Text(model.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(model.skuString(),
+            maxLines: 2,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 14
+            ),
+          )
         ],
       ),
     );
+//    return ;
   }
 
-  priceWidget() {
+  rightWidget() {
     return Container(
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text("￥ ${model.price.toString()}",
+          Text("￥${model.price.toString()}",
             maxLines: 2,
             style: TextStyle(
-                color: appCommonColor
+                color: Colors.black87
             ),
           ),
-//          CartNumberButton(
-//            defaultValue: model.number,
-//            maxValue: 5,
-//          )
+          Text("x${model.number.toString()}",
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 15
+            ),
+          )
         ],
       ),
     );

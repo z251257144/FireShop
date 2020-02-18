@@ -2,6 +2,7 @@
 import 'package:fire_shop/model/goods/goods_childs_property_model.dart';
 import 'package:fire_shop/model/goods/goods_detail_model.dart';
 import 'package:fire_shop/model/goods/goods_property_model.dart';
+import 'package:fire_shop/utils/list_util.dart';
 
 class CartGoodsModel {
   String key;
@@ -84,6 +85,17 @@ class CartGoodsModel {
 
     status = sta["status"];
     statusStr = sta["statusStr"];
+  }
+
+  skuString() {
+    if (ListUtil.isEmpty(sku)) {
+      return "";
+    }
+
+    List strings = sku.map((item){
+      return "${item.optionName}:${item.optionValueName}";
+    }).toList();
+    return strings.join(" ");
   }
 }
 
