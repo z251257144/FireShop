@@ -1,8 +1,5 @@
-
-import 'dart:convert';
-
 import 'package:fire_shop/manager/userinfo_manager.dart';
-import 'package:fire_shop/model/cart/cart_goods_model.dart';
+import 'package:fire_shop/model/order/cart_goods_model.dart';
 import 'package:fire_shop/model/goods/goods_detail_model.dart';
 import 'package:fire_shop/server/cart_server.dart';
 import 'package:fire_shop/utils/list_util.dart';

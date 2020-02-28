@@ -1,5 +1,5 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
-import 'package:fire_shop/model/cart/cart_goods_model.dart';
+import 'package:fire_shop/model/order/cart_goods_model.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_image_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_info_widget.dart';
 import 'package:fire_shop/pages/goods/goods_detail/goods_detail_property_view.dart';
