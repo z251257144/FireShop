@@ -1,4 +1,6 @@
+import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/member/member_model.dart';
+import 'package:fire_shop/server/order_server.dart';
 import 'package:fire_shop/server/user_server.dart';
 
 class MemeberViewModel {
@@ -59,6 +61,8 @@ class MemeberViewModel {
 
   List<MemberModel> functionData;
 
+  OrderServer _orderServer = OrderServer();
+
   MemeberViewModel() {
     orderData = _orderData.map<MemberModel>((item) => MemberModel.fromData(item))
         .toList();
@@ -67,5 +71,15 @@ class MemeberViewModel {
     functionData = _functionData.map((item) {
       return MemberModel.fromData(item);
     }).toList();
+  }
+
+  Future fetchOrderStatistics() {
+    if (UserinfoManager.shared.isLogin) {
+      var token = UserinfoManager.shared.user.token;
+      var res = _orderServer.fetchOrderStatistics(token);
+      print(res);
+    }
+
+
   }
 }

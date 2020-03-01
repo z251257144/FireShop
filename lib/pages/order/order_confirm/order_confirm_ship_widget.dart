@@ -46,6 +46,10 @@ class OrderConformShipWidget extends StatelessWidget {
   }
 
   addressWidget() {
+    if (this.model == null) {
+      return Container();
+    }
+
     return Container(
       padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: Column(

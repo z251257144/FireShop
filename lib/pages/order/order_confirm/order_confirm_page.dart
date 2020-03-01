@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/order/cart_goods_model.dart';
+import 'package:fire_shop/pages/order/order_confirm/order_confirm_bottom_bar.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_ship_widget.dart';
 import 'package:fire_shop/view_model/order/order_confirm_view_model.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
   @override
   void initState() {
     // TODO: implement initState
+    _viewModel.goodsList = this.goodsList;
     _viewModel.fetchDefaultShippingAddress();
     super.initState();
   }
@@ -38,13 +40,21 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
         backgroundColor: Colors.white,
         title: Text("确认订单"),
       ),
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            OrderGoodsListView(goodsList: goodsList),
-            this.shipWidget(),
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          ListView(
+            children: <Widget>[
+              OrderGoodsListView(goodsList: goodsList),
+              this.shipWidget(),
+            ],
+          ),
+          Positioned(
+            child: this.bottomBar(),
+            bottom: 0,
+            left: 0,
+            right: 0,
+          ),
+        ],
       ),
     );
   }
@@ -56,5 +66,16 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
         return OrderConformShipWidget(model: _viewModel.address);
       }),
     );
+  }
+
+  Widget bottomBar() {
+    return OrderConfirmBottomBar(callback: (){
+      this.submitOrder();
+    },);
+  }
+
+  // 提交订单
+  submitOrder(){
+    _viewModel.fetchCreateOrder();
   }
 }

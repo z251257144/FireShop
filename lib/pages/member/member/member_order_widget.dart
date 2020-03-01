@@ -3,10 +3,13 @@ import 'package:fire_shop/routes/route_path.dart';
 import 'package:fire_shop/view_model/member/member_view_model.dart';
 import 'package:flutter/material.dart';
 
+typedef MemberOrderCallBack = void Function(int);
+
 class MemberOrderWidget extends StatelessWidget {
   final List orderData;
+  final MemberOrderCallBack callBack;
 
-  const MemberOrderWidget({Key key, this.orderData}) : super(key: key);
+  const MemberOrderWidget({Key key, this.orderData, this.callBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,16 +69,17 @@ class MemberOrderWidget extends StatelessWidget {
             crossAxisSpacing: 20.0,
         ),
         itemBuilder: (context, index){
-          return orderItemWidget(context, orderData[index]);
+          return orderItemWidget(index);
         }
       ),
     );
   }
 
-  Widget orderItemWidget(context, MemberModel data) {
+  Widget orderItemWidget(index) {
+    MemberModel data = this.orderData[index];
     return InkWell(
       onTap: (){
-        this.showOrderList(context, data);
+        this.callBack(index);
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -94,9 +98,5 @@ class MemberOrderWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  showOrderList(context, data) {
-    Navigator.of(context).pushNamed(RoutePath.orderList);
   }
 }

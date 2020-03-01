@@ -4,10 +4,13 @@ import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/model/member/member_model.dart';
 
+typedef MemberFunctionCallBack = void Function(int);
+
 class MemberFunctionView extends StatelessWidget {
   final List functionData;
+  final MemberFunctionCallBack callBack;
 
-  const MemberFunctionView({Key key, this.functionData}) : super(key: key);
+  const MemberFunctionView({Key key, this.functionData, this.callBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +32,15 @@ class MemberFunctionView extends StatelessWidget {
             childAspectRatio: 1.2
         ),
         itemBuilder: (context, index) {
-          return this.itemWidget(context, functionData[index]);
+          return this.itemWidget(context, index);
         }
       ),
     );
   }
 
-  Widget itemWidget(context, MemberModel data) {
+  Widget itemWidget(context, index) {
+    MemberModel data = this.functionData[index];
+
     var border = BorderSide(
         color: Colors.black12,
         width: 0.5
@@ -43,7 +48,7 @@ class MemberFunctionView extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        this.showFunctionView(context, data);
+        this.callBack(index);
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(0, ScreenUtil().setWidth(40), 0, 0),
@@ -74,16 +79,5 @@ class MemberFunctionView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  showFunctionView(context, MemberModel data) {
-    print(data.memberType);
-    print("MemberType.address = ${MemberType.address}");
-
-    if (data.memberType == MemberType.address) {
-      if (UserinfoManager.shared.isShowLogin(context)) {
-        Navigator.of(context).pushNamed(RoutePath.addressList);
-      }
-    }
   }
 }

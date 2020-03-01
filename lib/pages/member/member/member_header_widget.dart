@@ -1,12 +1,13 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
-import 'package:fire_shop/pages/member/login/login_page.dart';
-import 'package:fire_shop/routes/route_path.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+typedef MemberHeaderCallBack = void Function(int);
+
 class MemberHeaderWidget extends StatelessWidget {
-  const MemberHeaderWidget({Key key}) : super(key: key);
+  final MemberHeaderCallBack callBack;
+
+  const MemberHeaderWidget({Key key, this.callBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +24,16 @@ class MemberHeaderWidget extends StatelessWidget {
             return UserinfoManager();
         },
         child: Consumer(builder: (context, UserinfoManager provider, child) {
-            return provider.isLogin ? this.hasLoginWidget(context) : this.loginTapWidget(context);
+            return provider.isLogin ? this.hasLoginWidget() : this.loginTapWidget();
         }),
       )
     );
   }
 
-  Widget hasLoginWidget(context) {
+  Widget hasLoginWidget() {
     return InkWell(
         onTap: () {
-          print("logout");
-          this.logout(context);
+          this.callBack(1);
         },
         child: Container(
             margin: EdgeInsets.fromLTRB(0, 58, 0, 0),
@@ -63,11 +63,10 @@ class MemberHeaderWidget extends StatelessWidget {
     );
   }
 
-  Widget loginTapWidget(context) {
+  Widget loginTapWidget() {
     return InkWell(
         onTap: () {
-            print("login");
-            this.showLoginPage(context);
+            this.callBack(1);
         },
         child: Container(
             margin: EdgeInsets.fromLTRB(0, 58, 0, 0),
@@ -95,24 +94,4 @@ class MemberHeaderWidget extends StatelessWidget {
     );
   }
 
-  void logout(context) {
-    var alert = CupertinoAlertDialog(
-      title: Text("是否退出登录?"),
-      actions: <Widget>[
-        CupertinoButton(child: Text("取消"), onPressed: (){
-          Navigator.pop(context);
-        }),
-        CupertinoButton(child: Text("确定"), onPressed: (){
-          UserinfoManager.shared.setLoginInfo(null);
-          Navigator.pop(context);
-        }),
-      ],
-    );
-
-    showDialog(context: context, builder: (_) => alert);
-  }
-  /* 显示登录界面 */
-  void showLoginPage(BuildContext context) {
-    Navigator.of(context).pushNamed(RoutePath.login);
-  }
 }
