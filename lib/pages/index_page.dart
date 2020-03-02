@@ -3,9 +3,12 @@ import 'package:fire_shop/pages/order/cart_list/cart_list_page.dart';
 import 'package:fire_shop/pages/goods/category/category_page.dart';
 import 'package:fire_shop/pages/home/home_page.dart';
 import 'package:fire_shop/pages/member/member/member_page.dart';
+import 'package:fire_shop/view_model/member/member_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fire_shop/utils/device_util.dart';
+import 'package:provider/provider.dart';
+
 
 class IndexPage extends StatefulWidget {
   IndexPage({Key key}) : super(key: key);
@@ -63,12 +66,16 @@ class _IndexPageState extends State<IndexPage> {
         items: items,
         currentIndex: _index,
         onTap: (index) {
-          if (index == 2) {
-            this.refreshCart();
-          }
           this.setState((){
             _index = index;
           });
+
+          if (index == 2) {
+            this.refreshCart();
+          }
+          else if (index == 3) {
+            this.refreshMemberPage();
+          }
         },
       ),
       body: IndexedStack(
@@ -81,5 +88,10 @@ class _IndexPageState extends State<IndexPage> {
   refreshCart() {
     CartManager.shared.refreshCartData();
   }
+
+  refreshMemberPage() {
+    MemberViewModel.shared.fetchOrderStatistics();
+  }
+
 }
 

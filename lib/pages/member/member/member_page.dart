@@ -3,6 +3,7 @@ import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/member/member_model.dart';
 import 'package:fire_shop/utils/const.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'member_header_widget.dart';
 import 'member_order_widget.dart';
 import 'member_function_widget.dart';
@@ -19,7 +20,7 @@ class MemberPage extends StatefulWidget {
 
 class _MemberPageState extends State<MemberPage> {
 
-  MemeberViewModel viewModel = MemeberViewModel();
+  MemberViewModel viewModel = MemberViewModel();
 
   @override
   void initState() {
@@ -85,9 +86,13 @@ class _MemberPageState extends State<MemberPage> {
   }
 
   orderView() {
-    return MemberOrderWidget(orderData: viewModel.orderData, callBack: (index){
-      this.showOrderListView(index);
-    },);
+    return ChangeNotifierProvider.value(
+      value: viewModel,
+      child: Consumer<MemberViewModel>(builder: (context, MemberViewModel value, child){
+        return MemberOrderWidget(orderData: viewModel.orderData, callBack: (index){
+          this.showOrderListView(index);
+        });
+      }),);
   }
 
   functionView() {

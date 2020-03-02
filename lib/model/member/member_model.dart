@@ -4,9 +4,13 @@ class MemberType {
   const MemberType(this._value);
   toString() => 'Enum.$_value';
 
+  // 待付款
   static const orderPay = const MemberType(1);
+  // 代发货
   static const orderDelivering = const MemberType(2);
+  // 待收货
   static const orderShip = const MemberType(3);
+  // 待评价
   static const orderComment = const MemberType(4);
 
   static const address = const MemberType(15);
