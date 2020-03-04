@@ -1,5 +1,6 @@
 import 'package:fire_shop/model/member/member_model.dart';
 import 'package:fire_shop/routes/route_path.dart';
+import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/view_model/member/member_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -82,21 +83,53 @@ class MemberOrderWidget extends StatelessWidget {
         this.callBack(index);
       },
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-        child: Column(
+        child: Stack(
           children: <Widget>[
-            Image.asset(data.icon, width: 20, height: 20,),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Text(data.title,
-                style: TextStyle(
-                    fontSize: 15
+            Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Image.asset(data.icon, width: 20, height: 20,),
                 ),
-              ),
-            )
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Text(data.title,
+                    style: TextStyle(
+                        fontSize: 15
+                    ),
+                  ),
+                )
+              ],
+            ),
+            this.countBadge(data.value)
           ],
         ),
       ),
+    );
+  }
+
+  countBadge(text) {
+    if (text == null || int.parse(text) <=0) {
+      return Container();
+    }
+    return Positioned(
+      top: 10,
+      right: 30,
+      child: Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: appCommonColor,
+          borderRadius: BorderRadius.circular(8),
+
+        ),
+        alignment: Alignment.center,
+        child: Text(text,
+          style: TextStyle(
+              color: Colors.white
+          ),
+        ),
+      )
     );
   }
 }

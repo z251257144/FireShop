@@ -30,6 +30,7 @@ class MemberHeaderWidget extends StatelessWidget {
     );
   }
 
+  // 已登录界面
   Widget hasLoginWidget() {
     return InkWell(
         onTap: () {
@@ -63,10 +64,11 @@ class MemberHeaderWidget extends StatelessWidget {
     );
   }
 
+  // 未登录界面
   Widget loginTapWidget() {
     return InkWell(
         onTap: () {
-            this.callBack(1);
+            this.callBack(0);
         },
         child: Container(
             margin: EdgeInsets.fromLTRB(0, 58, 0, 0),

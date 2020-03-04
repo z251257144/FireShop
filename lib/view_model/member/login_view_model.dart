@@ -1,5 +1,6 @@
 import 'package:fire_shop/server/user_server.dart';
 import 'package:fire_shop/utils/storage_util.dart';
+import 'package:fire_shop/utils/string_uril.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fire_shop/model/member/user_model.dart';
 import 'package:fire_shop/manager/userinfo_manager.dart';
@@ -7,27 +8,31 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fire_shop/utils/validator_util.dart';
 
 const String kLoginUserName = "kLoginUserName";
-const String kLoginPassword = "kLoginPassword";
+const String kLoginUserToken = "kLoginUserToken";
 
 class LoginViewModel {
   UserServer server = UserServer();
 
+  // 自动登录
   autoLogin() async {
 
-    String username = await StorageUtil.getValue<String>(kLoginUserName);
-    String password = await StorageUtil.getValue<String>(kLoginPassword);
-    if (username != null && password != null) {
+    String token = await StorageUtil.getValue<String>(kLoginUserToken);
+    if (token != null && token != null) {
       print("开始自动登录");
-      this.doLogin(username, password);
+      this.fetchUserProfile(token);
     }
   }
 
+  // 点击登录按钮
   Future doLogin(phone, password) async {
     var result = await this.fetchLogin(phone, password);
-    await this.fetchUserProfile(result["token"]);
+    var token = result["token"];
+    if (StringUtil.isNotEmpty(result["token"])) {
+      StorageUtil.save(kLoginUserName, phone);
+      StorageUtil.save(kLoginUserToken, token);
 
-    StorageUtil.save(kLoginUserName, phone);
-    StorageUtil.save(kLoginPassword, password);
+      await this.fetchUserProfile(token);
+    }
   }
 
   // 用户登录

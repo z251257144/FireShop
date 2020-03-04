@@ -141,6 +141,6 @@ class _MemberPageState extends State<MemberPage> {
 
   showNextPage(path, {arguments}) async {
     await Navigator.of(context).pushNamed(path, arguments: arguments);
-    this.viewModel.fetchOrderStatistics();
+//    this.viewModel.fetchOrderStatistics();
   }
 }

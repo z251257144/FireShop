@@ -20,6 +20,11 @@ class OrderServer extends BaseServer {
     return super.requestGetData("order/statistics", param: param);
   }
 
+  // 获取订单列表
+  Future fetchOrderList(param) async {
+    return super.requestPostData("order/list", param: param);
+  }
+
 
 
 

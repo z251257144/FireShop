@@ -1,7 +1,6 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/member/member_model.dart';
 import 'package:fire_shop/server/order_server.dart';
-import 'package:fire_shop/server/user_server.dart';
 import 'package:flutter/cupertino.dart';
 
 final List _orderData = [
@@ -9,21 +8,25 @@ final List _orderData = [
     "title": "待付款",
     "icon": "images/member/orderform_pay.png",
     "type": 1,
+    "valueKey": "count_id_no_pay"
   },
   {
     "title": "待发货",
     "icon": "images/member/orderform_ship.png",
     "type": 2,
+    "valueKey": "count_id_no_transfer"
   },
   {
     "title": "待收货",
     "icon": "images/member/delivering.png",
     "type": 3,
+    "valueKey": "count_id_no_confirm"
   },
   {
     "title": "待评价",
     "icon": "images/member/orderform.png",
     "type": 4,
+    "valueKey": "count_id_close"
   }
 ];
 
@@ -92,22 +95,10 @@ class MemberViewModel with ChangeNotifier {
       var res = await _orderServer.fetchOrderStatistics(token);
 
       for (MemberModel model in this.orderData) {
-        if (model.memberType == MemberType.orderPay) {
-          model.value = res["count_id_no_pay"].toString();
-        }
-        else if (model.memberType == MemberType.orderDelivering) {
-          model.value = res["count_id_no_transfer"].toString();
-        }
-        else if (model.memberType == MemberType.orderShip) {
-          model.value = res["count_id_no_confirm"].toString();
-        }
-        else if (model.memberType == MemberType.orderComment) {
-          model.value = res["count_id_no_reputation"].toString();
-        }
+        model.value = res[model.valueKey].toString();
       }
       print(res);
+      notifyListeners();
     }
-
-
   }
 }
