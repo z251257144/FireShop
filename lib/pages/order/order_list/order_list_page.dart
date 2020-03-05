@@ -2,6 +2,7 @@ import 'package:fire_shop/pages/order/order_list/order_list_item_widget.dart';
 import 'package:fire_shop/utils/const.dart';
 import 'package:fire_shop/utils/list_util.dart';
 import 'package:fire_shop/view_model/order/order_list_view_model.dart';
+import 'package:fire_shop/widgets/LoadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,8 +35,7 @@ class _OrderListPageState extends State<OrderListPage> with SingleTickerProvider
           controller: _tabController,
           indicatorColor: appCommonColor,
           onTap: (index) {
-            _viewModle.typeIndex = index;
-            _viewModle.fetchOrderList();
+            this.tabbarChanged(index);
           },
           tabs: _viewModle.orderTypeConfig.map((e) => Tab(text: e["title"])).toList()
         ),
@@ -67,6 +67,16 @@ class _OrderListPageState extends State<OrderListPage> with SingleTickerProvider
         return OrderListItemWidget(model: model);
       },
     );
+  }
+
+  tabbarChanged(index) {
+    _viewModle.typeIndex = index;
+
+    LoadingDialog().showLoadingView(context);
+    _viewModle.fetchOrderList().whenComplete((){
+      Navigator.of(context).pop();
+    });
+
   }
 
 

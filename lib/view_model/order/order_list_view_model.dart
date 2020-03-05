@@ -40,18 +40,25 @@ class OrderListViewModle with ChangeNotifier {
   List<OrderListModel> orderList;
 
   // 获取订单列表
-  fetchOrderList() async {
+  Future fetchOrderList() async {
     var token = UserinfoManager.shared.user.token;
     var param = {"token": token, "page": page};
     param["status"] = this.orderTypeConfig[this.typeIndex]["type"];
-    var res = await _server.fetchOrderList(param);
-    List tempOrderList = res["orderList"];
-    Map goodsMap = res["goodsMap"];
-    this.orderList = tempOrderList.map((item){
-      MapUtil.printMap(item);
-      return OrderListModel.fromJson(item);
-    }).toList();
+    try {
+      var res = await _server.fetchOrderList(param);
+      List tempOrderList = res["orderList"];
+      Map goodsMap = res["goodsMap"];
+      this.orderList = tempOrderList.map((item){
+        OrderListModel orderListModel = OrderListModel.fromJson(item);
+        orderListModel.goodsList = goodsMap[orderListModel.id.toString()];
+        return orderListModel;
+      }).toList();
+    }
+    catch (err) {
+      this.orderList = [];
+    }
     notifyListeners();
+    return "";
   }
 
 }

@@ -51,6 +51,7 @@ class OrderListItemWidget extends StatelessWidget {
   }
 
   goodsView() {
+
     return Container(
       height: 110,
     );

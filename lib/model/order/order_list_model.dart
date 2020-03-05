@@ -26,6 +26,7 @@ class OrderListModel {
   int type;
   int uid;
   int userId;
+  List goodsList;
 
   OrderListModel(
       {this.amount,

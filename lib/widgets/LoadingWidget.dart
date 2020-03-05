@@ -16,6 +16,17 @@ class LoadingDialog extends StatefulWidget {
 
   @override
   State<LoadingDialog> createState() => _LoadingDialog();
+
+  // 显示等待界面
+  showLoadingView(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return this;
+      }
+    );
+  }
 }
 
 class _LoadingDialog extends State<LoadingDialog> {
