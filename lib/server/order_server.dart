@@ -25,6 +25,12 @@ class OrderServer extends BaseServer {
     return super.requestPostData("order/list", param: param);
   }
 
+  // 获取订单详情
+  Future fetchOrderDetail(token, orderId) async {
+    var param = {"token": token, "id": orderId};
+    return super.requestPostData("order/detail", param: param);
+  }
+
 
 
 

@@ -17,6 +17,7 @@ final routes = {
   RoutePath.orderList: orderListFunction,
   RoutePath.addOrder: addOrderFunction,
   RoutePath.orderConfirm: orderConfirmFunction,
+  RoutePath.orderDetail: orderDetailFunction,
 
   RoutePath.addressList: addressListFunction,
   RoutePath.addAddress: addAddressFunction,

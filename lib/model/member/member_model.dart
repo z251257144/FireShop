@@ -26,6 +26,7 @@ class MemberModel {
   String icon;
   String value;
   String valueKey;
+  int orderIndex = 0;
   MemberType memberType;
 
   MemberModel.fromData(Map<String, dynamic> map) {
@@ -33,6 +34,7 @@ class MemberModel {
     icon = map['icon'];
     value = map['value'];
     valueKey = map['valueKey'];
+    orderIndex = map['orderIndex'];
     memberType = MemberType(map['type']);
   }
 }

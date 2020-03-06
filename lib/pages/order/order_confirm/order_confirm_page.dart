@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/order/cart_goods_model.dart';
+import 'package:fire_shop/model/order/order_goods_model.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_bottom_bar.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_ship_widget.dart';
 import 'package:fire_shop/view_model/order/order_confirm_view_model.dart';
@@ -22,12 +23,16 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
 
   final List<CartGoodsModel> goodsList;
   final OrderConfirmViewModel _viewModel = OrderConfirmViewModel();
+  List<OrderGoodsModel> orderGoodsList;
 
   _OrderConfirmPageState(this.goodsList);
 
   @override
   void initState() {
     // TODO: implement initState
+    this.orderGoodsList = this.goodsList.map((item){
+      return OrderGoodsModel.fromCartGoods(item);
+    }).toList();
     _viewModel.goodsList = this.goodsList;
     _viewModel.fetchDefaultShippingAddress();
     super.initState();
@@ -44,7 +49,7 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
         children: <Widget>[
           ListView(
             children: <Widget>[
-              OrderGoodsListView(goodsList: goodsList),
+              OrderGoodsListView(goodsList: this.orderGoodsList),
               this.shipWidget(),
             ],
           ),

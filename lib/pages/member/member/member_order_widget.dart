@@ -23,32 +23,43 @@ class MemberOrderWidget extends StatelessWidget {
   }
 
   Widget titleWidget() {
-    return Container(
-      margin: EdgeInsets.only(top: 15),
-      padding: EdgeInsets.fromLTRB(15, 15, 0, 15),
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-          color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12,
-            width: 0.5
-          )
-        )
-      ),
-      child: Row(
-        children: <Widget>[
-         Image.asset("images/member/profile_dfunding.png", width: 20, height: 20,),
-          Container(
-            padding: EdgeInsets.only(left: 7),
-            child: Text("我的订单",
-              style: TextStyle(
-                fontSize: 15
-              ),
+    return InkWell(
+      onTap: () {
+        this.callBack(-1);
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 15),
+        padding: EdgeInsets.fromLTRB(15, 15, 0, 15),
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+                bottom: BorderSide(
+                    color: Colors.black12,
+                    width: 0.5
+                )
+            )
+        ),
+        child: Row(
+          children: <Widget>[
+            Image.asset("images/member/profile_dfunding.png", width: 20, height: 20,),
+            Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(left: 7),
+                  child: Text("我的订单",
+                    style: TextStyle(
+                        fontSize: 15
+                    ),
+                  ),
+                )
             ),
-          )
-        ],
-      ),
+            Container(
+              padding: EdgeInsets.only(right: 15),
+              child: Image.asset("images/member/arrow-right.png", width: 10, height: 19,),
+            )
+          ],
+        ),
+      )
     );
   }
 

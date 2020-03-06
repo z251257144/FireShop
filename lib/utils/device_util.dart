@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 
-const double appScreenWidth = 828;
-const double appScreenHeight = 1792;
+const double appScreenWidth = 750;
+const double appScreenHeight = 1134;
 
 class DeviceUtil {
 //  获取当前设备名称

@@ -72,7 +72,7 @@ class _CartListPageState extends State<CartListPage> {
       };
     }
     return EmptyView(
-      image: "images/cart/cart_empty.png",
+      image: "images/order/cart_empty.png",
       title: title,
       callback: callback,
     );
@@ -121,6 +121,9 @@ class _CartListPageState extends State<CartListPage> {
 
   // 显示下单确认页
   showOrderConfirm() {
-    Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": CartManager.shared.goodsList});
+    List goodsList = CartManager.shared.goodsList.where((item){
+      return item.selected;
+    }).toList();
+    Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": goodsList});
   }
 }

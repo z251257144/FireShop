@@ -1,11 +1,12 @@
-import 'package:fire_shop/model/order/cart_goods_model.dart';
+
+import 'package:fire_shop/model/order/order_goods_model.dart';
 import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/material.dart';
 
 final double OrderGoodsItemWidgetHeight = ScreenUtil().setWidth(175)+30;
 
 class OrderGoodsItemWidget extends StatelessWidget {
-  final CartGoodsModel model;
+  final OrderGoodsModel model;
 
   const OrderGoodsItemWidget(this.model);
 
@@ -38,8 +39,11 @@ class OrderGoodsItemWidget extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
       width: ScreenUtil().setWidth(175),
       height: ScreenUtil().setWidth(175),
-      child: Image.network(model.pic,
-        fit: BoxFit.fill,
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Image.network(model.pic,
+            fit: BoxFit.fill,
+          )
       ),
     );
   }
@@ -50,11 +54,11 @@ class OrderGoodsItemWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(model.name,
+          Text(model.goodsName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          Text(model.skuString(),
+          Text(model.property,
             maxLines: 2,
             style: TextStyle(
               color: Colors.black54,
@@ -73,7 +77,7 @@ class OrderGoodsItemWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text("￥${model.price.toString()}",
+          Text("￥${model.amount.toString()}",
             maxLines: 2,
             style: TextStyle(
                 color: Colors.black87

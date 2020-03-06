@@ -8,25 +8,29 @@ final List _orderData = [
     "title": "待付款",
     "icon": "images/member/orderform_pay.png",
     "type": 1,
-    "valueKey": "count_id_no_pay"
+    "valueKey": "count_id_no_pay",
+    "orderIndex": 1
   },
   {
     "title": "待发货",
     "icon": "images/member/orderform_ship.png",
     "type": 2,
-    "valueKey": "count_id_no_transfer"
+    "valueKey": "count_id_no_transfer",
+    "orderIndex": 2
   },
   {
     "title": "待收货",
     "icon": "images/member/delivering.png",
     "type": 3,
-    "valueKey": "count_id_no_confirm"
+    "valueKey": "count_id_no_confirm",
+    "orderIndex": 3
   },
   {
     "title": "待评价",
     "icon": "images/member/orderform.png",
     "type": 4,
-    "valueKey": "count_id_close"
+    "valueKey": "count_id_close",
+    "orderIndex": 4
   }
 ];
 

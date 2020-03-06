@@ -124,8 +124,14 @@ class _MemberPageState extends State<MemberPage> {
     Navigator.of(context).pushNamed(RoutePath.login);
   }
 
+  // 显示订单列表
   showOrderListView(index) {
-    this.showNextPage(RoutePath.orderList);
+    int orderListIndex = 0;
+    if (index >= 0) {
+      MemberModel data = this.viewModel.orderData[index];
+      orderListIndex = data.orderIndex;
+    }
+    this.showNextPage(RoutePath.orderList, arguments: {"orderIndex": orderListIndex});
   }
 
   // 功能菜单点击

@@ -1,15 +1,20 @@
-import 'package:fire_shop/model/order/cart_goods_model.dart';
+
+import 'package:fire_shop/model/order/order_goods_model.dart';
 import 'package:fire_shop/pages/order/order_detail/order_goods_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class OrderGoodsListView extends StatelessWidget {
 
-  final List<CartGoodsModel> goodsList;
+  final List<OrderGoodsModel> goodsList;
 
   const OrderGoodsListView({Key key, this.goodsList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    if (this.goodsList == null || this.goodsList.length == 0) {
+      return this.header();
+    }
 
     List list = <Widget>[header()];
     list.addAll(goodsViewList());
