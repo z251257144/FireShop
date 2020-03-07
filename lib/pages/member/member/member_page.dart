@@ -60,7 +60,6 @@ class _MemberPageState extends State<MemberPage> {
 
   @override
   Widget build(BuildContext context) {
-    viewModel.fetchOrderStatistics();
     return Scaffold(
       backgroundColor: appCommonBackgroudColor,
       body: ListView(
@@ -146,6 +145,11 @@ class _MemberPageState extends State<MemberPage> {
 
 
   showNextPage(path, {arguments}) async {
+    if (!UserinfoManager.shared.isLogin) {
+      Navigator.of(context).pushNamed(RoutePath.login);
+      return;
+    }
+
     await Navigator.of(context).pushNamed(path, arguments: arguments);
 //    this.viewModel.fetchOrderStatistics();
   }

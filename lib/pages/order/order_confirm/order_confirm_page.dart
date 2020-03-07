@@ -1,5 +1,6 @@
 import 'package:fire_shop/model/order/cart_goods_model.dart';
 import 'package:fire_shop/model/order/order_goods_model.dart';
+import 'package:fire_shop/pages/order/order_confirm/order_confirm_amount_widget.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_bottom_bar.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_ship_widget.dart';
 import 'package:fire_shop/view_model/order/order_confirm_view_model.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fire_shop/pages/order/order_detail/order_goods_list_view.dart';
 import 'package:provider/provider.dart';
 
+// 订单确认页
 class OrderConfirmPage extends StatefulWidget {
 
   final List<CartGoodsModel> goodsList;
@@ -49,8 +51,9 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
         children: <Widget>[
           ListView(
             children: <Widget>[
-              OrderGoodsListView(goodsList: this.orderGoodsList),
+              this.goodsWidget(),
               this.shipWidget(),
+              this.amountWidget()
             ],
           ),
           Positioned(
@@ -64,19 +67,44 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
     );
   }
 
-  Widget shipWidget() {
+  // 商品界面
+  Widget goodsWidget() {
+    return Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+      child: OrderGoodsListView(goodsList: this.orderGoodsList),
+    );
+  }
+
+  /* 状态变更 */
+  Widget changeNotifierWidget(Widget widget) {
     return ChangeNotifierProvider.value(
       value: _viewModel,
       child: Consumer(builder: (BuildContext context, OrderConfirmViewModel value, Widget child) {
-        return OrderConformShipWidget(model: _viewModel.address);
+        return widget;
       }),
     );
   }
 
+  // 收货地址
+  Widget shipWidget() {
+    var widget = OrderConformShipWidget(model: _viewModel.address);
+    return this.changeNotifierWidget(widget);
+  }
+
+  /* 订单金额 */
+  Widget amountWidget() {
+    var widget = OrderConfirmAmountWidget(amount: _viewModel.amount);
+    return this.changeNotifierWidget(widget);
+  }
+
+  /* 底部栏 */
   Widget bottomBar() {
-    return OrderConfirmBottomBar(callback: (){
-      this.submitOrder();
-    },);
+    var widget = OrderConfirmBottomBar(
+      amount: _viewModel.amount,
+      callback: (){
+        this.submitOrder();
+      }
+    );
+    return this.changeNotifierWidget(widget);
   }
 
   // 提交订单

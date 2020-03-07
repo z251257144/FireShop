@@ -14,16 +14,20 @@ class OrderConfirmViewModel with ChangeNotifier {
 
   AddressModel address;
 
+  Map amount;
+
   // 获取默认收货地址
   Future fetchDefaultShippingAddress() async {
     var token = UserinfoManager.shared.user.token;
     var res = await _server.fetchDefaultShippingAddress(token);
     this.address = AddressModel.fromJson(res["info"]);
-    print(this.address);
     notifyListeners();
+
+    this.fetchCalculateOrderAmount();
   }
 
-  getCreateOrderParam() {
+  // 拼接订单参数
+  getOrderParam() {
     var token = UserinfoManager.shared.user.token;
     var param = {"token": token};
     param["address"] = this.address.address;
@@ -38,6 +42,7 @@ class OrderConfirmViewModel with ChangeNotifier {
     return param;
   }
 
+  // 拼接商品参数
   getGoodsParam() {
     var goodsParam = [];
     for (CartGoodsModel model in this.goodsList ) {
@@ -53,9 +58,18 @@ class OrderConfirmViewModel with ChangeNotifier {
     return jsonEncode(goodsParam);
   }
 
+  // 计算订单价格
+  Future fetchCalculateOrderAmount() async {
+    var param = this.getOrderParam();
+    param["calculate"] = "true";
+    var res = await _server.fetchCreateOrder(param);
+    this.amount = res;
+    notifyListeners();
+  }
+
   // 创建订单
   Future fetchCreateOrder() async {
-    var param = this.getCreateOrderParam();
+    var param = this.getOrderParam();
     print(param);
     var res = await _server.fetchCreateOrder(param);
     print(res);

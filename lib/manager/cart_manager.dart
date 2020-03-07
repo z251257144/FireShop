@@ -76,27 +76,41 @@ class CartManager with ChangeNotifier {
       }).toList();
     }
 
+    this.updateGoodsSelectStatus();
+
     notifyListeners();
   }
 
-  // 清空购物车缓存
-  clear() {
-    StorageUtil.remove(kCartGoodsKey);
-  }
+  // 从缓存更新商品选择状态
+  updateGoodsSelectStatus() async {
+    if (ListUtil.isEmpty(this.goodsList)){
+      return;
+    }
 
-  // 获取购物车所有商品数量
-  int cartCount() {
-    int count = 0;
-    goodsList.forEach((item){
-      count += item.number;
-    });
-    return count;
+    List goodsKeys = await StorageUtil.getValue<List>(kCartGoodsKey);
+    if (ListUtil.isEmpty(goodsKeys)) {
+      return;
+    }
+
+    for (CartGoodsModel model in this.goodsList) {
+      bool isSelected = goodsKeys.contains(model.key);
+      if (isSelected) {
+        model.selected = isSelected;
+        goodsKeys.remove(model.key);
+      }
+    }
+
+    if (ListUtil.isNotEmpty(goodsKeys)) {
+      this.saveGoodsSelectStatus();
+    }
   }
 
   // 设置商品是否选中
   selectGoods(CartGoodsModel model) {
     model.selected = !model.selected;
     notifyListeners();
+
+    this.saveGoodsSelectStatus();
   }
 
   // 设置全部商品是否选中
@@ -105,6 +119,8 @@ class CartManager with ChangeNotifier {
       item.selected = select;
     }
     notifyListeners();
+
+    this.saveGoodsSelectStatus();
   }
 
   // 是否已经全选
@@ -122,7 +138,7 @@ class CartManager with ChangeNotifier {
     return true;
   }
 
-  // 是否已经全选
+  // 是否有选择商品，即可以下单
   bool canOrder() {
     if (goodsList.length == 0) {
       return false;
@@ -151,6 +167,34 @@ class CartManager with ChangeNotifier {
     }
 
     return price;
+  }
+
+  // 获取购物车所有商品数量
+  int cartCount() {
+    int count = 0;
+    goodsList.forEach((item){
+      count += item.number;
+    });
+    return count;
+  }
+
+  // 缓存商品选择状态
+  saveGoodsSelectStatus() async {
+    List<String> keys = List<String>();
+    if (ListUtil.isNotEmpty(this.goodsList)) {
+      for (CartGoodsModel item in goodsList) {
+        if (item.selected) {
+          keys.add(item.key.toString());
+        }
+      }
+    }
+
+    if (ListUtil.isEmpty(keys)) {
+      StorageUtil.remove(kCartGoodsKey);
+    }
+    else {
+      StorageUtil.save(kCartGoodsKey, keys);
+    }
   }
 
 }

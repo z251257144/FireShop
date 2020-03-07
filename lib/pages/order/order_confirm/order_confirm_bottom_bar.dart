@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 
 class OrderConfirmBottomBar extends StatelessWidget {
 
+  final Map amount;
+
   final GestureTapCallback callback;
 
-  const OrderConfirmBottomBar({Key key, this.callback}) : super(key: key);
+  const OrderConfirmBottomBar({Key key, this.callback, this.amount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (this.amount == null) {
+      return Container();
+    }
+
     double bottom = MediaQuery.of(context).padding.bottom;
     return Container(
       height: (48+bottom),
@@ -26,7 +32,12 @@ class OrderConfirmBottomBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text("价格"),
+          Text("￥${this.amount["amountTotle"]}",
+            style: TextStyle(
+              color: appCommonColor,
+              fontSize: 20
+            ),
+          ),
           this.submitButton()
         ],
       ),

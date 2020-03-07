@@ -88,11 +88,11 @@ class AddressModel {
   }
 
   String fullAddress() {
-    var str = provinceStr + cityStr;
+    var str = provinceStr + " " + cityStr;
     if (areaStr != null) {
-      str += areaStr;
+      str += " " + areaStr;
     }
-    str += address;
+    str += " " + address;
     return str;
   }
 }

@@ -8,6 +8,7 @@ class RoutePath {
   static String addOrder = "/addOrder";
   static String orderConfirm = "/orderConfirm";
   static String orderDetail = "/orderDetail";
+  static String orderPay = "/orderPay";
 
 
   static String addressList = "/addressList";

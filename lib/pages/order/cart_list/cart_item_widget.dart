@@ -94,11 +94,19 @@ class CartItemWidget extends StatelessWidget {
           ),
           CartNumberButton(
             defaultValue: model.number,
-            maxValue: 5,
+            maxValue: 100,
+            callBack: (count) {
+              this.changeGoodsCount(count);
+            },
           )
         ],
       ),
     );
+  }
+
+  //调整商品数量
+  changeGoodsCount(count) {
+
   }
 }
 
