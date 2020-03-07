@@ -1,4 +1,5 @@
 import 'package:fire_shop/manager/userinfo_manager.dart';
+import 'package:fire_shop/model/member/address_model.dart';
 import 'package:fire_shop/model/order/order_detail_model.dart';
 import 'package:fire_shop/model/order/order_goods_model.dart';
 import 'package:fire_shop/server/order_server.dart';
@@ -10,6 +11,7 @@ class OrderDetailViewModel with ChangeNotifier {
 
   OrderDetailModel model;
   List<OrderGoodsModel> goodsList;
+  AddressModel addressModel;
 
   // 获取订单详情
   Future fetchOrderDetail() async {
@@ -21,6 +23,8 @@ class OrderDetailViewModel with ChangeNotifier {
     this.goodsList = goods.map((item){
       return OrderGoodsModel.fromJson(item);
     }).toList();
+    Map logistics = res["logistics"];
+    this.addressModel = AddressModel.fromJson(logistics);
 
     notifyListeners();
   }
