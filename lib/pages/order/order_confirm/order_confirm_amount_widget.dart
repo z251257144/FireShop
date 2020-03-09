@@ -8,6 +8,14 @@ class OrderConfirmAmountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (amount != null) {
+      print("OrderConfirmAmountWidget ===   " + amount.toString());
+    }
+    else {
+      print("OrderConfirmAmountWidget ===   null");
+    }
+
     if (this.amount == null) {
       return Container();
     }

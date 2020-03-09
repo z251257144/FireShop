@@ -124,6 +124,6 @@ class _CartListPageState extends State<CartListPage> {
     List goodsList = CartManager.shared.goodsList.where((item){
       return item.selected;
     }).toList();
-    Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": goodsList});
+    Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": goodsList, "fromCart": true});
   }
 }

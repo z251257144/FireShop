@@ -68,17 +68,32 @@ class CartItemWidget extends StatelessWidget {
   goodsInfoWidget() {
     return Expanded(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(model.name,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
+            this.goodsSKUWidget(),
             priceWidget(),
           ],
         ),
       );
+  }
+
+  goodsSKUWidget() {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.only(top: 3),
+        child: Text(model.skuString(),
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              color: Colors.black38,
+              fontSize: 12
+          ),
+        ),
+      )
+    );
   }
 
   priceWidget() {

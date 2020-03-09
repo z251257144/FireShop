@@ -1,16 +1,20 @@
 
 import 'dart:convert';
 
+import 'package:fire_shop/manager/cart_manager.dart';
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/member/address_model.dart';
 import 'package:fire_shop/model/order/cart_goods_model.dart';
+import 'package:fire_shop/server/cart_server.dart';
 import 'package:fire_shop/server/order_server.dart';
 import 'package:flutter/cupertino.dart';
 
 class OrderConfirmViewModel with ChangeNotifier {
   var _server = OrderServer();
+  CartServer _cartServer = CartServer();
 
   List<CartGoodsModel> goodsList;
+  bool fromCart = false;
 
   AddressModel address;
 
@@ -47,12 +51,15 @@ class OrderConfirmViewModel with ChangeNotifier {
     var goodsParam = [];
     for (CartGoodsModel model in this.goodsList ) {
       Map<String, dynamic> param = {"goodsId":model.goodsId,
-                  "number":model.number,
-                  "logisticsType":0};
-      List<String> list = model.sku.map((item){
-        return "${item.optionId}:${item.optionValueId}";
-      }).toList();
-      param["propertyChildIds"] = list.join(",");
+        "number":model.number,
+        "logisticsType":0};
+      if (model.sku != null) {
+        // 有SKU信息
+        List<String> list = model.sku.map((item){
+          return "${item.optionId}:${item.optionValueId}";
+        }).toList();
+        param["propertyChildIds"] = list.join(",");
+      }
       goodsParam.add(param);
     }
     return jsonEncode(goodsParam);
@@ -71,9 +78,25 @@ class OrderConfirmViewModel with ChangeNotifier {
   Future fetchCreateOrder() async {
     var param = this.getOrderParam();
     print(param);
-    var res = await _server.fetchCreateOrder(param);
-    print(res);
-    notifyListeners();
+
+    try {
+      var res = await _server.fetchCreateOrder(param);
+
+      if (this.fromCart != null && this.fromCart) {
+        // 删除购物车已下单记录
+        var keys = this.goodsList.map((item){
+          return item.key;
+        }).toList().join(",");
+        CartManager.shared.removeCartRecord(keys);
+      }
+      return res;
+    }
+    catch (err){
+      return err;
+    }
   }
+
+
+
 
 }

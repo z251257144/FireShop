@@ -9,6 +9,13 @@ class OrderConformShipWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (model != null) {
+      print("OrderConformShipWidget ===   " + model.toJson().toString());
+    }
+    else {
+      print("OrderConformShipWidget ===   null");
+    }
+
 
     return Container(
       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),

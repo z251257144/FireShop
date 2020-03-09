@@ -18,14 +18,15 @@ final addOrderFunction = (context, {arguments}) => AddOrderPage(
 // ignore: top_level_function_literal_block
 final orderConfirmFunction = (context, {arguments}) {
   return OrderConfirmPage(
-      goodsList: arguments["goodsList"]
+    goodsList: arguments["goodsList"],
+    fromCart: arguments["fromCart"],
   );
 };
 
 // ignore: top_level_function_literal_block
 final orderPayFunction = (context, {arguments}) {
   return OrderPayPage(
-//      orderId: arguments["orderId"].toString()
+      orderId: arguments["orderId"].toString()
   );
 };
 

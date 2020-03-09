@@ -4,8 +4,10 @@ import 'package:fire_shop/pages/order/order_confirm/order_confirm_amount_widget.
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_bottom_bar.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_ship_widget.dart';
 import 'package:fire_shop/view_model/order/order_confirm_view_model.dart';
+import 'package:fire_shop/widgets/LoadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_shop/pages/order/order_detail/order_goods_list_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 // 订单确认页
@@ -13,25 +15,32 @@ class OrderConfirmPage extends StatefulWidget {
 
   final List<CartGoodsModel> goodsList;
 
-  const OrderConfirmPage({Key key, this.goodsList}) : super(key: key);
+  // 是否从购物车进入订单确认页
+  final bool fromCart;
+
+  const OrderConfirmPage({Key key, this.goodsList, this.fromCart}) : super(key: key);
 
   @override
   _OrderConfirmPageState createState() => _OrderConfirmPageState(
-    goodsList
+    this.goodsList,
+    this.fromCart
   );
 }
 
 class _OrderConfirmPageState extends State<OrderConfirmPage> {
 
   final List<CartGoodsModel> goodsList;
+  final bool fromCart;
+
   final OrderConfirmViewModel _viewModel = OrderConfirmViewModel();
   List<OrderGoodsModel> orderGoodsList;
 
-  _OrderConfirmPageState(this.goodsList);
+  _OrderConfirmPageState(this.goodsList, this.fromCart);
 
   @override
   void initState() {
     // TODO: implement initState
+    this._viewModel.fromCart = fromCart;
     this.orderGoodsList = this.goodsList.map((item){
       return OrderGoodsModel.fromCartGoods(item);
     }).toList();
@@ -74,41 +83,55 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
     );
   }
 
-  /* 状态变更 */
-  Widget changeNotifierWidget(Widget widget) {
+  // 收货地址
+  Widget shipWidget() {
     return ChangeNotifierProvider.value(
       value: _viewModel,
       child: Consumer(builder: (BuildContext context, OrderConfirmViewModel value, Widget child) {
-        return widget;
+        return OrderConformShipWidget(model: _viewModel.address);
       }),
     );
   }
 
-  // 收货地址
-  Widget shipWidget() {
-    var widget = OrderConformShipWidget(model: _viewModel.address);
-    return this.changeNotifierWidget(widget);
-  }
-
   /* 订单金额 */
   Widget amountWidget() {
-    var widget = OrderConfirmAmountWidget(amount: _viewModel.amount);
-    return this.changeNotifierWidget(widget);
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: Consumer(builder: (BuildContext context, OrderConfirmViewModel value, Widget child) {
+        return OrderConfirmAmountWidget(amount: _viewModel.amount);
+      }),
+    );
   }
 
   /* 底部栏 */
   Widget bottomBar() {
-    var widget = OrderConfirmBottomBar(
-      amount: _viewModel.amount,
-      callback: (){
-        this.submitOrder();
-      }
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: Consumer(builder: (BuildContext context, OrderConfirmViewModel value, Widget child) {
+        return OrderConfirmBottomBar(
+            amount: _viewModel.amount,
+            callback: (){
+              this.submitOrder();
+            }
+        );
+      }),
     );
-    return this.changeNotifierWidget(widget);
   }
 
   // 提交订单
   submitOrder(){
-    _viewModel.fetchCreateOrder();
+    LoadingDialog(loadingText: "正在提交订单...").showLoadingView(context);
+    _viewModel.fetchCreateOrder().then((res){
+      // 订单提交成功
+    }).catchError((err){
+      Fluttertoast.showToast(msg: err.message, gravity: ToastGravity.CENTER);
+    }).whenComplete((){
+      Navigator.of(context).pop();
+    });
+  }
+
+  // 显示支付订单界面
+  showOrderPayView() {
+
   }
 }

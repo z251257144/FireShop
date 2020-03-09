@@ -26,6 +26,7 @@ class CartListBottomBar extends StatelessWidget {
     return Container(
       height: 48,
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border(
           top: BorderSide(
             color: Colors.black26,

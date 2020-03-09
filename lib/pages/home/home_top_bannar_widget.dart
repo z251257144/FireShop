@@ -59,9 +59,10 @@ class HomeTopBannarWidget extends StatelessWidget {
   }
 
   onTap(HomeBannarModel model, context) {
-    if (model.linkUrl == RoutePath.goodsDetail) {
-      Navigator.of(context).pushNamed(RoutePath.goodsDetail, arguments: {"id": model.remark});
-    }
+//    if (model.linkUrl == RoutePath.goodsDetail) {
+//      Navigator.of(context).pushNamed(RoutePath.goodsDetail, arguments: {"id": model.remark});
+//    }
+    Navigator.of(context).pushNamed(RoutePath.orderPay, arguments: {"orderId": 471813});
   }
 
 

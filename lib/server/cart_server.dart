@@ -25,4 +25,12 @@ class CartServer extends BaseServer {
     param["number"] = number;
     return super.requestPostData("shopping-cart/modifyNumber", param: param);
   }
+
+  // 移除购物车中某条记录
+  Future fetchRemoveCartRecord(token, key) async {
+    var param = Map<String, dynamic>();
+    param["token"] = token;
+    param["key"] = key;
+    return super.requestPostData("shopping-cart/remove", param: param);
+  }
 }

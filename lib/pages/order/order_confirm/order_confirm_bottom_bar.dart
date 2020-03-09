@@ -12,6 +12,14 @@ class OrderConfirmBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (amount != null) {
+      print("OrderConfirmBottomBar ===   " + amount.toString());
+    }
+    else {
+      print("OrderConfirmBottomBar ===   null");
+    }
+
+
     if (this.amount == null) {
       return Container();
     }

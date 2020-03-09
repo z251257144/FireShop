@@ -105,6 +105,14 @@ class CartManager with ChangeNotifier {
     }
   }
 
+  // 删除购物车记录
+  removeCartRecord(keys) async {
+    var token = UserinfoManager.shared.user.token;
+    var res = await _server.fetchRemoveCartRecord(token, keys);
+    print(res);
+    notifyListeners();
+  }
+
   // 设置商品是否选中
   selectGoods(CartGoodsModel model) {
     model.selected = !model.selected;
