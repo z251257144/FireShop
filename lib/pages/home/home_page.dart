@@ -1,4 +1,3 @@
-import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/pages/goods/goods_recommend/goods_recommend_widget.dart';
 import 'package:fire_shop/pages/home/home_hot_widget.dart';
 import 'package:fire_shop/pages/home/home_sales_widget.dart';
@@ -23,7 +22,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     memoizer.runOnce(() async {
       this.autoLogin();
       viewModel.getBannerData();

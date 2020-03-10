@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:fire_shop/model/order/order_detail_model.dart';
 import 'package:fire_shop/pages/order/order_pay/order_pay_info_widget.dart';
 import 'package:fire_shop/pages/order/order_pay/order_payment_list_view.dart';
 import 'package:fire_shop/utils/const.dart';
@@ -25,8 +28,6 @@ class _OrderPayPageState extends State<OrderPayPage> {
   OrderPayViewModel _viewModel = OrderPayViewModel();
 
   _OrderPayPageState(this.orderId);
-
-//  RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -71,8 +72,11 @@ class _OrderPayPageState extends State<OrderPayPage> {
   }
 
   bodyView(){
-    if (_viewModel.model == null) {
-      return Container();
+    if (_viewModel.model == null ) {
+      return Center(child: Text("数据异常"));
+    }
+    else if (_viewModel.model.status != OrderStatus.unpay) {
+      return Center(child: Text(_viewModel.model.statusStr));
     }
     else {
       return this.refresher();
@@ -100,7 +104,12 @@ class _OrderPayPageState extends State<OrderPayPage> {
 
   // 订单信息界面
   infoView() {
-    return OrderPayInfoWidget();
+    return OrderPayInfoWidget(
+      model: this._viewModel.model,
+      callBack: (){
+        this._viewModel.fetchOrderDetail();
+      },
+    );
   }
 
   // 支付方式界面

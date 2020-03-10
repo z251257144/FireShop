@@ -1,4 +1,5 @@
 import 'package:fire_shop/model/order/order_detail_model.dart';
+import 'package:fire_shop/utils/const.dart';
 import 'package:flutter/material.dart';
 
 class OrderDetailAmountWidget extends StatelessWidget {
@@ -30,25 +31,29 @@ class OrderDetailAmountWidget extends StatelessWidget {
 
   // 商品金额
   goodsAmountWidget() {
-    return this.singleAmountWidget("商品金额", "￥${this.model.amount}");
+    return this.singleAmountWidget("商品金额", "￥${this.model.amount}", Colors.black);
   }
 
   // 运费
   logisticsAmountWidget() {
-    return this.singleAmountWidget("运费", "+ ￥${this.model.amountLogistics}");
+    return this.singleAmountWidget("运费", "+ ￥${this.model.amountLogistics}", Colors.black);
   }
 
   // 实付金额
   realAmountWidget() {
-    return this.singleAmountWidget("实付金额", "￥${this.model.amountReal}");
+    return this.singleAmountWidget("实付金额", "￥${this.model.amountReal}", appCommonColor);
   }
 
-  singleAmountWidget(title, amount){
+  singleAmountWidget(title, amount, color){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(title),
-        Text(amount)
+        Text(amount,
+          style: TextStyle(
+            color: color
+          )
+        )
       ],
     );
   }

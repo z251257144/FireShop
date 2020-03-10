@@ -58,7 +58,7 @@ class OrderGoodsItemWidget extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          Text(model.property,
+          Text(model.property ?? "",
             maxLines: 2,
             style: TextStyle(
               color: Colors.black54,

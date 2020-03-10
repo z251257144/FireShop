@@ -1,3 +1,28 @@
+
+
+class OrderStatus {
+  final int value;
+  const OrderStatus(this.value);
+
+  // 已关闭
+  static const close = const OrderStatus(-1);
+  // 待付款
+  static const unpay = const OrderStatus(0);
+  // 代发货
+  static const undelivering = const OrderStatus(1);
+  // 待收货
+  static const unship = const OrderStatus(2);
+  // 待评价
+  static const uncomment = const OrderStatus(3);
+  // 已评价
+  static const complete = const OrderStatus(3);
+
+  @override
+  bool operator ==(other) {
+    return value == other.value;
+  }
+}
+
 class OrderDetailModel {
   double amount;
   double amountLogistics;
@@ -21,7 +46,7 @@ class OrderDetailModel {
   int score;
   int scoreDeduction;
   int shopId;
-  int status;
+  OrderStatus status;
   String statusStr;
   int type;
   int uid;
@@ -79,7 +104,7 @@ class OrderDetailModel {
     score = json['score'];
     scoreDeduction = json['scoreDeduction'];
     shopId = json['shopId'];
-    status = json['status'];
+    status = OrderStatus(json['status']);
     statusStr = json['statusStr'];
     type = json['type'];
     uid = json['uid'];
@@ -110,7 +135,7 @@ class OrderDetailModel {
     data['score'] = this.score;
     data['scoreDeduction'] = this.scoreDeduction;
     data['shopId'] = this.shopId;
-    data['status'] = this.status;
+    data['status'] = this.status.value;
     data['statusStr'] = this.statusStr;
     data['type'] = this.type;
     data['uid'] = this.uid;

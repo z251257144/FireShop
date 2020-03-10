@@ -3,6 +3,7 @@ import 'package:fire_shop/model/order/order_goods_model.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_amount_widget.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_bottom_bar.dart';
 import 'package:fire_shop/pages/order/order_confirm/order_confirm_ship_widget.dart';
+import 'package:fire_shop/routes/app_routes.dart';
 import 'package:fire_shop/view_model/order/order_confirm_view_model.dart';
 import 'package:fire_shop/widgets/LoadingWidget.dart';
 import 'package:flutter/material.dart';
@@ -123,6 +124,9 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
     LoadingDialog(loadingText: "正在提交订单...").showLoadingView(context);
     _viewModel.fetchCreateOrder().then((res){
       // 订单提交成功
+      Future.delayed(Duration(microseconds: 200), (){
+        this.showOrderPayView(res["id"]);
+      });
     }).catchError((err){
       Fluttertoast.showToast(msg: err.message, gravity: ToastGravity.CENTER);
     }).whenComplete((){
@@ -131,7 +135,7 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
   }
 
   // 显示支付订单界面
-  showOrderPayView() {
-
+  showOrderPayView(orderId) {
+    Navigator.of(context).pushReplacementNamed(RoutePath.orderPay, arguments: {"orderId": orderId});
   }
 }

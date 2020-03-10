@@ -23,8 +23,10 @@ class OrderDetailViewModel with ChangeNotifier {
     this.goodsList = goods.map((item){
       return OrderGoodsModel.fromJson(item);
     }).toList();
-    Map logistics = res["logistics"];
-    this.addressModel = AddressModel.fromJson(logistics);
+    if (this.model.status != OrderStatus.close) {
+      Map logistics = res["logistics"];
+      this.addressModel = AddressModel.fromJson(logistics);
+    }
 
     notifyListeners();
   }
