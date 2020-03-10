@@ -5,12 +5,13 @@ import 'package:fire_shop/utils/device_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef CartItemSelectCallback = void Function(CartGoodsModel model);
+typedef CartItemSelectCallback = void Function(CartGoodsModel model, bool isEdit);
 
 class CartItemWidget extends StatelessWidget {
 
-  const CartItemWidget({Key key, this.model, this.selectCallback}) : super(key: key);
+  const CartItemWidget({Key key, this.model, this.selectCallback, this.isEdit}) : super(key: key);
 
+  final bool isEdit;
   final CartGoodsModel model;
   final CartItemSelectCallback selectCallback;
 
@@ -39,21 +40,28 @@ class CartItemWidget extends StatelessWidget {
   }
 
   selectButton() {
+    var icon = Icons.check_circle;
+    if (this.isEdit) {
+      icon = model.removeSelected ? Icons.check_circle: Icons.radio_button_unchecked;
+    }
+    else {
+      icon = model.selected ? Icons.check_circle: Icons.radio_button_unchecked;
+    }
     return InkWell(
       onTap: (){
         if (selectCallback != null && model != null) {
-          selectCallback(model);
+          selectCallback(model, this.isEdit);
         }
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
         width: 25,
-        child: model.selected ? Icon(Icons.check_circle, color: appCommonColor, size: 25,)
-            : Icon(Icons.radio_button_unchecked, color: appCommonColor, size: 25,),
+        child: Icon(icon, color: appCommonColor, size: 25,)
       ),
     );
   }
 
+  //商品图片
   imageWidget() {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -65,6 +73,7 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 
+  // 商品信息
   goodsInfoWidget() {
     return Expanded(
         child: Column(
@@ -81,6 +90,7 @@ class CartItemWidget extends StatelessWidget {
       );
   }
 
+  // 商品SKU信息
   goodsSKUWidget() {
     return Expanded(
       child: Container(
@@ -107,15 +117,24 @@ class CartItemWidget extends StatelessWidget {
               color: appCommonColor
             ),
           ),
-          CartNumberButton(
-            defaultValue: model.number,
-            maxValue: 100,
-            callBack: (count) {
-              this.changeGoodsCount(count);
-            },
-          )
+          this.numberButton()
         ],
       ),
+    );
+  }
+
+  // 数量调整按钮
+  numberButton(){
+    if (this.isEdit) {
+      return Container();
+    }
+
+    return CartNumberButton(
+      defaultValue: model.number,
+      maxValue: 100,
+      callBack: (count) {
+        this.changeGoodsCount(count);
+      },
     );
   }
 

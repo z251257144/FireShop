@@ -86,7 +86,7 @@ class OrderConfirmViewModel with ChangeNotifier {
         // 删除购物车已下单记录
         var keys = this.goodsList.map((item){
           return item.key;
-        }).toList().join(",");
+        }).toList();
         CartManager.shared.removeCartRecord(keys);
       }
       return res;

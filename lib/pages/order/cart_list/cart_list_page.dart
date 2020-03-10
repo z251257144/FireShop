@@ -1,12 +1,15 @@
 import 'package:fire_shop/manager/cart_manager.dart';
 import 'package:fire_shop/manager/userinfo_manager.dart';
 import 'package:fire_shop/model/order/cart_goods_model.dart';
+import 'package:fire_shop/pages/index_page.dart';
 import 'package:fire_shop/pages/order/cart_list/cart_item_widget.dart';
 import 'package:fire_shop/pages/order/cart_list/cart_list_bottom_bar.dart';
 import 'package:fire_shop/routes/app_routes.dart';
 import 'package:fire_shop/utils/list_util.dart';
+import 'package:fire_shop/widgets/LoadingWidget.dart';
 import 'package:fire_shop/widgets/empty_view.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class CartListPage extends StatefulWidget {
@@ -15,6 +18,8 @@ class CartListPage extends StatefulWidget {
 }
 
 class _CartListPageState extends State<CartListPage> {
+
+  bool isEdit = false;
 
   @override
   void didChangeDependencies() {
@@ -38,6 +43,18 @@ class _CartListPageState extends State<CartListPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("购物车"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(isEdit? "完成" : "编辑",
+              style: TextStyle(
+                  fontSize: 16
+              ),
+            ),
+            onPressed: () {
+              this.editButtonTaped();
+            },
+          )
+        ],
       ),
       body: ChangeNotifierProvider.value(
         value: CartManager(),
@@ -87,8 +104,9 @@ class _CartListPageState extends State<CartListPage> {
         CartGoodsModel model = value.goodsList[index];
         return CartItemWidget(
           model: model,
-          selectCallback: (_) {
-            value.selectGoods(model);
+          isEdit: this.isEdit,
+          selectCallback: (_, isEdit) {
+            value.selectGoods(model, isEdit);
           },
         );
       }
@@ -97,26 +115,30 @@ class _CartListPageState extends State<CartListPage> {
 
   // 购物车底部操作栏
   bottomBar() {
-    bool isSelectAll = CartManager.shared.isSelectAll();
-    bool canOrder = CartManager.shared.canOrder();
+    bool isSelectAll = CartManager.shared.isSelectAll(this.isEdit);
+    bool canOrder = CartManager.shared.hasSelectedGoods(this.isEdit);
     double price = CartManager.shared.goodsPrice();
 
     return CartListBottomBar(
       isSelectAll: isSelectAll,
       canOrder: canOrder,
       price: price,
+      isEdit: this.isEdit,
       selectCallBack: () {
         this.selectAll(!isSelectAll);
       },
       orderCallBack: (){
         this.showOrderConfirm();
       },
+      removeCallBack: (){
+        this.removeSelectedGoods();
+      },
     );
   }
 
   // 设置全部商品是否选中
   selectAll(bool select) {
-    CartManager.shared.selectAllGoods(select);
+    CartManager.shared.selectAllGoods(select, this.isEdit);
   }
 
   // 显示下单确认页
@@ -125,5 +147,41 @@ class _CartListPageState extends State<CartListPage> {
       return item.selected;
     }).toList();
     Navigator.of(context).pushNamed(RoutePath.orderConfirm, arguments: {"goodsList": goodsList, "fromCart": true});
+  }
+
+  // 编辑按钮点击
+  editButtonTaped() {
+    if (ListUtil.isEmpty(CartManager.shared.goodsList)) {
+      Fluttertoast.showToast(msg: "暂无商品，无法编辑", gravity: ToastGravity.CENTER);
+      return;
+    }
+
+    if (this.isEdit) {
+      CartManager.shared.selectAllGoods(false, this.isEdit);
+    }
+
+    this.setState((){
+      isEdit = !isEdit;
+    });
+  }
+
+  // 删除选中的商品
+  removeSelectedGoods(){
+    if (!CartManager.shared.hasSelectedGoods(this.isEdit)) {
+      Fluttertoast.showToast(msg: "您没有选中商品", gravity: ToastGravity.CENTER);
+      return;
+    }
+
+    var keys = [];
+    for (CartGoodsModel item in CartManager.shared.goodsList) {
+      if (item.removeSelected) {
+        keys.add(item.key);
+      }
+    }
+
+    LoadingDialog().showLoadingView(context);
+    CartManager.shared.removeCartRecord(keys);
+
+
   }
 }

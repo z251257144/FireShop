@@ -106,33 +106,65 @@ class CartManager with ChangeNotifier {
   }
 
   // 删除购物车记录
-  removeCartRecord(keys) async {
+  removeCartRecord(List keys) async {
     var token = UserinfoManager.shared.user.token;
-    var res = await _server.fetchRemoveCartRecord(token, keys);
-    print(res);
+    var res = await _server.fetchRemoveCartRecord(token, keys.join(","));
+//    keys
+    for (CartGoodsModel item in goodsList) {
+//      if () {
+//
+//      }
+    }
     notifyListeners();
   }
 
   // 设置商品是否选中
-  selectGoods(CartGoodsModel model) {
-    model.selected = !model.selected;
-    notifyListeners();
+  selectGoods(CartGoodsModel model, bool isEdit) {
+    if (isEdit) {
+      model.removeSelected = !model.removeSelected;
+      notifyListeners();
+    }
+    else {
+      model.selected = !model.selected;
+      notifyListeners();
 
-    this.saveGoodsSelectStatus();
+      this.saveGoodsSelectStatus();
+    }
   }
 
   // 设置全部商品是否选中
-  selectAllGoods(bool select) {
-    for (CartGoodsModel item in goodsList) {
-      item.selected = select;
+  selectAllGoods(bool select, bool isEdit) {
+    if (isEdit) {
+      for (CartGoodsModel item in goodsList) {
+        item.removeSelected = select;
+      }
+      notifyListeners();
     }
-    notifyListeners();
+    else {
+      for (CartGoodsModel item in goodsList) {
+        item.selected = select;
+      }
+      notifyListeners();
 
-    this.saveGoodsSelectStatus();
+      this.saveGoodsSelectStatus();
+    }
   }
 
   // 是否已经全选
-  bool isSelectAll() {
+  bool isSelectAll(bool isEdit) {
+    if (isEdit) {
+      if (goodsList.length == 0) {
+        return false;
+      }
+
+      for (CartGoodsModel item in goodsList) {
+        if (!item.removeSelected) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     if (goodsList.length == 0) {
       return false;
     }
@@ -146,8 +178,22 @@ class CartManager with ChangeNotifier {
     return true;
   }
 
-  // 是否有选择商品，即可以下单
-  bool canOrder() {
+  // 是否有选择商品
+  bool hasSelectedGoods(bool isEdit) {
+    if (isEdit) {
+      if (goodsList.length == 0) {
+        return false;
+      }
+
+      for (CartGoodsModel item in goodsList) {
+        if (item.removeSelected) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     if (goodsList.length == 0) {
       return false;
     }

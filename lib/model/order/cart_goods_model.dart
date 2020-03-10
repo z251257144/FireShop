@@ -19,6 +19,7 @@ class CartGoodsModel {
   String statusStr;
 
   bool selected = false;
+  bool removeSelected = false;
 
   CartGoodsModel(
       {this.key,

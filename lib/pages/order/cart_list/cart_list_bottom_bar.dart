@@ -11,15 +11,19 @@ class CartListBottomBar extends StatelessWidget {
         this.price = 0,
         this.canOrder = false,
         this.selectCallBack,
-        this.orderCallBack})
+        this.orderCallBack,
+        this.isEdit,
+        this.removeCallBack})
       : super(key: key);
 
   final bool isSelectAll;
   final double price;
   final bool canOrder;
+  final bool isEdit;
 
   final CartListBarCallBack selectCallBack;
   final CartListBarCallBack orderCallBack;
+  final CartListBarCallBack removeCallBack;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +39,24 @@ class CartListBottomBar extends StatelessWidget {
         )
       ),
       child: Row(
-        children: <Widget>[
-          selectButton(),
-          priceLabel(),
-          orderButton()
-        ],
+        children: this.contentWidgets(),
       ),
     );
+  }
+
+  contentWidgets(){
+    if (isEdit) {
+      return <Widget>[
+        Expanded(child: this.selectButton()),
+        this.removeButton()
+      ];
+    }
+
+    return <Widget>[
+      this.selectButton(),
+      this.priceLabel(),
+      this.orderButton()
+    ];
   }
 
   // 全选按钮
@@ -103,6 +118,34 @@ class CartListBottomBar extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontSize: 16
+          ),
+        ),
+      ),
+    );
+  }
+
+  // 删除按钮
+  removeButton(){
+    return InkWell(
+      onTap: (){
+        this.removeCallBack();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 32,
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+        margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+                color: appCommonColor,
+                width: 1
+            )
+        ),
+        child: Text("删除",
+          style: TextStyle(
+              color: appCommonColor,
+              fontSize: 13
           ),
         ),
       ),
