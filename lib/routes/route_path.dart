@@ -13,6 +13,7 @@ class RoutePath {
 
   static String addressList = "/addressList";
   static String addAddress = "/addAddress";
+  static String favorite = "/favorite";
 
   static String goodsDetail = "/goodsDetail";
   static String goodsSearch = "/goodsSearch";

@@ -22,6 +22,7 @@ final routes = {
 
   RoutePath.addressList: addressListFunction,
   RoutePath.addAddress: addAddressFunction,
+  RoutePath.favorite: favoriteFunction,
 
   RoutePath.goodsDetail: goodsDetailFunction,
   RoutePath.goodsSearch: goodsHistoryFunction,

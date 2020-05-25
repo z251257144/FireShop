@@ -136,9 +136,13 @@ class _MemberPageState extends State<MemberPage> {
   // 功能菜单点击
   showFunctionView(index) {
     MemberModel data = this.viewModel.functionData[index];
-    if (data.memberType == MemberType.address) {
-      if (UserinfoManager.shared.isShowLogin(context)) {
+
+    if (UserinfoManager.shared.isShowLogin(context)) {
+      if (data.memberType == MemberType.address) {
         this.showNextPage(RoutePath.addressList);
+      }
+      else if (data.memberType == MemberType.favorite) {
+        this.showNextPage(RoutePath.favorite);
       }
     }
   }

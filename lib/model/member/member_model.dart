@@ -14,6 +14,7 @@ class MemberType {
   static const orderComment = const MemberType(4);
 
   static const address = const MemberType(15);
+  static const favorite = const MemberType(14);
 
   @override
   bool operator ==(other) {
