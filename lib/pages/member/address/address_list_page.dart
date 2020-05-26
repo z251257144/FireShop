@@ -40,7 +40,6 @@ class AddressListPage extends StatelessWidget {
         }
         if (snapshot.hasError) return addressListErrorWidget(snapshot.error);
         return Center(child: CircularProgressIndicator());
-        return addressListWidget();
     });
   }
 

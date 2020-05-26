@@ -39,6 +39,8 @@ class UserServer extends BaseServer {
     return super.requestPostData("user/m/reset-pwd", param: param);
   }
 
+
+
   // 获取所有的收货地址
   Future fetchShippingAddressList(token) async {
     var param = {"token": token};
