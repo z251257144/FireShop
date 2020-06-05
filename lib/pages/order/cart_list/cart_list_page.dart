@@ -7,7 +7,7 @@ import 'package:fire_shop/pages/order/cart_list/cart_list_bottom_bar.dart';
 import 'package:fire_shop/routes/app_routes.dart';
 import 'package:fire_shop/utils/list_util.dart';
 import 'package:fire_shop/widgets/LoadingWidget.dart';
-import 'package:fire_shop/widgets/empty_view.dart';
+import 'package:fire_shop/widgets/zm_empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';

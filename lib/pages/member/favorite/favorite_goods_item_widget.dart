@@ -10,7 +10,29 @@ class FavoriteGoodsItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(this.model.goodsName),
+      color: Colors.white,
+      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          this.imageView(),
+          this.nameLabel()
+        ],
+      ),
     );
+  }
+
+  Widget imageView() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+      child: Image.network(this.model.pic,
+        width: 80,
+        height: 80,
+      )
+    );
+  }
+
+  Widget nameLabel() {
+    return Text(this.model.goodsName);
   }
 }

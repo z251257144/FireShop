@@ -44,7 +44,7 @@ class GoodsServer extends BaseServer {
 
   // 商品收藏列表
   Future fetchFavoriteGoodsList(param) async {
-    return super.requestPostData("shop/goods/fav/list", param: param);
+    return super.requestPostData("shop/goods/fav/list/2", param: param);
   }
 
 

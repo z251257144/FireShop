@@ -26,7 +26,7 @@ class FavoritePage extends StatelessWidget {
   listViewProvider(){
     return ChangeNotifierProvider.value(
         value: _viewModel,
-        child: Consumer(builder: (context, ChangeNotifier _, child){
+        child: Consumer(builder: (context, FavoriteViewModel _, child){
           return this.listView(context);
         })
     );
@@ -41,10 +41,4 @@ class FavoritePage extends StatelessWidget {
     );
   }
 }
-
-
-ZMFuture.builder(
-  future: _viewModel.fetchFavoriteGoodsList(),
-  view: this.listViewProvider()
-)
 

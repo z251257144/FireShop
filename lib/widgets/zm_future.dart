@@ -1,4 +1,4 @@
-import 'package:fire_shop/widgets/empty_view.dart';
+import 'package:fire_shop/widgets/zm_empty_view.dart';
 import 'package:flutter/material.dart';
 
 class ZMFuture<T> {
@@ -39,6 +39,8 @@ class ZMFuture<T> {
   * 错误界面
   * */
   static Widget errorView(error) {
+    print("sadfsdfasdfsdaf");
+    print(error);
     return EmptyView(
     );
   }

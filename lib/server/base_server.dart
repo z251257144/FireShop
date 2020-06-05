@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fire_shop/widgets/zm_error.dart';
 import 'package:flutter/cupertino.dart';
 
 class BaseServer {
@@ -69,7 +70,7 @@ class BaseServer {
   }
 
   /*DioError转换为FormatException*/
-  FormatException convertDioError(DioError err) {
+  ZMError convertDioError(DioError err) {
     print("请求失败 ===== DioError： " + err.message);
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx and is also not 304.
@@ -82,20 +83,31 @@ class BaseServer {
       print(err.request);
       print(err.message);
     }
-    return FormatException("网络异常，请稍后再试", null, 400);
+
+    if (err.type == DioErrorType.CONNECT_TIMEOUT || err.type == DioErrorType.RECEIVE_TIMEOUT) {
+      return ZMError.builder(ZMErrorType.NO_CONNECT);
+    }
+    else if (err.type == DioErrorType.SEND_TIMEOUT || err.type == DioErrorType.RECEIVE_TIMEOUT) {
+      return ZMError.builder(ZMErrorType.TIMEOUT);
+    }
+    else if (err.type == DioErrorType.RESPONSE) {
+      return ZMError.builder(ZMErrorType.RESPONSE);
+    }
+
+    return null;
   }
 
   /*Response转换为FormatException*/
-  FormatException checkException(Response response) {
+  ZMError checkException(Response response) {
     if (response.statusCode != 200) {
       print("请求失败 ===== Response Error：${response.statusCode} " + response.statusMessage);
-      return FormatException("网络异常，请稍后再试", null, response.statusCode);
+      return ZMError(type: ZMErrorType.RESPONSE, code: response.statusCode, message: "网络异常，请稍后再试");
     }
 
     var code = response.data['code'];
     if (code != 0) {
       print("请求失败 ===== Data Error： " + response.data.toString());
-      return FormatException(response.data["msg"], null, code);
+      return ZMError(type: ZMErrorType.DEFAULT, code: code, message: response.data["msg"]);
     }
 
     return null;
