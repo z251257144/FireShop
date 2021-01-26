@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       //统一处理命名路由
       onGenerateRoute: onGenerateRoute,
       localizationsDelegates: [
-        GlobalEasyRefreshLocalizations.delegate,
+        
       ],
       locale: const Locale('zh', 'CN'),
 //      supportedLocales: [
